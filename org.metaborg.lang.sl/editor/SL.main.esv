@@ -1,0 +1,33 @@
+module SL.main
+
+imports
+  SL-Colorer
+  SL-Completions
+  SL-Folding
+  SL-Menus
+  SL-Refactorings
+  SL-References
+  SL-Syntax
+  SL-Views
+
+language General properties
+  
+  name:          SL
+  id:            org.metaborg.lang.sl
+  extends:       Root
+  
+  description:   "Spoofax-generated editor for the SL language"
+  url:           http://strategoxt.org
+  
+  extensions:    sl
+  table:         include/SL.tbl
+  start symbols: Start
+  
+  provider:      include/sl.ctree
+  provider:      include/sl-java.jar
+  
+  observer:      editor-analyze (multifile)
+  
+  on save:       editor-save
+  
+  jvm opts:      -server -Xss8m -Xmx1024m

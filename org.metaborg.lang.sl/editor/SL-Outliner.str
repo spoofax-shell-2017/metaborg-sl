@@ -1,0 +1,13 @@
+module editor/SL-Outliner
+
+imports
+  
+  include/SL
+  lib/runtime/editor/outline-library
+  lib/runtime/editor/origins
+  editor/SL-Outliner.generated
+
+rules
+  
+  to-outline-label = fail
+  
