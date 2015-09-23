@@ -6,12 +6,12 @@ imports
 
 context-free start-symbols
   
-  Start
+  Program
 
 context-free syntax
   
-  Start.Program = [[{FunDef "\n"}*]]
-
+  Program.Program = [[{FunDef "\n"}*]]
+  
 context-free syntax
   
   FunDef.FunDef = [

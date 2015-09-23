@@ -21,7 +21,7 @@ language General properties
   
   extensions:    sl
   table:         include/SL.tbl
-  start symbols: Start
+  start symbols: Program
   
   provider:      include/sl.ctree
   provider:      include/sl-java.jar

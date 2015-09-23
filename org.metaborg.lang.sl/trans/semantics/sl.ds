@@ -1,7 +1,98 @@
 module trans/semantics/sl
 
 imports
-  src-gen/ds-signatures/SL-sig
+  trans/semantics/desugared-sig
+
+signature
+  sorts U V
+  
+  constructors
+    U: U
+    __f2v__ : FunDef -> V {implicit}
+
+  arrows
+    Program -init-> U
+    FunDefSeq -load-> U
+    FunDef -load-> U
+
+  native operators
+    writeSlot : FrameSlot * V -> V
+    readSlot : FrameSlot -> V
+    readArg : Int -> V
 
 rules
-      
+
+  ProgramDesug(fdefseq, stmt) -init-> U()
+  where
+    fdefseq -load-> _;
+    stmt --> _.
+    
+  FunDefSeq(fdef, fdefseq) -load-> U()
+  where
+    fdef -load-> _;
+    fdefseq -load-> _.
+  
+  fdef@FunDefDesug(slot, _, _) -load-> U()
+  where
+    writeSlot(slot, fdef) => _.
+
+signature
+  arrows
+    Expr --> V
+    Stmt --> U
+
+rules
+  
+  ArgRead(idx) --> readArg(idx).
+  
+  LocalRead(slot) --> readSlot(slot).
+  
+  LocalWrite(slot, e) --> writeSlot(slot, v)
+  where
+    e --> v.
+
+  FunCallDesug(slot, argseq) --> v
+  where
+    readSlot(slot) => FunDefDesug(_, _, stmt).
+    
+
+
+
+// signature
+//   sorts
+//     V
+//     
+//   native datatypes
+//     "java.math.BigInteger" as BigInt { }
+// 
+//   constructors
+//     IntV  : Int -> V
+//     // LongV : Long -> V
+//     BigIntV : BigInt -> V  
+//     BoolV : Bool -> V
+//     StringV : String -> V
+//     FunV : FunDef -> V
+// 
+//   sorts
+//     U
+// 
+//   constructors
+//     U : U
+//     __u2v__ : U -> V {implicit}
+// 
+//   arrows
+//     Program -init-> U
+//     Stmt --> U
+//     Expr --> V
+//     FunDef --> FunDef
+// 
+//   sort aliases
+//     E = Map<Int, V>
+// 
+//   variables
+//     E : E
+//   
+//   arrows
+//     FunDefSeq -load-> U
+// 
+// rules

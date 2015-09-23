@@ -1,0 +1,29 @@
+module trans/semantics/desugared-sig
+
+imports
+  src-gen/ds-signatures/SL-sig
+
+signature
+  sorts FunDefSeq ParamSeq ArgSeq
+  
+  native datatypes
+    "com.oracle.truffle.api.frame.FrameSlot" as FrameSlot { }
+    
+  constructors
+    ProgramDesug : FunDefSeq * Stmt -> Program
+    FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
+    NoFunDefSeq : FunDefSeq 
+    
+    FunDefDesug : FrameSlot * ParamSeq * Stmt -> FunDef
+    ParamSeq : Int * ParamSeq -> ParamSeq
+    NoParam : ParamSeq
+
+    FunCallDesug : FrameSlot * ArgSeq -> Expr
+    ArgSeq : Int * Expr * ArgSeq -> ArgSeq
+    NoArgSeq : ArgSeq
+  
+  constructors
+    ArgRead: Int -> Expr
+    LocalRead: FrameSlot -> Expr
+    LocalWrite: FrameSlot * Expr -> Expr
+
