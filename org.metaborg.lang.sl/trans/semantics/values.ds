@@ -20,10 +20,14 @@ signature
  
   sort aliases
     E = Map<String, V>
-    F = Map<String, V>
+  
+  sorts
+    C
+  
+  constructors
+    C : E -> C
   
   variables
-    F : F
     E : E
   
   variables

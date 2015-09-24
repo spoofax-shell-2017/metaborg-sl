@@ -46,7 +46,7 @@ rules
   
   ArgSeq(e, aseq) --> VSeq(e, aseq).
 
-  bind(NoVSeq(), NoParamSeq()) --> {}.
+  C C(E) |- bind(NoVSeq(), NoParamSeq()) --> E.
   
   bind(VSeq(v, vseq), ParamSeq(p, pseq)) --> {p |--> v, E}
   where

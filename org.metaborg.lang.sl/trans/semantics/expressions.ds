@@ -19,21 +19,13 @@ signature
     andB: Bool * Bool -> Bool
     orB: Bool * Bool -> Bool
     concatS: String * String -> String
-    hasEKey: E * String -> Bool
-    hasFKey: F * String -> Bool
   
   native operators
     v2s : V -> String
     
 rules
 
-  VarRead(__String2ID__(name)) :: E --> E[name] :: E
-  where
-    hasEKey(E, name) == true.
-
-  VarRead(__String2ID__(name)) :: E, F --> F[name] :: E, F
-  where
-    hasEKey(E, name) == false.
+  VarRead(__String2ID__(name)) :: E --> E[name] :: E.
   
   VarWrite(__String2ID__(name), v) :: E --> v :: E {name |--> v, E}.
   

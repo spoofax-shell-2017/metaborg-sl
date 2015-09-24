@@ -16,14 +16,14 @@ rules // loading and init
 
   ProgramDesug(fdefseq, stmt) -init-> U()
   where
-    fdefseq :: F {} -load-> _ :: F';
-    stmt :: F', E {} --> _ :: F _, E _.
+    fdefseq :: E {} -load-> _ :: E;
+    C C(E) |- stmt :: E --> _ :: E _.
 
   FunDefSeq(fdef, fdefseq) -load-> U()
   where
     fdef -load-> _;
     fdefseq -load-> _.
 
-  FunDefDesug(name, params, body) :: F -load-> U() :: F {name |--> FunV(params, body), F}.
+  FunDefDesug(name, params, body) :: E -load-> U() :: E {name |--> FunV(params, body), E}.
 
 

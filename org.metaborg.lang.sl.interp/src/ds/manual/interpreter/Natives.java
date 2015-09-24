@@ -1,6 +1,9 @@
 package ds.manual.interpreter;
 
 import ds.generated.interpreter.A_V;
+import ds.generated.interpreter.BoolV_1;
+import ds.generated.interpreter.NumV_1;
+import ds.generated.interpreter.StringV_1;
 
 public class Natives {
 
@@ -8,9 +11,20 @@ public class Natives {
 		return i1 + i2;
 	}
 
-	public static String v2s_1(A_V lifted_6360) {
-		// FIXME implement
-		throw new RuntimeException("not implemented");
+	public static String v2s_1(A_V v) {
+		if (v instanceof StringV_1) {
+			return ((StringV_1) v).get_1();
+		}
+
+		if (v instanceof BoolV_1) {
+			return ((BoolV_1) v).get_1() + "";
+		}
+
+		if (v instanceof NumV_1) {
+			return ((NumV_1) v).get_1() + "";
+		}
+
+		return v + "";
 	}
 
 	public static String concatS_2(String s1, String s2) {
@@ -42,8 +56,7 @@ public class Natives {
 	}
 
 	public static ObjData newObj_0() {
-		// FIXME implement
-		throw new RuntimeException("not implemented");
+		return new ObjData();
 	}
 
 	public static int mulI_2(int i1, int i2) {
@@ -56,6 +69,10 @@ public class Natives {
 
 	public static boolean notB_1(boolean b1) {
 		return b1;
+	}
+
+	public static int subI_2(int i1, int i2) {
+		return i1 - i2;
 	}
 
 }
