@@ -6,7 +6,7 @@ imports
   trans/semantics/functions
 
 signature
-  native constructors
+  constructors
     ObjV : ObjData -> V
 
   native operators
