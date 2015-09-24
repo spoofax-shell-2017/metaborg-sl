@@ -1,0 +1,65 @@
+module trans/semantics/functions
+
+imports
+  trans/semantics/values
+
+rules
+
+  FunCallDesug(name, args) --> v
+  where
+    lookupFun(name) --> FunDefDesug(_, params, stmt);
+    args --> vargs;
+    invoke(vargs, params, stmt) --> v.
+
+// Function calls
+signature
+  constructors
+    lookupFun: String --> FunDef
+    invoke: VSeq * ParamSeq * Stmt --> V
+    bind: VSeq * ParamSeq --> E
+  
+  sorts
+    ReturnHandler
+  
+  native constructors
+    doReturn : V -> ReturnHandler // will throw a ReturnException with the value and the semantic components
+    onReturn : Stmt -> ReturnHandler // will catch a ReturnException with the value and the semantic components
+  
+  arrows
+    ReturnHandler --> V
+  
+  sorts VSeq
+  
+  constructors
+    VSeq: V * VSeq -> VSeq
+    NoVSeq: VSeq
+  
+  arrows
+    ArgSeq --> VSeq
+
+rules  
+  
+  lookupFun(name) :: F --> F[name] :: F.
+
+  invoke(vseq, parseq, stmt) :: E --> v :: E
+  where
+    bind(vseq, parseq) :: E --> E' :: E _;
+    onReturn(stmt) :: E' --> v :: E _.
+  
+  NoArgSeq() --> NoVSeq().
+  
+  ArgSeq(e, aseq) --> VSeq(e, aseq).
+
+  bind(NoVSeq(), NoParamSeq()) --> {}.
+  
+  bind(VSeq(v, vseq), ParamSeq(p, pseq)) --> {p |--> v, E}
+  where
+    bind(vseq, pseq) --> E.
+  
+  ReturnVoid() --> U()
+  where
+    doReturn(U()) --> _.
+
+  Return(e) --> U()
+  where
+    doReturn(e) --> _.

@@ -1,0 +1,44 @@
+module trans/semantics/expressions
+
+imports
+  trans/semantics/desugared-sig
+  trans/semantics/values
+  src-gen/ds-signatures/Common-sig
+
+signature
+  native operators
+    s2i: String -> Int
+    lteI: Int * Int -> Bool
+    ltI: Int * Int -> Bool
+    eqV: V * V -> Bool
+    notB: Bool -> Bool
+    andB: Bool * Bool -> Bool
+    orB: Bool * Bool -> Bool
+
+  variables
+    v : V
+rules
+
+  VarRead(__String2ID__(name)) :: E --> E[name] :: E.
+  VarWrite(__String2ID__(name), v) :: E --> v :: E {name |--> v, E}.
+  
+  Int(__String2INT__(s)) --> NumV(s2i(s)).
+  
+  String(__String2STRING__(s)) --> StringV(s).
+  
+  True() --> BoolV(true).
+  False() --> BoolV(false).
+  
+  Eq(v1, v2) --> BoolV(eqV(v1, v2)).
+  
+  Neq(v1, v2) --> BoolV(notB(eqV(v1, v2))).
+  
+  Lte(NumV(i1), NumV(i2)) --> BoolV(lteI(i1, i2)).
+  Lt(NumV(i1), NumV(i2)) --> BoolV(ltI(i1, i2)).
+  Gte(NumV(i1), NumV(i2)) --> BoolV(ltI(i2, i1)).
+  Gt(NumV(i1), NumV(i2)) --> BoolV(lteI(i2, i1)).
+  
+  And(BoolV(b1), BoolV(b2)) --> BoolV(andB(b1, b2)).
+  Or(BoolV(b1), BoolV(b2)) --> BoolV(orB(b1, b2)).
+  Not(BoolV(b)) --> BoolV(notB(b)).
+

@@ -1,0 +1,66 @@
+module trans/semantics/control-flow
+
+imports
+  trans/semantics/desugared-sig
+  trans/semantics/values
+
+// While loops
+signature
+  sorts
+    BreakHandler
+    ContinueHandler
+
+  native constructors
+    doBreak : BreakHandler // will throw a BreakException with the value and the semantic components 
+    onBreak : Stmt -> Stmt // will handle a BreakException with the value and the semantic components
+    doContinue : ContinueHandler // will throw a ContinueException with the value and the semantic components
+    onContinue : Stmt -> Stmt // will handle a ContinueException with the value and the semantic components
+
+  arrows
+    BreakHandler --> U
+    ContinueHandler --> U
+
+  constructors
+    while : Expr * Block -> Stmt
+
+rules
+  
+  While(e, block) --> U()
+  where
+    onBreak(onContinue(while(e, block))) --> _.
+
+  Continue() --> U()
+  where
+    doContinue() --> _.
+  
+  Break() --> U()
+  where
+    doBreak() --> _.
+
+// IfThenElse (IfNoElse gets desugared into IfThenElse(Expr, body, EmptyBlock))
+
+rules
+
+  IfThenElse(e, then, _) --> U()
+  where
+    e --> BoolV(true);
+    then --> _.
+  
+  IfThenElse(e, _, else) --> U()
+  where
+    e --> BoolV(false);
+    else --> _.
+
+  Block(stmt) --> stmt.
+  
+  EmptyBlock() --> U().
+  
+  Stmt(e) --> U()
+  where
+    e --> _.
+  
+  Seq(stmt1, stmt2) --> U()
+  where
+    stmt1 --> _;
+    stmt2 --> _.
+  

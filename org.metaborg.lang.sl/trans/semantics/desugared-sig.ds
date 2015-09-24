@@ -5,25 +5,18 @@ imports
 
 signature
   sorts FunDefSeq ParamSeq ArgSeq
-  
-  native datatypes
-    "com.oracle.truffle.api.frame.FrameSlot" as FrameSlot { }
-    
+
   constructors
     ProgramDesug : FunDefSeq * Stmt -> Program
     FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
-    NoFunDefSeq : FunDefSeq 
-    
-    FunDefDesug : FrameSlot * ParamSeq * Stmt -> FunDef
-    ParamSeq : Int * ParamSeq -> ParamSeq
-    NoParam : ParamSeq
+    NoFunDefSeq : FunDefSeq
 
-    FunCallDesug : FrameSlot * ArgSeq -> Expr
-    ArgSeq : Int * Expr * ArgSeq -> ArgSeq
+    FunDefDesug : String * ParamSeq * Stmt -> FunDef
+    ParamSeq : String * ParamSeq -> ParamSeq
+    NoParamSeq : ParamSeq
+
+    FunCallDesug : String * ArgSeq -> Expr
+    ArgSeq : Expr * ArgSeq -> ArgSeq
     NoArgSeq : ArgSeq
-  
-  constructors
-    ArgRead: Int -> Expr
-    LocalRead: FrameSlot -> Expr
-    LocalWrite: FrameSlot * Expr -> Expr
 
+  
