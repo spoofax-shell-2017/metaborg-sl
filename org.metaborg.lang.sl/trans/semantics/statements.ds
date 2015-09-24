@@ -40,28 +40,28 @@ rules
     	
     }.
   
-  Continue() --> U()
+  Continue() --> u
   where
-    doContinue() --> _.
+    doContinue() --> u.
   
-  Break() --> U()
+  Break() --> u
   where
-    doBreak() --> _.
+    doBreak() --> u.
 
 // IfThenElse (IfNoElse gets desugared into IfThenElse(Expr, body, EmptyBlock))
 
 rules
 
-  IfThenElse(e, then, _) --> U()
+  IfThenElse(e, then, else) --> U()
   where
-    e --> BoolV(true);
-    then --> _.
-  
-  IfThenElse(e, _, else) --> U()
-  where
-    e --> BoolV(false);
-    else --> _.
-  
+    e --> BoolV(bv);
+    bv == true
+    < {
+    	then --> _
+    } + {
+    	else --> _
+    }.
+    
   Block(stmt) --> stmt.
   
   EmptyBlock() --> U().

@@ -28,5 +28,6 @@ signature
   
   variables
     v : V
+    u : U
 
   
