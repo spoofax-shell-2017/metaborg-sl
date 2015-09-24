@@ -1,6 +1,6 @@
 module SL-Completions
 
-imports src-gen/completions/SL-esv
+imports completions/SL-esv
 
 completions
                                                                    

@@ -3,9 +3,9 @@ module pp
 imports
 
 	libstratego-gpp
-	lib/runtime/refactoring/-
+	runtime/refactoring/-
 	include/SL-parenthesize
-	src-gen/pp/SL-pp
+	pp/SL-pp
 
 rules
 	

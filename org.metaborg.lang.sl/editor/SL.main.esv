@@ -26,8 +26,6 @@ language General properties
   provider:      include/sl.ctree
   provider:      include/sl-java.jar
   
-  observer:      editor-analyze (multifile)
-  
-  on save:       editor-save
+  observer:      editor-analyze
   
   jvm opts:      -server -Xss8m -Xmx1024m
