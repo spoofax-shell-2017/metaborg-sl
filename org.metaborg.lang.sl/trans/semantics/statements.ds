@@ -21,24 +21,24 @@ signature
     ContinueHandler --> U
 
   constructors
-    while : Expr * Block -> Stmt
+    whileHelper : Expr * Block -> Stmt
 
 rules
   
   While(e, block) --> U()
   where
-    onBreak(onContinue(while(e, block))) --> _.
+    onBreak(onContinue(whileHelper(e, block))) --> _.
 
-  w@while(e, block) --> U()
-  where
-    e --> BoolV(bv);
-    bv == true
-    < {
-    	block --> _;
-    	w --> _
-    } + {
-    	
-    }.
+  // w@whileHelper(e, block) --> U()
+  // where
+  //   e --> BoolV(bv);
+  //   bv == true
+  //   < {
+  //   	block --> _;
+  //   	w --> _
+  //   } + {
+  //   	
+  //   }.
   
   Continue() --> u
   where
@@ -52,15 +52,15 @@ rules
 
 rules
 
-  IfThenElse(e, then, else) --> U()
-  where
-    e --> BoolV(bv);
-    bv == true
-    < {
-    	then --> _
-    } + {
-    	else --> _
-    }.
+  // IfThenElse(e, then, else) --> U()
+  // where
+  //   e --> BoolV(bv);
+  //   bv == true
+  //   < {
+  //   	then --> _
+  //   } + {
+  //   	else --> _
+  //   }.
     
   Block(stmt) --> stmt.
   
