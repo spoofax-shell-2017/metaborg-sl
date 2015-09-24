@@ -24,5 +24,8 @@ signature
   variables
     F : F
     E : E
+  
+  variables
+    v : V
 
   
