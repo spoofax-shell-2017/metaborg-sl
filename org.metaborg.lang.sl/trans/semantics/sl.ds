@@ -24,27 +24,6 @@ rules // loading and init
     fdef -load-> _;
     fdefseq -load-> _.
 
-  fdef@FunDefDesug(name, _, _) :: F -load-> U() :: F {name |--> fdef, F}.
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-    
-
-
-
-
-
+  FunDefDesug(name, params, body) :: F -load-> U() :: F {name |--> FunV(params, body), F}.
 
 

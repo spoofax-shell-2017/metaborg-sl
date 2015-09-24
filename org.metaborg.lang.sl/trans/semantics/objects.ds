@@ -6,29 +6,28 @@ imports
   trans/semantics/functions
 
 signature
-  sort aliases
-    ObjTbl = Map<String, MemberSlot>
+  native constructors
+    ObjV : ObjData -> V
 
-  sorts
-    MemberSlot
-    Obj
+  native operators
+    newObj : ObjData
   
-  constructors
-    ObjV : ObjTbl -> Obj
-    FieldSlot : V -> MemberSlot {implicit}
-    MethodSlot : FunDef -> MemberSlot {implicit}
-    __obj2v__ : Obj -> V {implicit}
+  native datatypes
+    "ObjData" as ObjData {
+      readProp : String -> V
+      writeProp : String * V -> V
+    }
 
 rules
+
+  SLNewObject() --> ObjV(newObj()).
   
-  SLNewObject() --> ObjV({}).
-  
-  PropRead(ObjV(tbl), __String2ID__(prop)) --> tbl[prop] : V.
-  
-  PropWrite(ObjV(tbl), __String2ID__(prop), v) --> ObjV({prop |--> v, tbl}). 
-  
-  MethodCallDesug(ObjV({tbl}), fun, aseq) --> v
+  PropRead(ObjV(od), __String2ID__(prop)) --> readProp[od](prop).
+  PropWrite(ObjV(od), __String2ID__(prop), v) --> writeProp[od](prop, v).
+
+  MethodCallDesug(ObjV(od), fun, eseq) --> v
   where
-    tbl[fun] => FunDefDesug(_, pseq, body);
-    aseq --> vseq;
+    readProp[od](fun) => FunV(pseq, body);
+    eseq --> vseq;
     invoke(vseq, pseq, body) --> v.
+

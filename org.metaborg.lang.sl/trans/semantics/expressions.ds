@@ -8,24 +8,47 @@ imports
 signature
   native operators
     s2i: String -> Int
+    addI: Int * Int -> Int
+    subI: Int * Int -> Int
+    mulI: Int * Int -> Int
+    divI: Int * Int -> Int
     lteI: Int * Int -> Bool
     ltI: Int * Int -> Bool
     eqV: V * V -> Bool
     notB: Bool -> Bool
     andB: Bool * Bool -> Bool
     orB: Bool * Bool -> Bool
-
-  variables
-    v : V
+    concatS: String * String -> String
+    hasEKey: E * String -> Bool
+    hasFKey: F * String -> Bool
+  
+  native operators
+    v2s : V -> String
+    
 rules
 
-  VarRead(__String2ID__(name)) :: E --> E[name] :: E.
+  VarRead(__String2ID__(name)) :: E --> E[name] :: E
+  where
+    hasEKey(E, name) == true.
+
+  VarRead(__String2ID__(name)) :: E, F --> F[name] :: E, F
+  where
+    hasEKey(E, name) == false.
+  
   VarWrite(__String2ID__(name), v) :: E --> v :: E {name |--> v, E}.
   
   Int(__String2INT__(s)) --> NumV(s2i(s)).
   
+  Add(NumV(i1), NumV(i2)) --> NumV(addI(i1, i2)).
+  Sub(NumV(i1), NumV(i2)) --> NumV(subI(i1, i2)).
+  Mul(NumV(i1), NumV(i2)) --> NumV(mulI(i1, i2)).
+  Div(NumV(i1), NumV(i2)) --> NumV(divI(i1, i2)).
+  
   String(__String2STRING__(s)) --> StringV(s).
   
+  Add(StringV(s1), v2) --> StringV(concatS(s1, v2s(v2))).
+  Add(v1, StringV(s2)) --> StringV(concatS(v2s(v1), s2)).
+
   True() --> BoolV(true).
   False() --> BoolV(false).
   

@@ -29,6 +29,17 @@ rules
   where
     onBreak(onContinue(while(e, block))) --> _.
 
+  w@while(e, block) --> U()
+  where
+    e --> BoolV(bv);
+    bv == true
+    < {
+    	block --> _;
+    	w --> _
+    } + {
+    	
+    }.
+  
   Continue() --> U()
   where
     doContinue() --> _.

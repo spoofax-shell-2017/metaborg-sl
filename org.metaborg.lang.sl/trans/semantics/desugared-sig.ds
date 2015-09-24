@@ -15,10 +15,10 @@ signature
     ParamSeq : String * ParamSeq -> ParamSeq
     NoParamSeq : ParamSeq
 
-    FunCallDesug : String * ArgSeq -> Expr
+    FunCallDesug : Expr * ArgSeq -> Expr
     ArgSeq : Expr * ArgSeq -> ArgSeq
     NoArgSeq : ArgSeq
-    
+
     MethodCallDesug: Expr * String * ArgSeq -> Expr
 
   constructors // built-ins

@@ -5,16 +5,14 @@ imports
 
 rules
 
-  FunCallDesug(name, args) --> v
+  FunCallDesug(FunV(params, body), args) --> v
   where
-    lookupFun(name) --> FunDefDesug(_, params, stmt);
     args --> vargs;
-    invoke(vargs, params, stmt) --> v.
+    invoke(vargs, params, body) --> v.
 
 // Function calls
 signature
   constructors
-    lookupFun: String --> FunDef
     invoke: VSeq * ParamSeq * Stmt --> V
     bind: VSeq * ParamSeq --> E
   
@@ -38,8 +36,6 @@ signature
     ArgSeq --> VSeq
 
 rules  
-  
-  lookupFun(name) :: F --> F[name] :: F.
 
   invoke(vseq, parseq, stmt) :: E --> v :: E
   where
