@@ -33,6 +33,12 @@
 			<version>${metaborg-version}</version>
 			<type>spoofax-language</type>
 		</dependency>
+		<dependency>
+			<groupId>org.metaborg</groupId>
+			<artifactId>dynsem</artifactId>
+			<version>1.5.0-truffle-SNAPSHOT</version>
+			<type>spoofax-language</type>
+		</dependency>
 	</dependencies>
 
 	<build>
