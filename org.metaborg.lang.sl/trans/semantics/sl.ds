@@ -23,6 +23,8 @@ rules // loading and init
   where
     fdef -load-> _;
     fdefseq -load-> _.
+    
+  NoFunDefSeq() -load-> U().
 
   FunDefDesug(name, params, body) :: E -load-> U() :: E {name |--> FunV(params, body), E}.
 
