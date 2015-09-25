@@ -56,6 +56,6 @@ rules
   where
     doReturn(U()) --> _.
 
-  Return(e) --> U()
+  Return(v) --> U()
   where
-    doReturn(e) --> _.
+    doReturn(v) --> _.
