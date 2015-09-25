@@ -1,4 +1,4 @@
-package ds.main.interpreter;
+package ds.manual.interpreter;
 
 import java.util.Stack;
 
