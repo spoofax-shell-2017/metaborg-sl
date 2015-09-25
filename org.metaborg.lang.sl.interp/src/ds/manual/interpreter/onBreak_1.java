@@ -7,25 +7,34 @@ import com.github.krukow.clj_ds.PersistentMap;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
-import ds.generated.interpreter.A_BreakHandler;
 import ds.generated.interpreter.A_C;
+import ds.generated.interpreter.A_Stmt;
 import ds.generated.interpreter.A_V;
 import ds.generated.interpreter.R_default_U;
+import ds.generated.interpreter.U_0;
 
-public class doBreak_0 extends A_BreakHandler {
+public class onBreak_1 extends A_Stmt {
 
-	public doBreak_0(SourceSection src) {
+	@Child private A_Stmt _1;
+
+	public onBreak_1(SourceSection src, A_Stmt stmt) {
 		super(src);
+		this._1 = stmt;
 	}
 
+	@Override
 	public R_default_U execute_default(VirtualFrame frame, A_C ctx,
 			PersistentMap<String, A_V> env) {
-		throw new BreakException(env);
+		try {
+			return _1.execute_default(frame, ctx, env);
+		} catch (BreakException bex) {
+			return new R_default_U(new U_0(getSourceSection()), bex.getEnv());
+		}
 	}
 
 	@Override
 	public IStrategoTerm toStrategoTerm(ITermFactory factory) {
-		return factory.makeAppl(factory.makeConstructor("doBreak", 0));
+		return _1.toStrategoTerm(factory);
 	}
 
 }
