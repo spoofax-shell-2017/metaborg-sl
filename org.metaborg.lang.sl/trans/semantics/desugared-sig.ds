@@ -22,9 +22,72 @@ signature
     MethodCallDesug: Expr * String * ArgSeq -> Expr
 
   constructors // built-ins
-    SLDefineFunction : String -> Expr
+    SLDefineFunction : Expr -> Expr
     SLNanoTime : Expr
     SLNewObject : Expr
-    SLPrintln : String -> Expr
+    SLPrintln : Expr -> Expr
     SLReadln : Expr
     SLStacktrace : Expr
+
+  arrows
+    Program -desugar-> Program
+    FunDef -desugar-> FunDef
+    Expr -desugar-> Expr
+    List(FunDef) -desugar-> FunDefSeq
+    List(ID) -desugar-> ParamSeq
+    List(Expr) -desugar-> ArgSeq
+
+  arrows
+    Program -desugartop-> Program
+
+  sorts
+    traversal
+    
+  native constructors
+    innermost : Program -> traversal
+
+  arrows
+    traversal -desugar-> traversal
+    
+rules
+
+  p@Program(funcs) -desugartop-> p'
+  where
+    innermost(p) -desugar-> innermost(p').
+
+  Program(funcs) -desugar-> ProgramDesug(funcseq, Stmt(maincall))
+  where
+    funcs -desugar-> funcseq;
+    FunCallDesug(String("main"), NoArgSeq()) => maincall.
+  
+  [] : List(FunDef) -desugar-> NoFunDefSeq().
+  [func|funcs] : List(FunDef) -desugar-> FunDefSeq(func', funcs')
+  where
+    func -desugar-> func';
+    funcs -desugar-> funcs'.
+  
+  FunDef(__String2ID__(name), params, body) -desugar-> FunDefDesug(name, params, body).
+  
+  [] : List(ID) -desugar-> NoParamSeq().
+  [__String2ID__(name)|ids] : List(ID) -desugar-> ParamSeq(name, ids).
+
+  FunCall(__String2ID__(name), args) -desugar-> FunCallDesug(String(name), args).
+  
+  [] : List(Expr) -desugar-> NoArgSeq().
+  [e|es] : List(Expr) -desugar-> ArgSeq(e, es).
+
+  MethodCall(e, __String2ID__(name), args) -desugar-> MethodCallDesug(e, name, args).
+  
+  FunCallDesug(String("defineFunction"), ArgSeq(e, NoArgSeq())) -desugar-> SLDefineFunction(e).
+  
+  FunCallDesug(String("nanoTime"), NoArgSeq()) -desugar-> SLNanoTime().
+  
+  FunCallDesug(String("new"), NoArgSeq()) -desugar-> SLNewObject().
+  
+  FunCallDesug(String("println"), ArgSeq(e, NoArgSeq())) -desugar-> SLPrintln(e).
+  
+  FunCallDesug(String("readln"), NoArgSeq()) -desugar-> SLReadln().
+  
+  FunCallDesug(String("stacktrace"), NoArgSeq()) -desugar-> SLStacktrace().
+  
+  
