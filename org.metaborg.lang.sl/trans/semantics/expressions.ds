@@ -31,16 +31,28 @@ rules
   
   Int(__String2INT__(s)) --> NumV(s2i(s)).
   
-  Add(NumV(i1), NumV(i2)) --> NumV(addI(i1, i2)).
   Sub(NumV(i1), NumV(i2)) --> NumV(subI(i1, i2)).
   Mul(NumV(i1), NumV(i2)) --> NumV(mulI(i1, i2)).
   Div(NumV(i1), NumV(i2)) --> NumV(divI(i1, i2)).
   
   String(__String2STRING__(s)) --> StringV(s).
   
-  Add(StringV(s1), v2) --> StringV(concatS(s1, v2s(v2))).
-  Add(v1, StringV(s2)) --> StringV(concatS(v2s(v1), s2)).
-
+  Add(v1, v2) --> vout
+  where
+    v1 => NumV(i1)
+    < {
+      v2 => NumV(i2);
+      NumV(addI(i1, i2)) => vout
+    } + {
+      v1 => StringV(s1)
+      < {
+        StringV(concatS(s1, v2s(v2))) => vout
+      } + {
+        v2 => StringV(s2);
+        StringV(concatS(v2s(v1), s2)) => vout
+      }
+    }.
+  
   True() --> BoolV(true).
   False() --> BoolV(false).
   
