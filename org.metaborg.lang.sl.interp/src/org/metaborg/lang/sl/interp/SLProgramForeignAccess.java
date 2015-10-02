@@ -2,14 +2,12 @@ package org.metaborg.lang.sl.interp;
 
 import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.Truffle;
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.interop.ForeignAccess;
 import com.oracle.truffle.api.interop.ForeignAccess.Factory;
 import com.oracle.truffle.api.interop.Message;
 import com.oracle.truffle.api.interop.TruffleObject;
 import com.oracle.truffle.api.nodes.RootNode;
-import com.oracle.truffle.api.source.SourceSection;
 
 public class SLProgramForeignAccess implements Factory {
 
@@ -20,7 +18,7 @@ public class SLProgramForeignAccess implements Factory {
 	public CallTarget accessMessage(Message tree) {
 		if (Message.createExecute(0).equals(tree)) {
 			return Truffle.getRuntime().createCallTarget(
-					new SLForeignCallerNode(null, null, null));
+					new SLForeignCallerNode());
 		} else {
 			throw new IllegalArgumentException(tree.toString()
 					+ " not supported");
@@ -34,9 +32,8 @@ public class SLProgramForeignAccess implements Factory {
 
 	private static class SLForeignCallerNode extends RootNode {
 
-		public SLForeignCallerNode(Class<SLLanguage> language,
-				SourceSection sourceSection, FrameDescriptor frameDescriptor) {
-			super(language, sourceSection, frameDescriptor);
+		public SLForeignCallerNode() {
+			super(SLLanguage.class, null, null);
 		}
 
 		@Override
