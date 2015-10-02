@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
+import java.util.concurrent.Callable;
+
+import org.metaborg.meta.interpreter.framework.InterpreterException;
 
 import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.Truffle;
@@ -13,19 +16,24 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.instrument.ToolSupportProvider;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.source.Source;
+import com.oracle.truffle.api.vm.TruffleVM;
+import com.oracle.truffle.api.vm.TruffleVM.Symbol;
 
 import ds.generated.interpreter.A_Program;
+import ds.generated.interpreter.R_init_U;
 import ds.manual.interpreter.A_Program_RootWrap;
 
-@TruffleLanguage.Registration(name = "expr.lang", version = "0.0.1", mimeType = "application/x-exprlang")
+@TruffleLanguage.Registration(name = "sl.lang", version = "0.0.1", mimeType = "application/x-sllang")
 public final class SLLanguage extends TruffleLanguage<SLContext> {
 
 	public static final SLLanguage INSTANCE = new SLLanguage();
 
 	private final SLParser parser;
+	private final TruffleVM vm;
 
 	private SLLanguage() {
 		parser = new SLParser(Paths.get("../lang.expr/include/Langexpr.tbl"));
+		vm = TruffleVM.newVM().build();
 	}
 
 	@Override
@@ -54,55 +62,26 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		};
 	}
 
-	// public static void main(String[] args) throws IOException,
-	// URISyntaxException {
+	public Callable<R_init_U> makeCallable(String filename) {
+		assert vm.getLanguages().containsKey("application/x-sllang");
 
-	// TruffleVM vm = TruffleVM.newVM().build();
-	//
-	// assert vm.getLanguages().containsKey("application/x-exprlang");
-	//
-	// System.out.println("== running on " +
-	// Truffle.getRuntime().getName());
-	//
-	// String[] args2 = null;
-	// if (args.length == 2) {
-	// args2 = args;
-	// } else {
-	// args2 = args[0].split(" ");
-	// }
-	// int repeats = 1;
-	//
-	// if (args2.length == 2) {
-	// repeats = Integer.parseInt(args2[1]);
-	// }
-	//
-	// vm.eval(Source.fromFileName(args2[0]).withMimeType(
-	// "application/x-exprlang"));
-	//
-	// Symbol program = vm.findGlobalSymbol("program");
-	// R_init_V res = null;
-	// long st = 0;
-	// long et = 0;
-	// int repeatsbak = repeats;
-	// while (repeats-- > 0) {
-	// st = System.nanoTime();
-	//
-	// res = (R_init_V) program.invoke(null).get();
-	// et = System.nanoTime();
-	// }
-	// repeats = repeatsbak;
-	// st = System.nanoTime();
-	// while (repeats-- > 0) {
-	// res = (R_init_V) program.invoke(null).get();
-	// }
-	// et = System.nanoTime();
-	// System.out.println("------------");
-	// System.out.println(res.toStrategoTerm(new TermFactory()).toString());
-	// System.out.println("============");
-	// System.out.println("Duration: " + ((double) (et - st)) / repeatsbak
-	// / 1000000 + " ms");
+		try {
+			vm.eval(Source.fromFileName(filename).withMimeType(
+					"application/x-sllang"));
+		} catch (IOException e) {
+			throw new InterpreterException("Eval failed", e);
+		}
+		Symbol program = vm.findGlobalSymbol("program");
 
-	// }
+		return new Callable<R_init_U>() {
+
+			@Override
+			public R_init_U call() throws Exception {
+				return (R_init_U) program.invoke(null).get();
+			}
+		};
+
+	}
 
 	@Override
 	protected SLContext createContext(Env env) {
