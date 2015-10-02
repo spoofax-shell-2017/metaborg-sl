@@ -62,7 +62,7 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		};
 	}
 
-	public Callable<R_init_U> makeCallable(String filename) {
+	public Callable<R_init_U> getCallable(String filename) {
 		assert vm.getLanguages().containsKey("application/x-sllang");
 
 		try {
