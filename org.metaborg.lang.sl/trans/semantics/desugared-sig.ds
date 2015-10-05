@@ -44,7 +44,7 @@ signature
     traversal
     
   native constructors
-    innermost : Program -> traversal
+    alltd : Program -> traversal
 
   arrows
     traversal -desugar-> traversal
@@ -53,7 +53,7 @@ rules
 
   p@Program(funcs) -desugartop-> p'
   where
-    innermost(p) -desugar-> innermost(p').
+    alltd(p) -desugar-> alltd(p').
 
   Program(funcs) -desugar-> ProgramDesug(funcseq, Stmt(maincall))
   where
@@ -61,6 +61,7 @@ rules
     FunCallDesug(String("main"), NoArgSeq()) => maincall.
   
   [] : List(FunDef) -desugar-> NoFunDefSeq().
+  
   [func|funcs] : List(FunDef) -desugar-> FunDefSeq(func', funcs')
   where
     func -desugar-> func';
