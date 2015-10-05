@@ -1,0 +1,17 @@
+module trans/semantics/builtins
+
+imports
+  trans/semantics/desugared-sig
+  trans/semantics/values
+
+signature
+  native operators
+    println : String -> String
+
+rules
+  
+  SLPrintln(e) --> v 
+  where
+    e --> v@StringV(s);
+    println(s) => _.
+  

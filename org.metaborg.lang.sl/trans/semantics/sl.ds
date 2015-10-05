@@ -5,6 +5,7 @@ imports
   trans/semantics/statements
   trans/semantics/expressions
   trans/semantics/objects
+  trans/semantics/builtins
 
 signature
   arrows

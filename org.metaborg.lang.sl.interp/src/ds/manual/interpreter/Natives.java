@@ -75,4 +75,9 @@ public class Natives {
 		return i1 - i2;
 	}
 
+	public static String println_1(String s) {
+		System.out.println(s);
+		return s;
+	}
+
 }

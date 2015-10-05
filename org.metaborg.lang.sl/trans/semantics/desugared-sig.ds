@@ -22,11 +22,11 @@ signature
     MethodCallDesug: Expr * String * ArgSeq -> Expr
 
   constructors // built-ins
+    SLPrintln : Expr -> Expr
+    SLReadln : Expr
     SLDefineFunction : Expr -> Expr
     SLNanoTime : Expr
     SLNewObject : Expr
-    SLPrintln : Expr -> Expr
-    SLReadln : Expr
     SLStacktrace : Expr
   
   
