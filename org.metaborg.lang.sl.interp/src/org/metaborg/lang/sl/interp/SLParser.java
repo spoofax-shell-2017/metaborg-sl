@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.nio.file.Path;
 
 import org.apache.commons.io.IOUtils;
+import org.metaborg.lang.sl.desugar.desugar;
+import org.metaborg.lang.sl.desugar.desugar_all_0_0;
 import org.metaborg.meta.interpreter.framework.InterpreterException;
 import org.metaborg.meta.interpreter.framework.SourceSectionUtil;
 import org.spoofax.interpreter.terms.IStrategoTerm;
@@ -40,9 +42,13 @@ public class SLParser {
 			IStrategoTerm programterm = (IStrategoTerm) parser.parse(
 					IOUtils.toString(src.getInputStream()), src.getName(),
 					"Program");
+
+			IStrategoTerm desugprogterm = desugar_all_0_0.instance.invoke(
+					desugar.init(), programterm);
+
 			return new Generic_A_Program(
-					SourceSectionUtil.fromStrategoTerm(programterm),
-					programterm);
+					SourceSectionUtil.fromStrategoTerm(desugprogterm),
+					desugprogterm);
 		} catch (Exception e) {
 			throw new InterpreterException("Parse failure", e);
 		}
