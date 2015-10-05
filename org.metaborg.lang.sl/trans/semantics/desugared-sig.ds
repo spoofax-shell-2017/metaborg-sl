@@ -51,7 +51,7 @@ signature
     
 rules
 
-  p@Program(funcs) -desugartop-> p'
+  p@Program(_) -desugartop-> p'
   where
     alltd(p) -desugar-> alltd(p').
 
