@@ -34,4 +34,16 @@ signature
     v : V
     u : U
 
-  
+signature
+  constructors
+    lookup : String --> V
+    write : String * V --> V
+
+rules
+  lookup(name) :: E --> E[name] :: E.
+
+  write(name, v) :: E --> v :: E {name |--> v, E}.
+
+
+
+

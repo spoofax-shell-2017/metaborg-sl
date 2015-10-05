@@ -25,9 +25,9 @@ signature
     
 rules
 
-  VarRead(__String2ID__(name)) :: E --> E[name] :: E.
+  VarRead(__String2ID__(name)) --> lookup(name).
   
-  VarWrite(__String2ID__(name), v) :: E --> v :: E {name |--> v, E}.
+  VarWrite(__String2ID__(name), v) --> write(name, v).
   
   Int(__String2INT__(s)) --> NumV(s2i(s)).
   

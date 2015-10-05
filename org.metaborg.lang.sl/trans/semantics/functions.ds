@@ -5,8 +5,9 @@ imports
 
 rules
 
-  FunCallDesug(FunV(params, body), args) --> v
+  FunCallDesug(name, args) --> v
   where
+    lookup(name) --> FunV(params, body);
     args --> vargs;
     invoke(vargs, params, body) --> v.
 
@@ -59,3 +60,6 @@ rules
   Return(v) --> U()
   where
     doReturn(v) --> _.
+
+
+
