@@ -1,22 +1,27 @@
 package org.metaborg.lang.sl.desugar;
 
-import org.spoofax.interpreter.terms.IStrategoTerm;
-import org.strategoxt.lang.Context;
-import org.strategoxt.lang.Strategy;
+import org.strategoxt.stratego_lib.*;
+import org.strategoxt.lang.*;
+import org.spoofax.interpreter.terms.*;
+import static org.strategoxt.lang.Term.*;
+import org.spoofax.interpreter.library.AbstractPrimitive;
+import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 
-@SuppressWarnings("all")
-final class lifted0 extends Strategy {
-	Strategy d_78;
+@SuppressWarnings("all") final class lifted0 extends Strategy 
+{ 
+  Strategy j_78;
 
-	@Override
-	public IStrategoTerm invoke(Context context, IStrategoTerm term) {
-		Fail81: {
-			term = b_78.instance.invoke(context, term, d_78);
-			if (term == null)
-				break Fail81;
-			if (true)
-				return term;
-		}
-		return null;
-	}
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
+  { 
+    Fail82:
+    { 
+      term = h_78.instance.invoke(context, term, j_78);
+      if(term == null)
+        break Fail82;
+      if(true)
+        return term;
+    }
+    return null;
+  }
 }

@@ -1,58 +1,53 @@
 package org.metaborg.lang.sl.desugar;
 
-import static org.strategoxt.lang.Term.checkListAnnos;
+import org.strategoxt.stratego_lib.*;
+import org.strategoxt.lang.*;
+import org.spoofax.interpreter.terms.*;
+import static org.strategoxt.lang.Term.*;
+import org.spoofax.interpreter.library.AbstractPrimitive;
+import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 
-import org.spoofax.interpreter.terms.IStrategoAppl;
-import org.spoofax.interpreter.terms.IStrategoList;
-import org.spoofax.interpreter.terms.IStrategoTerm;
-import org.spoofax.interpreter.terms.ITermFactory;
-import org.strategoxt.lang.Context;
-import org.strategoxt.lang.Strategy;
+@SuppressWarnings("all") public class $If$Then$Else_3_0 extends Strategy 
+{ 
+  public static $If$Then$Else_3_0 instance = new $If$Then$Else_3_0();
 
-@SuppressWarnings("all")
-public class $If$Then$Else_3_0 extends Strategy {
-	public static $If$Then$Else_3_0 instance = new $If$Then$Else_3_0();
-
-	@Override
-	public IStrategoTerm invoke(Context context, IStrategoTerm term,
-			Strategy a_6, Strategy b_6, Strategy c_6) {
-		ITermFactory termFactory = context.getFactory();
-		context.push("IfThenElse_3_0");
-		Fail48: {
-			IStrategoTerm u_73 = null;
-			IStrategoTerm r_73 = null;
-			IStrategoTerm s_73 = null;
-			IStrategoTerm t_73 = null;
-			IStrategoTerm v_73 = null;
-			IStrategoTerm w_73 = null;
-			if (term.getTermType() != IStrategoTerm.APPL
-					|| desugar._consIfThenElse_3 != ((IStrategoAppl) term)
-							.getConstructor())
-				break Fail48;
-			r_73 = term.getSubterm(0);
-			s_73 = term.getSubterm(1);
-			t_73 = term.getSubterm(2);
-			IStrategoList annos27 = term.getAnnotations();
-			u_73 = annos27;
-			term = a_6.invoke(context, r_73);
-			if (term == null)
-				break Fail48;
-			v_73 = term;
-			term = b_6.invoke(context, s_73);
-			if (term == null)
-				break Fail48;
-			w_73 = term;
-			term = c_6.invoke(context, t_73);
-			if (term == null)
-				break Fail48;
-			term = termFactory.annotateTerm(termFactory.makeAppl(
-					desugar._consIfThenElse_3, new IStrategoTerm[] { v_73,
-							w_73, term }), checkListAnnos(termFactory, u_73));
-			context.popOnSuccess();
-			if (true)
-				return term;
-		}
-		context.popOnFailure();
-		return null;
-	}
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy c_6, Strategy d_6, Strategy e_6)
+  { 
+    ITermFactory termFactory = context.getFactory();
+    context.push("IfThenElse_3_0");
+    Fail48:
+    { 
+      IStrategoTerm w_73 = null;
+      IStrategoTerm t_73 = null;
+      IStrategoTerm u_73 = null;
+      IStrategoTerm v_73 = null;
+      IStrategoTerm x_73 = null;
+      IStrategoTerm y_73 = null;
+      if(term.getTermType() != IStrategoTerm.APPL || desugar._consIfThenElse_3 != ((IStrategoAppl)term).getConstructor())
+        break Fail48;
+      t_73 = term.getSubterm(0);
+      u_73 = term.getSubterm(1);
+      v_73 = term.getSubterm(2);
+      IStrategoList annos27 = term.getAnnotations();
+      w_73 = annos27;
+      term = c_6.invoke(context, t_73);
+      if(term == null)
+        break Fail48;
+      x_73 = term;
+      term = d_6.invoke(context, u_73);
+      if(term == null)
+        break Fail48;
+      y_73 = term;
+      term = e_6.invoke(context, v_73);
+      if(term == null)
+        break Fail48;
+      term = termFactory.annotateTerm(termFactory.makeAppl(desugar._consIfThenElse_3, new IStrategoTerm[]{x_73, y_73, term}), checkListAnnos(termFactory, w_73));
+      context.popOnSuccess();
+      if(true)
+        return term;
+    }
+    context.popOnFailure();
+    return null;
+  }
 }

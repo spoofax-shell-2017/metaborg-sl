@@ -1,49 +1,51 @@
 package org.metaborg.lang.sl.desugar;
 
-import org.spoofax.interpreter.terms.IStrategoList;
-import org.spoofax.interpreter.terms.IStrategoTerm;
-import org.spoofax.interpreter.terms.ITermFactory;
-import org.strategoxt.lang.Context;
-import org.strategoxt.lang.Strategy;
+import org.strategoxt.stratego_lib.*;
+import org.strategoxt.lang.*;
+import org.spoofax.interpreter.terms.*;
+import static org.strategoxt.lang.Term.*;
+import org.spoofax.interpreter.library.AbstractPrimitive;
+import java.util.ArrayList;
+import java.lang.ref.WeakReference;
 
-@SuppressWarnings("all")
-public class desugar_funcs_0_0 extends Strategy {
-	public static desugar_funcs_0_0 instance = new desugar_funcs_0_0();
+@SuppressWarnings("all") public class desugar_funcs_0_0 extends Strategy 
+{ 
+  public static desugar_funcs_0_0 instance = new desugar_funcs_0_0();
 
-	@Override
-	public IStrategoTerm invoke(Context context, IStrategoTerm term) {
-		ITermFactory termFactory = context.getFactory();
-		context.push("desugar_funcs_0_0");
-		Fail11: {
-			IStrategoTerm term19 = term;
-			Success9: {
-				Fail12: {
-					if (term.getTermType() != IStrategoTerm.LIST
-							|| !((IStrategoList) term).isEmpty())
-						break Fail12;
-					term = desugar.constNoFunDefSeq0;
-					if (true)
-						break Success9;
-				}
-				term = term19;
-				IStrategoTerm p_3 = null;
-				IStrategoTerm q_3 = null;
-				if (term.getTermType() != IStrategoTerm.LIST
-						|| ((IStrategoList) term).isEmpty())
-					break Fail11;
-				p_3 = ((IStrategoList) term).head();
-				q_3 = ((IStrategoList) term).tail();
-				term = this.invoke(context, q_3);
-				if (term == null)
-					break Fail11;
-				term = termFactory.makeAppl(desugar._consFunDefSeq_2,
-						new IStrategoTerm[] { p_3, term });
-			}
-			context.popOnSuccess();
-			if (true)
-				return term;
-		}
-		context.popOnFailure();
-		return null;
-	}
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
+  { 
+    ITermFactory termFactory = context.getFactory();
+    context.push("desugar_funcs_0_0");
+    Fail12:
+    { 
+      IStrategoTerm term21 = term;
+      Success10:
+      { 
+        Fail13:
+        { 
+          if(term.getTermType() != IStrategoTerm.LIST || !((IStrategoList)term).isEmpty())
+            break Fail13;
+          term = desugar.constNoFunDefSeq0;
+          if(true)
+            break Success10;
+        }
+        term = term21;
+        IStrategoTerm r_3 = null;
+        IStrategoTerm s_3 = null;
+        if(term.getTermType() != IStrategoTerm.LIST || ((IStrategoList)term).isEmpty())
+          break Fail12;
+        r_3 = ((IStrategoList)term).head();
+        s_3 = ((IStrategoList)term).tail();
+        term = this.invoke(context, s_3);
+        if(term == null)
+          break Fail12;
+        term = termFactory.makeAppl(desugar._consFunDefSeq_2, new IStrategoTerm[]{r_3, term});
+      }
+      context.popOnSuccess();
+      if(true)
+        return term;
+    }
+    context.popOnFailure();
+    return null;
+  }
 }
