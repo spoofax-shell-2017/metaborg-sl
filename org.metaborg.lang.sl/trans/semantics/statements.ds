@@ -55,9 +55,9 @@ rules
     e --> BoolV(bv);
     bv == true
     < {
-    	then --> _
+    	__Block2Stmt__(then) --> _
     } + {
-    	else --> _
+    	__Block2Stmt__(else) --> _
     }.
     
   Block(stmt) --> stmt.
