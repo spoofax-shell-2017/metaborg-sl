@@ -8,12 +8,11 @@ signature
 
   constructors
     U: U
-    __u2v__: U -> V {implicit}
+    NullV: V
     BoolV : Bool -> V
-    NumV : Int -> V
+    NumV : Long -> V
     StringV : String -> V
     FunV: String * ParamSeq * Stmt -> V
-    NullV: V
     
   arrows
     Expr --> V
@@ -41,6 +40,7 @@ signature
     write : String * V --> V
 
 rules
+
   lookup(name) :: E --> E[name] :: E.
 
   write(name, v) :: E --> v :: E {name |--> v, E}.

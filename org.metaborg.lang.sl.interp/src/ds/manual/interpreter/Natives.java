@@ -9,7 +9,7 @@ import ds.generated.interpreter.StringV_1;
 
 public class Natives {
 
-	public static int addI_2(int i1, int i2) {
+	public static long addI_2(long i1, long i2) {
 		return i1 + i2;
 	}
 
@@ -45,7 +45,7 @@ public class Natives {
 		return b1 && b2;
 	}
 
-	public static int divI_2(int i1, int i2) {
+	public static long divI_2(long i1, long i2) {
 		return i1 / i2;
 	}
 
@@ -53,15 +53,15 @@ public class Natives {
 		return v1.equals(v2);
 	}
 
-	public static int s2i_1(String s) {
-		return Integer.parseInt(s);
+	public static long s2l_1(String s) {
+		return Long.parseLong(s);
 	}
 
-	public static boolean ltI_2(int i1, int i2) {
+	public static boolean ltI_2(long i1, long i2) {
 		return i1 < i2;
 	}
 
-	public static boolean lteI_2(int i1, int i2) {
+	public static boolean lteI_2(long i1, long i2) {
 		return i1 <= i2;
 	}
 
@@ -69,7 +69,7 @@ public class Natives {
 		return new ObjData();
 	}
 
-	public static int mulI_2(int i1, int i2) {
+	public static long mulI_2(long i1, long i2) {
 		return i1 * i2;
 	}
 
@@ -81,7 +81,7 @@ public class Natives {
 		return b1;
 	}
 
-	public static int subI_2(int i1, int i2) {
+	public static long subI_2(long i1, long i2) {
 		return i1 - i2;
 	}
 

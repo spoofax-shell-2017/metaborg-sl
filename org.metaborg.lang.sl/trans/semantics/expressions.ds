@@ -7,13 +7,13 @@ imports
 
 signature
   native operators
-    s2i: String -> Int
-    addI: Int * Int -> Int
-    subI: Int * Int -> Int
-    mulI: Int * Int -> Int
-    divI: Int * Int -> Int
-    lteI: Int * Int -> Bool
-    ltI: Int * Int -> Bool
+    s2l: String -> Long
+    addI: Long * Long -> Long
+    subI: Long * Long -> Long
+    mulI: Long * Long -> Long
+    divI: Long * Long -> Long
+    lteI: Long * Long -> Bool
+    ltI: Long * Long -> Bool
     eqV: V * V -> Bool
     notB: Bool -> Bool
     andB: Bool * Bool -> Bool
@@ -30,7 +30,7 @@ rules
   
   VarWrite(__String2ID__(name), v) --> write(name, v).
   
-  Int(__String2INT__(s)) --> NumV(s2i(s)).
+  Int(__String2INT__(s)) --> NumV(s2l(s)).
   
   Sub(NumV(i1), NumV(i2)) --> NumV(subI(i1, i2)).
   Mul(NumV(i1), NumV(i2)) --> NumV(mulI(i1, i2)).
