@@ -19,6 +19,7 @@ signature
     andB: Bool * Bool -> Bool
     orB: Bool * Bool -> Bool
     concatS: String * String -> String
+    isS : V -> Bool
   
   native operators
     v2s : V -> String
@@ -39,18 +40,13 @@ rules
   
   Add(v1, v2) --> vout
   where
-    v1 => NumV(i1)
+    orB(isS(v1), isS(v2)) == true
     < {
+      StringV(concatS(v2s(v1), v2s(v2))) => vout
+    } + {
+      v1 => NumV(i1);
       v2 => NumV(i2);
       NumV(addI(i1, i2)) => vout
-    } + {
-      v1 => StringV(s1)
-      < {
-        StringV(concatS(s1, v2s(v2))) => vout
-      } + {
-        v2 => StringV(s2);
-        StringV(concatS(v2s(v1), s2)) => vout
-      }
     }.
   
   True() --> BoolV(true).

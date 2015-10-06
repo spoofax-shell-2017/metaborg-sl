@@ -3,6 +3,7 @@ module trans/semantics/builtins
 imports
   trans/semantics/desugared-sig
   trans/semantics/values
+  trans/semantics/expressions
 
 signature
   native operators
@@ -12,6 +13,6 @@ rules
   
   SLPrintln(e) --> v 
   where
-    e --> v@StringV(s);
-    println(s) => _.
+    e --> v;
+    println(v2s(v)) => _.
   

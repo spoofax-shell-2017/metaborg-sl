@@ -80,4 +80,8 @@ public class Natives {
 		return s;
 	}
 
+	public static boolean isS_1(A_V v) {
+		return v instanceof StringV_1;
+	}
+
 }
