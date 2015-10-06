@@ -29,16 +29,16 @@ rules
   where
     onBreak(onContinue(whileHelper(e, block))) --> _.
 
-  // w@whileHelper(e, block) --> U()
-  // where
-  //   e --> BoolV(bv);
-  //   bv == true
-  //   < {
-  //   	block --> _;
-  //   	w --> _
-  //   } + {
-  //   	
-  //   }.
+  w@whileHelper(e, block) --> U()
+  where
+    e --> BoolV(bv);
+    bv == true
+    < {
+    	block --> _;
+    	w --> _
+    } + {
+    	
+    }.
   
   Continue() --> u
   where
@@ -48,19 +48,17 @@ rules
   where
     doBreak() --> u.
 
-// IfThenElse (IfNoElse gets desugared into IfThenElse(Expr, body, EmptyBlock))
-
 rules
 
-  // IfThenElse(e, then, else) --> U()
-  // where
-  //   e --> BoolV(bv);
-  //   bv == true
-  //   < {
-  //   	then --> _
-  //   } + {
-  //   	else --> _
-  //   }.
+  IfThenElse(e, then, else) --> U()
+  where
+    e --> BoolV(bv);
+    bv == true
+    < {
+    	then --> _
+    } + {
+    	else --> _
+    }.
     
   Block(stmt) --> stmt.
   

@@ -37,21 +37,21 @@ rules
   
   String(__String2STRING__(s)) --> StringV(s).
   
-  // Add(v1, v2) --> vout
-  // where
-  //   v1 => NumV(i1)
-  //   < {
-  //     v2 => NumV(i2);
-  //     NumV(addI(i1, i2)) => vout
-  //   } + {
-  //     v1 => StringV(s1)
-  //     < {
-  //       StringV(concatS(s1, v2s(v2))) => vout
-  //     } + {
-  //       v2 => StringV(s2);
-  //       StringV(concatS(v2s(v1), s2)) => vout
-  //     }
-  //   }.
+  Add(v1, v2) --> vout
+  where
+    v1 => NumV(i1)
+    < {
+      v2 => NumV(i2);
+      NumV(addI(i1, i2)) => vout
+    } + {
+      v1 => StringV(s1)
+      < {
+        StringV(concatS(s1, v2s(v2))) => vout
+      } + {
+        v2 => StringV(s2);
+        StringV(concatS(v2s(v1), s2)) => vout
+      }
+    }.
   
   True() --> BoolV(true).
   False() --> BoolV(false).
