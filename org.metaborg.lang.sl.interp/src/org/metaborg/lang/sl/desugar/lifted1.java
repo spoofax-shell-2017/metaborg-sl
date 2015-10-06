@@ -3,17 +3,18 @@ package org.metaborg.lang.sl.desugar;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 import org.strategoxt.lang.Context;
 import org.strategoxt.lang.Strategy;
+import org.strategoxt.stratego_lib.unquote_1_0;
 
 @SuppressWarnings("all")
-final class lifted0 extends Strategy {
-	Strategy x_78;
+final class lifted1 extends Strategy {
+	public static final lifted1 instance = new lifted1();
 
 	@Override
 	public IStrategoTerm invoke(Context context, IStrategoTerm term) {
-		Fail84: {
-			term = v_78.instance.invoke(context, term, x_78);
+		Fail85: {
+			term = unquote_1_0.instance.invoke(context, term, lifted2.instance);
 			if (term == null)
-				break Fail84;
+				break Fail85;
 			if (true)
 				return term;
 		}

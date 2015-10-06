@@ -7,6 +7,7 @@ menus
     action: "Format"                 = editor-format (realtime) (source)
     action: "Show abstract syntax"   = debug-show-aterm (realtime) (meta) (source)
     action: "Show analyzed syntax"   = debug-show-analyzed (meta)
+    action: "Show desugared syntax"  = desugar-editor (realtime) (source) (meta)
     
   menu: "Analysis"                     (meta)
     

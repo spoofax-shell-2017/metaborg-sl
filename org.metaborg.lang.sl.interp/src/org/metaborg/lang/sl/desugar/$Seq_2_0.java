@@ -1,46 +1,51 @@
 package org.metaborg.lang.sl.desugar;
 
-import org.strategoxt.stratego_lib.*;
-import org.strategoxt.lang.*;
-import org.spoofax.interpreter.terms.*;
-import static org.strategoxt.lang.Term.*;
-import org.spoofax.interpreter.library.AbstractPrimitive;
-import java.util.ArrayList;
-import java.lang.ref.WeakReference;
+import static org.strategoxt.lang.Term.checkListAnnos;
 
-@SuppressWarnings("all") public class $Seq_2_0 extends Strategy 
-{ 
-  public static $Seq_2_0 instance = new $Seq_2_0();
+import org.spoofax.interpreter.terms.IStrategoAppl;
+import org.spoofax.interpreter.terms.IStrategoList;
+import org.spoofax.interpreter.terms.IStrategoTerm;
+import org.spoofax.interpreter.terms.ITermFactory;
+import org.strategoxt.lang.Context;
+import org.strategoxt.lang.Strategy;
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy v_5, Strategy w_5)
-  { 
-    ITermFactory termFactory = context.getFactory();
-    context.push("Seq_2_0");
-    Fail43:
-    { 
-      IStrategoTerm d_73 = null;
-      IStrategoTerm b_73 = null;
-      IStrategoTerm c_73 = null;
-      IStrategoTerm e_73 = null;
-      if(term.getTermType() != IStrategoTerm.APPL || desugar._consSeq_2 != ((IStrategoAppl)term).getConstructor())
-        break Fail43;
-      b_73 = term.getSubterm(0);
-      c_73 = term.getSubterm(1);
-      IStrategoList annos23 = term.getAnnotations();
-      d_73 = annos23;
-      term = v_5.invoke(context, b_73);
-      if(term == null)
-        break Fail43;
-      e_73 = term;
-      term = w_5.invoke(context, c_73);
-      if(term == null)
-        break Fail43;
-      term = termFactory.annotateTerm(termFactory.makeAppl(desugar._consSeq_2, new IStrategoTerm[]{e_73, term}), checkListAnnos(termFactory, d_73));
-      context.popOnSuccess();
-      if(true)
-        return term;
-    }
-    context.popOnFailure();
-    return null;
-  }
+@SuppressWarnings("all")
+public class $Seq_2_0 extends Strategy {
+	public static $Seq_2_0 instance = new $Seq_2_0();
+
+	@Override
+	public IStrategoTerm invoke(Context context, IStrategoTerm term,
+			Strategy j_6, Strategy k_6) {
+		ITermFactory termFactory = context.getFactory();
+		context.push("Seq_2_0");
+		Fail45: {
+			IStrategoTerm r_73 = null;
+			IStrategoTerm p_73 = null;
+			IStrategoTerm q_73 = null;
+			IStrategoTerm s_73 = null;
+			if (term.getTermType() != IStrategoTerm.APPL
+					|| desugar._consSeq_2 != ((IStrategoAppl) term)
+							.getConstructor())
+				break Fail45;
+			p_73 = term.getSubterm(0);
+			q_73 = term.getSubterm(1);
+			IStrategoList annos23 = term.getAnnotations();
+			r_73 = annos23;
+			term = j_6.invoke(context, p_73);
+			if (term == null)
+				break Fail45;
+			s_73 = term;
+			term = k_6.invoke(context, q_73);
+			if (term == null)
+				break Fail45;
+			term = termFactory.annotateTerm(termFactory.makeAppl(
+					desugar._consSeq_2, new IStrategoTerm[] { s_73, term }),
+					checkListAnnos(termFactory, r_73));
+			context.popOnSuccess();
+			if (true)
+				return term;
+		}
+		context.popOnFailure();
+		return null;
+	}
 }

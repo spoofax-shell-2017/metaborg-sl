@@ -31,7 +31,14 @@ signature
     SLStacktrace : Expr
 
 rules
-  desugar-all = innermost(desugar)
+
+  desugar-editor:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := <desugar-all> ast
+  
+  desugar-all = innermost(desugar); alltd(unquote(?'"'))
 
   desugar:
     Program(funcs) -> ProgramDesug(<desugar-funcs> funcs, Stmt(FunCallDesug("main", NoArgSeq())))
@@ -44,7 +51,7 @@ rules
 
   desugar:
     FunDef(name, params, body) -> FunDefDesug(name, <desugar-params> params, body)
-    
+  
   desugar-params:
     [] -> NoParamSeq()
   

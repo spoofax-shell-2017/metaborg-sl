@@ -15,6 +15,7 @@ imports
 	lib/runtime/task/-
 	lib/runtime/analysis/-
 	lib/runtime/editor/-
+	desugar
 	pp
 
 rules // Analysis

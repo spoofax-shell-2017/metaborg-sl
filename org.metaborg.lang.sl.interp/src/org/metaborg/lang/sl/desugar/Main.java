@@ -1,4 +1,4 @@
 package org.metaborg.lang.sl.desugar;
 
-public class Main extends desugar 
-{ }
+public class Main extends desugar {
+}
