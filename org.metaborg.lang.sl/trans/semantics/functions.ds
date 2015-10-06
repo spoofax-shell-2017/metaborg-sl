@@ -55,7 +55,7 @@ rules
   
   ReturnVoid() --> U()
   where
-    doReturn(U()) --> _.
+    doReturn(NullV()) --> _.
 
   Return(v) --> U()
   where

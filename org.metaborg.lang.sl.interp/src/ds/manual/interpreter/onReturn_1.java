@@ -11,9 +11,9 @@ import ds.generated.interpreter.A_C;
 import ds.generated.interpreter.A_ReturnHandler;
 import ds.generated.interpreter.A_Stmt;
 import ds.generated.interpreter.A_V;
+import ds.generated.interpreter.NullV_0;
+import ds.generated.interpreter.R_default_U;
 import ds.generated.interpreter.R_default_V;
-import ds.generated.interpreter.U_0;
-import ds.generated.interpreter.__u2v___1;
 
 public class onReturn_1 extends A_ReturnHandler {
 
@@ -28,9 +28,8 @@ public class onReturn_1 extends A_ReturnHandler {
 	public R_default_V execute_default(VirtualFrame frame, A_C ctx,
 			PersistentMap<String, A_V> env) {
 		try {
-			return new R_default_V(new __u2v___1(getSourceSection(), new U_0(
-					getSourceSection())), stmt.execute_default(frame, ctx, env)
-					.get_1());
+			R_default_U res = stmt.execute_default(frame, ctx, env);
+			return new R_default_V(new NullV_0(getSourceSection()), res.get_1());
 		} catch (ReturnException rex) {
 			return new R_default_V(rex.getVal(), rex.getEnv());
 		}

@@ -13,6 +13,7 @@ signature
     NumV : Int -> V
     StringV : String -> V
     FunV: ParamSeq * Stmt -> V
+    NullV: V
     
   arrows
     Expr --> V
