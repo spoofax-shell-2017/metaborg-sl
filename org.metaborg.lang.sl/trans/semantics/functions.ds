@@ -7,7 +7,7 @@ rules
 
   FunCallDesug(name, args) --> v
   where
-    lookup(name) --> FunV(params, body);
+    lookup(name) --> FunV(_, params, body);
     args --> vargs;
     invoke(vargs, params, body) --> v.
 

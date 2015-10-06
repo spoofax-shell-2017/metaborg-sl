@@ -12,7 +12,7 @@ signature
     BoolV : Bool -> V
     NumV : Int -> V
     StringV : String -> V
-    FunV: ParamSeq * Stmt -> V
+    FunV: String * ParamSeq * Stmt -> V
     NullV: V
     
   arrows

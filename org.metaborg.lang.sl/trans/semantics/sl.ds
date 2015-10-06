@@ -27,6 +27,6 @@ rules // loading and init
     
   NoFunDefSeq() -load-> U().
 
-  FunDefDesug(name, params, body) :: E -load-> U() :: E {name |--> FunV(params, body), E}.
+  FunDefDesug(name, params, body) :: E -load-> U() :: E {name |--> FunV(name, params, body), E}.
 
 

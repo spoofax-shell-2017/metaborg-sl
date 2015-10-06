@@ -2,6 +2,7 @@ package ds.manual.interpreter;
 
 import ds.generated.interpreter.A_V;
 import ds.generated.interpreter.BoolV_1;
+import ds.generated.interpreter.FunV_3;
 import ds.generated.interpreter.NullV_0;
 import ds.generated.interpreter.NumV_1;
 import ds.generated.interpreter.StringV_1;
@@ -27,6 +28,10 @@ public class Natives {
 
 		if (v instanceof NullV_0) {
 			return "null";
+		}
+
+		if (v instanceof FunV_3) {
+			return ((FunV_3) v).get_1();
 		}
 
 		return v + "";

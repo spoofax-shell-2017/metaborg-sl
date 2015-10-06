@@ -27,7 +27,7 @@ rules
 
   MethodCallDesug(ObjV(od), fun, eseq) --> v
   where
-    readProp[od](fun) => FunV(pseq, body);
+    readProp[od](fun) => FunV(_, pseq, body);
     eseq --> vseq;
     invoke(vseq, pseq, body) --> v.
 
