@@ -15,10 +15,10 @@ signature
 
 rules // loading and init
 
-  ProgramDesug(fdefseq, stmt) -init-> U()
+  ProgramDesug(fdefseq, e) -init-> v
   where
     fdefseq :: E {} -load-> _ :: E;
-    C C(E) |- stmt :: E --> _ :: E _.
+    C C(E) |- e :: E --> v :: E _.
 
   FunDefSeq(fdef, fdefseq) -load-> U()
   where
