@@ -7,7 +7,7 @@ signature
   sorts FunDefSeq ParamSeq ArgSeq
 
   constructors
-    ProgramDesug : FunDefSeq * Stmt -> Program
+    ProgramDesug : FunDefSeq * Expr -> Program
     FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
     NoFunDefSeq : FunDefSeq
 

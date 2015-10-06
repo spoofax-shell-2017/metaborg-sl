@@ -8,7 +8,7 @@ signature
   sorts FunDefSeq ParamSeq ArgSeq
 
   constructors
-    ProgramDesug : FunDefSeq * Stmt -> Program
+    ProgramDesug : FunDefSeq * Expr -> Program
     FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
     NoFunDefSeq : FunDefSeq
 
@@ -41,7 +41,7 @@ rules
   desugar-all = innermost(desugar); alltd(unquote(?'"'))
 
   desugar:
-    Program(funcs) -> ProgramDesug(<desugar-funcs> funcs, Stmt(FunCallDesug("main", NoArgSeq())))
+    Program(funcs) -> ProgramDesug(<desugar-funcs> funcs, FunCallDesug("main", NoArgSeq()))
 
   desugar-funcs:
     [] -> NoFunDefSeq()

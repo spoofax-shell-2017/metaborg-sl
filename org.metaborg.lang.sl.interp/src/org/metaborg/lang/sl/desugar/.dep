@@ -1,0 +1,5 @@
+desugar/: \
+	 \
+	../../../../../../org.metaborg.lang.sl//src-gen/signatures/Common-sig.str \
+	../../../../../../org.metaborg.lang.sl//src-gen/signatures/SL-sig.str \
+	../../../../../../org.metaborg.lang.sl/trans/desugar.str
