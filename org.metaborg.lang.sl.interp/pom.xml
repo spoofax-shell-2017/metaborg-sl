@@ -22,7 +22,7 @@
 				<executions>
 					<execution>
 						<id>exec1</id>
-						<phase>test</phase>
+						<phase>exec</phase>
 						<goals>
 							<goal>exec</goal>
 						</goals>
