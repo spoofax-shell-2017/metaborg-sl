@@ -20,7 +20,6 @@ import com.oracle.truffle.api.vm.TruffleVM;
 import com.oracle.truffle.api.vm.TruffleVM.Symbol;
 
 import ds.generated.interpreter.A_Program;
-import ds.generated.interpreter.R_init_U;
 import ds.manual.interpreter.A_Program_RootWrap;
 
 @TruffleLanguage.Registration(name = "sl.lang", version = "0.0.1", mimeType = "application/x-sllang")
@@ -63,7 +62,7 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		};
 	}
 
-	public Callable<R_init_U> getCallable(String filename) {
+	public <T> Callable<T> getCallable(String filename) {
 		assert vm.getLanguages().containsKey("application/x-sllang");
 
 		try {
@@ -74,11 +73,11 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		}
 		Symbol program = vm.findGlobalSymbol("program");
 
-		return new Callable<R_init_U>() {
+		return new Callable<T>() {
 
 			@Override
-			public R_init_U call() throws Exception {
-				return (R_init_U) program.invoke(null).get();
+			public T call() throws Exception {
+				return (T) program.invoke(null).get();
 			}
 		};
 
