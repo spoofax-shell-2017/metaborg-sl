@@ -8,11 +8,13 @@ imports
 signature
   native operators
     println : String -> String
-
+    nanoTime: Long
 rules
   
   SLPrintln(e) --> v 
   where
     e --> v;
     println(v2s(v)) => _.
+  
+  SLNanoTime() --> NumV(nanoTime()).
   

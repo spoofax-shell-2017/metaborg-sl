@@ -103,4 +103,8 @@ public class Natives {
 		return SLProgramForeignAccess.INSTANCE;
 	}
 
+	public static long nanoTime_0() {
+		return System.nanoTime();
+	}
+
 }
