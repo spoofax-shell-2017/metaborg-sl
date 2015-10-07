@@ -1,5 +1,7 @@
 package org.metaborg.lang.sl.interp;
 
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.concurrent.Callable;
 
 import ds.generated.interpreter.NullV_0;
@@ -11,7 +13,10 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		String file = args[0];
 		SLLanguage language = SLLanguage.INSTANCE;
-		Callable<R_init_V> callee = language.getCallable(file);
+
+		Callable<R_init_V> callee = language.getCallable(file,
+				new InputStreamReader(System.in), new OutputStreamWriter(
+						System.out), new OutputStreamWriter(System.err));
 
 		R_init_V result = callee.call();
 		if (!(result.value instanceof NullV_0))

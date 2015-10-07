@@ -3,6 +3,8 @@ package org.metaborg.lang.sl.interp;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
@@ -28,12 +30,13 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 	public static final SLLanguage INSTANCE = new SLLanguage();
 
 	private final SLParser parser;
-	private final TruffleVM vm;
+
+	// private final TruffleVM vm;
 
 	private SLLanguage() {
 		parser = new SLParser(
 				Paths.get("../org.metaborg.lang.sl/include/SL.tbl"));
-		vm = TruffleVM.newVM().build();
+		// vm = TruffleVM.newVM().build();
 	}
 
 	@Override
@@ -48,8 +51,8 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 
 			@Override
 			public Object call(Object... arg0) {
-				Node n = createFindContextNode();
-				SLContext ctx = findContext(n);
+
+				SLContext ctx = getContext();
 				if (ctx.getProgram() == null) {
 					SLProgram prog = new SLProgram();
 					prog.setCallTarget(Truffle.getRuntime().createCallTarget(
@@ -62,7 +65,15 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		};
 	}
 
-	public <T> Callable<T> getCallable(String filename) {
+	public SLContext getContext() {
+		return findContext(createFindContextNode());
+	}
+
+	public <T> Callable<T> getCallable(String filename, Reader inputReader,
+			Writer outputWriter, Writer errWriter) {
+		TruffleVM vm = TruffleVM.newVM().stdIn(inputReader)
+				.stdOut(outputWriter).stdErr(errWriter).build();
+
 		assert vm.getLanguages().containsKey("application/x-sllang");
 
 		try {
@@ -86,7 +97,8 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 	@Override
 	protected SLContext createContext(Env env) {
 		return new SLContext(this, new BufferedReader(env.stdIn()),
-				new PrintWriter(env.stdOut(), true));
+				new PrintWriter(env.stdOut(), true), new PrintWriter(
+						env.stdErr(), true));
 	}
 
 	@Override

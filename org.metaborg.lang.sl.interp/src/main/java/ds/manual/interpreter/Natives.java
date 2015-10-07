@@ -1,5 +1,7 @@
 package ds.manual.interpreter;
 
+import org.metaborg.lang.sl.interp.SLLanguage;
+
 import ds.generated.interpreter.A_V;
 import ds.generated.interpreter.BoolV_1;
 import ds.generated.interpreter.FunV_3;
@@ -86,7 +88,7 @@ public class Natives {
 	}
 
 	public static String println_1(String s) {
-		System.out.println(s);
+		SLLanguage.INSTANCE.getContext().getOutputWriter().println(s);
 		return s;
 	}
 
