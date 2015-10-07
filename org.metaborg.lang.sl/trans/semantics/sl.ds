@@ -9,7 +9,7 @@ imports
 
 signature
   arrows
-    Program -init-> U
+    Program -init-> V
     FunDefSeq -load-> U
     FunDef -load-> U
 
