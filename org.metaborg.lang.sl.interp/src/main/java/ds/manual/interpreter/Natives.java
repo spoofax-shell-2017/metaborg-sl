@@ -1,6 +1,9 @@
 package ds.manual.interpreter;
 
 import org.metaborg.lang.sl.interp.SLLanguage;
+import org.metaborg.lang.sl.interp.SLProgramForeignAccess;
+
+import com.oracle.truffle.api.interop.ForeignAccess;
 
 import ds.generated.interpreter.A_V;
 import ds.generated.interpreter.BoolV_1;
@@ -94,6 +97,10 @@ public class Natives {
 
 	public static boolean isS_1(A_V v) {
 		return v instanceof StringV_1;
+	}
+
+	public static ForeignAccess getForeignAccess() {
+		return SLProgramForeignAccess.INSTANCE;
 	}
 
 }
