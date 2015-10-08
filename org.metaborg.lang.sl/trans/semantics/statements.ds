@@ -29,18 +29,19 @@ rules
   where
     onBreak(onContinue(whileHelper(e, block))) --> _.
 
-  w@whileHelper(e, block) --> u
+  w@whileHelper(e, block) :: E --> u :: E'''
   where
-    e --> BoolV(bv);
+    e :: E --> BoolV(bv) :: E';
     bv == true
     < {
-    	__Block2Stmt__(block) --> _;
-    	w --> _;
+    	__Block2Stmt__(block) :: E' --> _ :: E'';
+    	w :: E'' --> _ :: E''';
     	U() => u
     } + {
+    	E' => E''';
     	U() => u
     }.
-  
+
   Continue() --> u
   where
     doContinue() --> u.
