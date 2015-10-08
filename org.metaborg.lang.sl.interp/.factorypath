@@ -17,7 +17,6 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/strategoxt-min-jar/1.5.0-SNAPSHOT/strategoxt-min-jar-1.5.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.interpreter.library.index/1.5.0-SNAPSHOT/org.spoofax.interpreter.library.index-1.5.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.metaborg.runtime.task/1.5.0-SNAPSHOT/org.metaborg.runtime.task-1.5.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.4/commons-io-2.4.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/apache/commons/commons-vfs2/2.0/commons-vfs2-2.0.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/netflix/rxjava/rxjava-core/0.19.6/rxjava-core-0.19.6.jar" enabled="true" runInBatchMode="false"/>
@@ -35,4 +34,5 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/objenesis/objenesis/2.1/objenesis-2.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/functionaljava/functionaljava/4.1/functionaljava-4.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.jsglr/1.5.0-SNAPSHOT/org.spoofax.jsglr-1.5.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/commons-io/commons-io/2.4/commons-io-2.4.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>
