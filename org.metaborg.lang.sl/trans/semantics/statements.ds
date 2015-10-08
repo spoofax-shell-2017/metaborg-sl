@@ -29,16 +29,17 @@ rules
   where
     onBreak(onContinue(whileHelper(e, block))) --> _.
 
-  w@whileHelper(e, block) :: E --> u :: E'''
+  w@whileHelper(e, block) :: C, E --> u :: C''', E'''
   where
-    e :: E --> BoolV(bv) :: E';
+    e :: C, E --> BoolV(bv) :: C', E';
     bv == true
     < {
-    	__Block2Stmt__(block) :: E' --> _ :: E'';
-    	w :: E'' --> _ :: E''';
+    	__Block2Stmt__(block) :: C', E' --> _ :: C'', E'';
+    	w :: C'', E'' --> _ :: C''', E''';
     	U() => u
     } + {
     	E' => E''';
+    	C' => C''';
     	U() => u
     }.
 
@@ -52,15 +53,15 @@ rules
 
 rules
 
-  IfThenElse(e, then, else) --> u
+  IfThenElse(e, then, else) :: C, E --> u :: C'', E''
   where
-    e --> BoolV(bv);
+    e :: C, E --> BoolV(bv) :: C', E';
     bv == true
     < {
-    	__Block2Stmt__(then) --> _;
+    	__Block2Stmt__(then) :: C', E' --> _ :: C'', E'';
     	U() => u
     } + {
-    	__Block2Stmt__(else) --> _;
+    	__Block2Stmt__(else) :: C', E' --> _ :: C'', E'';
     	U() => u
     }.
     

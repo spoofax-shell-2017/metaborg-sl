@@ -29,7 +29,8 @@ signature
   
   variables
     E : E
-  
+    C : C
+
   variables
     v : V
     u : U
