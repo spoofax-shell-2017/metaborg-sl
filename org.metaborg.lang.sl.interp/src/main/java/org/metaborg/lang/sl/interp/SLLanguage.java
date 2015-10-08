@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
 import org.metaborg.meta.interpreter.framework.InterpreterException;
+import org.metaborg.meta.interpreter.framework.SourceSectionUtil;
+import org.spoofax.interpreter.terms.IStrategoTerm;
 
 import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.Truffle;
@@ -22,6 +24,7 @@ import com.oracle.truffle.api.vm.TruffleVM;
 import com.oracle.truffle.api.vm.TruffleVM.Symbol;
 
 import ds.generated.interpreter.A_Program;
+import ds.generated.interpreter.Generic_A_Program;
 import ds.manual.interpreter.A_Program_RootWrap;
 
 @TruffleLanguage.Registration(name = "sl.lang", version = "0.0.1", mimeType = "application/x-sllang")
@@ -39,8 +42,9 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 	@Override
 	protected CallTarget parse(Source src, Node node, String... argumentNames)
 			throws IOException {
-
-		A_Program program = parser.parse(src);
+		IStrategoTerm programTerm = parser.parse(src, "Program");
+		A_Program program = new Generic_A_Program(
+				SourceSectionUtil.fromStrategoTerm(programTerm), programTerm);
 		A_Program_RootWrap rootNode = new A_Program_RootWrap(program,
 				new FrameDescriptor());
 
@@ -60,6 +64,10 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 				return null;
 			}
 		};
+	}
+
+	public SLParser getParser() {
+		return parser;
 	}
 
 	public SLContext getContext() {
@@ -84,6 +92,7 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		return new Callable<T>() {
 
 			@Override
+			@SuppressWarnings("unchecked")
 			public T call() throws Exception {
 				return (T) program.invoke(null).get();
 			}

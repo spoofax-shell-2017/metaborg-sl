@@ -1,16 +1,30 @@
 package ds.manual.interpreter;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
+import org.metaborg.lang.sl.desugar.desugar;
+import org.metaborg.lang.sl.desugar.desugar_all_0_0;
 import org.metaborg.lang.sl.interp.SLLanguage;
 import org.metaborg.lang.sl.interp.SLProgramForeignAccess;
+import org.metaborg.meta.interpreter.framework.IGenericNode;
 import org.metaborg.meta.interpreter.framework.InterpreterException;
+import org.metaborg.meta.interpreter.framework.SourceSectionUtil;
+import org.spoofax.interpreter.terms.IStrategoTerm;
 
+import com.oracle.truffle.api.frame.FrameDescriptor;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.interop.ForeignAccess;
+import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.nodes.RootNode;
+import com.oracle.truffle.api.source.Source;
+import com.oracle.truffle.api.source.SourceSection;
 
+import ds.generated.interpreter.A_FunDef;
 import ds.generated.interpreter.A_V;
 import ds.generated.interpreter.BoolV_1;
 import ds.generated.interpreter.FunV_3;
+import ds.generated.interpreter.Generic_A_FunDef;
 import ds.generated.interpreter.NullV_0;
 import ds.generated.interpreter.NumV_1;
 import ds.generated.interpreter.StringV_1;
@@ -118,4 +132,49 @@ public class Natives {
 		}
 	}
 
+	public static A_FunDef parseFunDef_1(String s) {
+		IStrategoTerm funDefTerm = SLLanguage.INSTANCE.getParser().parse(
+				Source.fromBytes(s.getBytes(), "Dynamically defined function",
+						Charset.defaultCharset()), "FunDef");
+
+		IStrategoTerm desugFunDefTerm = desugar_all_0_0.instance.invoke(
+				desugar.init(), funDefTerm);
+
+		GenericRootNode<A_FunDef> fakeRootNode = new GenericRootNode<>(
+				new Generic_A_FunDef(
+						SourceSectionUtil.fromStrategoTerm(desugFunDefTerm),
+						desugFunDefTerm));
+		fakeRootNode.specializeChild();
+		return fakeRootNode.getChild();
+	}
+
+	private static class GenericRootNode<T extends Node> extends RootNode {
+
+		@Child private T child;
+
+		public GenericRootNode(T child) {
+			super(SLLanguage.class, SourceSection.createUnavailable(
+					"Dynamically defined", "function"), FrameDescriptor
+					.create());
+			this.child = child;
+			this.adoptChildren();
+		}
+
+		public void specializeChild() {
+			if (child instanceof IGenericNode) {
+				IGenericNode gennode = (IGenericNode) child;
+				gennode.specialize();
+			}
+		}
+
+		public T getChild() {
+			return child;
+		}
+
+		@Override
+		public Object execute(VirtualFrame frame) {
+			throw new InterpreterException("Not supported");
+		}
+
+	}
 }

@@ -9,7 +9,6 @@ import org.apache.commons.io.IOUtils;
 import org.metaborg.lang.sl.desugar.desugar;
 import org.metaborg.lang.sl.desugar.desugar_all_0_0;
 import org.metaborg.meta.interpreter.framework.InterpreterException;
-import org.metaborg.meta.interpreter.framework.SourceSectionUtil;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 import org.spoofax.jsglr.client.ParseTable;
 import org.spoofax.jsglr.client.SGLR;
@@ -21,9 +20,6 @@ import org.spoofax.terms.io.binary.TermReader;
 
 import com.oracle.truffle.api.source.Source;
 
-import ds.generated.interpreter.A_Program;
-import ds.generated.interpreter.Generic_A_Program;
-
 public class SLParser {
 
 	private Path parsetablePath;
@@ -33,7 +29,7 @@ public class SLParser {
 		this.parsetablePath = parsetablePath;
 	}
 
-	public A_Program parse(Source src) {
+	public IStrategoTerm parse(Source src, String startSymbol) {
 		if (parser == null) {
 			createParser();
 		}
@@ -41,14 +37,9 @@ public class SLParser {
 		try {
 			IStrategoTerm programterm = (IStrategoTerm) parser.parse(
 					IOUtils.toString(src.getInputStream()), src.getName(),
-					"Program");
+					startSymbol);
 
-			IStrategoTerm desugprogterm = desugar_all_0_0.instance.invoke(
-					desugar.init(), programterm);
-
-			return new Generic_A_Program(
-					SourceSectionUtil.fromStrategoTerm(desugprogterm),
-					desugprogterm);
+			return desugar_all_0_0.instance.invoke(desugar.init(), programterm);
 		} catch (Exception e) {
 			throw new InterpreterException("Parse failure", e);
 		}

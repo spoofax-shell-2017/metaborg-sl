@@ -4,12 +4,15 @@ imports
   trans/semantics/desugared-sig
   trans/semantics/values
   trans/semantics/expressions
+  trans/semantics/sl
 
 signature
   native operators
     println : String -> String
     readln : String
     nanoTime: Long
+    parseFunDef : String -> FunDef
+
 rules
   
   SLPrintln(e) --> v 
@@ -20,4 +23,8 @@ rules
   SLReadln() --> StringV(readln()).
   
   SLNanoTime() --> NumV(nanoTime()).
+  
+  SLDefineFunction(StringV(s)) --> NullV()
+  where
+    parseFunDef(s) -load-> _.
   
