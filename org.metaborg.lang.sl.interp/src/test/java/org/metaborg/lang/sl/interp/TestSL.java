@@ -76,7 +76,7 @@ public class TestSL {
 
 		R_init_V res = invokable.call();
 		if (!(res.value instanceof NullV_0)) {
-			outputWriter.write(Natives.v2s_1(res.value) + "\r\n");
+			outputWriter.write(Natives.v2s_1(res.value) + "\n");
 		}
 		outputWriter.flush();
 		errorWriter.flush();
