@@ -21,5 +21,4 @@ function main() {
   println(foo + "s");
 
   println(f(2, 4));
-  println(f(2, "4"));
 }  

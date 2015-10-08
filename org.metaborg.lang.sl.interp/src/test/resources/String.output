@@ -7,4 +7,3 @@ nulls
 bars
 foos
 2 < 4: true
-Type error at String.sl line 9 col 34: operation "<" not defined for Number 2, String "4"
