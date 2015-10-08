@@ -8,6 +8,7 @@ imports
 signature
   native operators
     println : String -> String
+    readln : String
     nanoTime: Long
 rules
   
@@ -15,6 +16,8 @@ rules
   where
     e --> v;
     println(v2s(v)) => _.
+  
+  SLReadln() --> StringV(readln()).
   
   SLNanoTime() --> NumV(nanoTime()).
   

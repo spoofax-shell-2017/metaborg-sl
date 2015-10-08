@@ -1,7 +1,10 @@
 package ds.manual.interpreter;
 
+import java.io.IOException;
+
 import org.metaborg.lang.sl.interp.SLLanguage;
 import org.metaborg.lang.sl.interp.SLProgramForeignAccess;
+import org.metaborg.meta.interpreter.framework.InterpreterException;
 
 import com.oracle.truffle.api.interop.ForeignAccess;
 
@@ -105,6 +108,14 @@ public class Natives {
 
 	public static long nanoTime_0() {
 		return System.nanoTime();
+	}
+
+	public static String readln_0() {
+		try {
+			return SLLanguage.INSTANCE.getContext().getInputReader().readLine();
+		} catch (IOException e) {
+			throw new InterpreterException("Failed to read input stream", e);
+		}
 	}
 
 }
