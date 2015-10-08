@@ -20,6 +20,6 @@ public class doReturn_1 extends Node {
 
 	public R_default_V execute_default(VirtualFrame frame, A_C ctx,
 			PersistentMap<String, A_V> env) {
-		throw new ReturnException(_1, env);
+		throw new ReturnException(_1, ctx, env);
 	}
 }

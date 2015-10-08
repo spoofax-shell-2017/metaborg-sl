@@ -10,23 +10,13 @@ imports
 signature
   arrows
     Program -init-> V
-    FunDefSeq -load-> U
-    FunDef -load-> U
+    
 
 rules // loading and init
 
   ProgramDesug(fdefseq, e) -init-> v
   where
-    fdefseq :: E {} -load-> _ :: E;
-    C C(E) |- e :: E --> v :: E _.
-
-  FunDefSeq(fdef, fdefseq) -load-> U()
-  where
-    fdef -load-> _;
-    fdefseq -load-> _.
-    
-  NoFunDefSeq() -load-> U().
-
-  FunDefDesug(name, params, body) :: E -load-> U() :: E {name |--> FunV(name, params, body), E}.
+    fdefseq :: C C({}), E {} -load-> _ :: C C(E), E';
+    e :: C C(E), E' --> v :: C _, E _.
 
 

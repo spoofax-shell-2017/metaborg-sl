@@ -20,7 +20,7 @@ public class doBreak_0 extends A_BreakHandler {
 
 	public R_default_U execute_default(VirtualFrame frame, A_C ctx,
 			PersistentMap<String, A_V> env) {
-		throw new BreakException(env);
+		throw new BreakException(ctx, env);
 	}
 
 	@Override

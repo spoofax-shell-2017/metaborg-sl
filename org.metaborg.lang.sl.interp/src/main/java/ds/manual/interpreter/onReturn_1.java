@@ -29,9 +29,10 @@ public class onReturn_1 extends A_ReturnHandler {
 			PersistentMap<String, A_V> env) {
 		try {
 			R_default_U res = stmt.execute_default(frame, ctx, env);
-			return new R_default_V(new NullV_0(getSourceSection()), res.get_1());
+			return new R_default_V(new NullV_0(getSourceSection()),
+					res.get_1(), res.get_2());
 		} catch (ReturnException rex) {
-			return new R_default_V(rex.getVal(), rex.getEnv());
+			return new R_default_V(rex.getVal(), rex.getRootenv(), rex.getEnv());
 		}
 	}
 

@@ -28,7 +28,8 @@ public class onBreak_1 extends A_Stmt {
 		try {
 			return _1.execute_default(frame, ctx, env);
 		} catch (BreakException bex) {
-			return new R_default_U(new U_0(getSourceSection()), bex.getEnv());
+			return new R_default_U(new U_0(getSourceSection()),
+					bex.getRootenv(), bex.getEnv());
 		}
 	}
 

@@ -3,6 +3,28 @@ module trans/semantics/functions
 imports
   trans/semantics/values
 
+/*
+* Function definitions
+*/
+signature
+  arrows
+    FunDefSeq -load-> U
+    FunDef -load-> U
+    FunDef -fun2val-> V
+    
+rules
+
+  NoFunDefSeq() -load-> U().
+
+  FunDefSeq(fundef, fundefs) -load-> U()
+  where
+    fundef -load-> _;
+    fundefs -load-> _.
+
+  FunDefDesug(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
+  where
+    {name |--> FunV(name, params, body)} => entry.
+
 rules
 
   FunCallDesug(name, args) --> v
@@ -11,7 +33,9 @@ rules
     args --> vargs;
     invoke(vargs, params, body) --> v.
 
-// Function calls
+/*
+* Function calls
+*/
 signature
   constructors
     invoke: VSeq * ParamSeq * Stmt --> V
@@ -47,7 +71,7 @@ rules
   
   ArgSeq(e, aseq) --> VSeq(e, aseq).
 
-  C C(E) |- bind(NoVSeq(), NoParamSeq()) --> E.
+  bind(NoVSeq(), NoParamSeq()) :: C C(E) --> E :: C C(E).
   
   bind(VSeq(v, vseq), ParamSeq(p, pseq)) --> {p |--> v, E}
   where
