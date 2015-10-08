@@ -31,12 +31,9 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 
 	private final SLParser parser;
 
-	// private final TruffleVM vm;
-
 	private SLLanguage() {
 		parser = new SLParser(
 				Paths.get("../org.metaborg.lang.sl/include/SL.tbl"));
-		// vm = TruffleVM.newVM().build();
 	}
 
 	@Override
