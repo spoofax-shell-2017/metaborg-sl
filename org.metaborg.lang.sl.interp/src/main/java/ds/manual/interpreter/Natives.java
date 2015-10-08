@@ -86,7 +86,7 @@ public class Natives {
 	}
 
 	public static boolean notB_1(boolean b1) {
-		return b1;
+		return !b1;
 	}
 
 	public static long subI_2(long i1, long i2) {
