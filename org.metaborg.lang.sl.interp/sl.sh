@@ -9,10 +9,9 @@ GRAAL_FLAGS='
   -G:TruffleCompilationThreshold=10
   -G:+TraceTruffleCompilation
   -G:+TraceTrufflePerformanceWarnings
-
-  -G:+FailedLoopExplosionIsFatal
-  -G:+TruffleCompilationExceptionsAreFatal
   '
+#  -G:+FailedLoopExplosionIsFatal
+#  -G:+TruffleCompilationExceptionsAreFatal
 
 GRAAL_SUITE='/Users/vladvergu/tud/slde/software/truffle/graal-root/graal-compiler'
 
