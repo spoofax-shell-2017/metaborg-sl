@@ -2,6 +2,7 @@ module trans/semantics/values
 
 imports
   trans/semantics/desugared-sig
+  trans/semantics/natives/arithmetics
 
 signature
   sorts U V
@@ -10,7 +11,7 @@ signature
     U: U
     NullV: V
     BoolV : Bool -> V
-    NumV : Long -> V
+    NumV : BigInteger -> V
     StringV : String -> V
     FunV: String * ParamSeq * Stmt -> V
     

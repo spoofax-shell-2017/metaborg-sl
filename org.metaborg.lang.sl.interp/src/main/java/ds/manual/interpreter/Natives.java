@@ -1,6 +1,7 @@
 package ds.manual.interpreter;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.nio.charset.Charset;
 
 import org.metaborg.lang.sl.desugar.desugar;
@@ -30,10 +31,6 @@ import ds.generated.interpreter.NumV_1;
 import ds.generated.interpreter.StringV_1;
 
 public class Natives {
-
-	public static long addI_2(long i1, long i2) {
-		return i1 + i2;
-	}
 
 	public static String v2s_1(A_V v) {
 		if (v instanceof StringV_1) {
@@ -67,32 +64,12 @@ public class Natives {
 		return b1 && b2;
 	}
 
-	public static long divI_2(long i1, long i2) {
-		return i1 / i2;
-	}
-
 	public static boolean eqV_2(A_V v1, A_V v2) {
 		return v1.equals(v2);
 	}
 
-	public static long s2l_1(String s) {
-		return Long.parseLong(s);
-	}
-
-	public static boolean ltI_2(long i1, long i2) {
-		return i1 < i2;
-	}
-
-	public static boolean lteI_2(long i1, long i2) {
-		return i1 <= i2;
-	}
-
 	public static ObjData newObj_0() {
 		return new ObjData();
-	}
-
-	public static long mulI_2(long i1, long i2) {
-		return i1 * i2;
 	}
 
 	public static boolean orB_2(boolean b1, boolean b2) {
@@ -120,8 +97,8 @@ public class Natives {
 		return SLProgramForeignAccess.INSTANCE;
 	}
 
-	public static long nanoTime_0() {
-		return System.nanoTime();
+	public static BigInteger nanoTime_0() {
+		return BigInteger.valueOf(System.nanoTime());
 	}
 
 	public static String readln_0() {
@@ -176,5 +153,17 @@ public class Natives {
 			throw new InterpreterException("Not supported");
 		}
 
+	}
+
+	public static BigInteger newBigInteger_1(String s) {
+		return new BigInteger(s);
+	}
+
+	public static boolean ltI_2(BigInteger i1, BigInteger i2) {
+		return i1.compareTo(i2) < 0;
+	}
+
+	public static boolean lteI_2(BigInteger i1, BigInteger i2) {
+		return i1.compareTo(i2) <= 0;
 	}
 }

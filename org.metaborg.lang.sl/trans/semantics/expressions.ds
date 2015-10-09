@@ -1,19 +1,13 @@
 module trans/semantics/expressions
 
 imports
+  src-gen/ds-signatures/Common-sig
   trans/semantics/desugared-sig
   trans/semantics/values
-  src-gen/ds-signatures/Common-sig
+  trans/semantics/natives/arithmetics
 
 signature
   native operators
-    s2l: String -> Long
-    addI: Long * Long -> Long
-    subI: Long * Long -> Long
-    mulI: Long * Long -> Long
-    divI: Long * Long -> Long
-    lteI: Long * Long -> Bool
-    ltI: Long * Long -> Bool
     eqV: V * V -> Bool
     notB: Bool -> Bool
     andB: Bool * Bool -> Bool
@@ -30,11 +24,11 @@ rules
   
   VarWrite(__String2ID__(name), v) --> write(name, v).
   
-  Int(__String2INT__(s)) --> NumV(s2l(s)).
+  Int(__String2INT__(s)) --> NumV(newBigInteger(s)).
   
-  Sub(NumV(i1), NumV(i2)) --> NumV(subI(i1, i2)).
-  Mul(NumV(i1), NumV(i2)) --> NumV(mulI(i1, i2)).
-  Div(NumV(i1), NumV(i2)) --> NumV(divI(i1, i2)).
+  Sub(NumV(i1), NumV(i2)) --> NumV(subtract[i1](i2)).
+  Mul(NumV(i1), NumV(i2)) --> NumV(multiply[i1](i2)).
+  Div(NumV(i1), NumV(i2)) --> NumV(divide[i1](i2)).
   
   String(__String2STRING__(s)) --> StringV(s).
   
@@ -46,7 +40,7 @@ rules
     } + {
       v1 => NumV(i1);
       v2 => NumV(i2);
-      NumV(addI(i1, i2)) => vout
+      NumV(add[i1](i2)) => vout
     }.
   
   True() --> BoolV(true).
