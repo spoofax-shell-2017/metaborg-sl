@@ -7,20 +7,23 @@ function mkTreeNode(left, right, item){
   tree.left = left;
   tree.right = right;
   tree.item = item;
+  return tree;
 }
 
-
 function itemCheck(tree) {
-  if(tree == null()) {
+  if(tree.left == null()) {
     return tree.item;
   } else {
     return tree.item + itemCheck(tree.left) - itemCheck(tree.right);
   }
 }
 
-function bottomUpTree(item,depth){
-  if(depth > 0){
-    return mkTreeNode(bottomUpTree(2 * item - 1, depth - 1), bottomUpTree(2 * item, depth - 1), item);
+function bottomUpTree(item, depth){
+  if(depth > 0) {
+    return mkTreeNode(
+      bottomUpTree(2 * item - 1, depth - 1),
+      bottomUpTree(2 * item, depth - 1),
+      item);
   } else {
     return mkTreeNode(null(), null(), item);
   }
@@ -36,32 +39,32 @@ function max(n1, n2){
 
 function main() {
   minDepth = 4;
-  n = 12; // 16 // 20
+  n = 12; // 16; // 20
   maxDepth = max(minDepth + 2, n);
   stretchDepth = maxDepth + 1;
   
  
-  check = (bottomUpTree(0,stretchDepth).itemCheck());
-  print("stretch tree of depth " + stretchDepth + "\t check: " + check);
+  check = itemCheck(bottomUpTree(0, stretchDepth));
+  println("stretch tree of depth " + stretchDepth + " check: " + check);
   
   longLivedTree = bottomUpTree(0, maxDepth);
   
   depth = minDepth;
   while(depth <= maxDepth) {
-    // iterations = 1 << (maxDepth - depth + minDepth);
     iterations = (maxDepth - depth + minDepth) * 2;
     check = 0;
     i = 1;
     while(i <= iterations) {
-      check = check + bottomUpTree(i,depth).itemCheck();
-      check = check + bottomUpTree(i * -1,depth).itemCheck();
+      check = check + itemCheck(bottomUpTree(i, depth));
+      check = check + itemCheck(bottomUpTree((0 - 1) * i, depth));
       i = i + 1;
     }
+    println(iterations * 2 + " trees of depth " + depth + " check: " + check);
+    
     depth = depth + 2;
   }
   
-  print("long lived tree of depth " + maxDepth + "\t check: " + longLivedTree.itemCheck());
-  
+  println("long lived tree of depth " + maxDepth + " check: " + itemCheck(longLivedTree));
 }
 
 function null() {

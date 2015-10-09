@@ -2,6 +2,7 @@ package ds.manual.interpreter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -24,4 +25,15 @@ public class ObjData {
 		return v;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{\n");
+		for (Entry<String, A_V> entry : store.entrySet()) {
+			builder.append(entry.getKey() + " : "
+					+ Natives.v2s_1(entry.getValue()) + "\n");
+		}
+		builder.append("}");
+		return builder.toString();
+	}
 }

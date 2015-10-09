@@ -28,6 +28,7 @@ import ds.generated.interpreter.FunV_3;
 import ds.generated.interpreter.Generic_A_FunDef;
 import ds.generated.interpreter.NullV_0;
 import ds.generated.interpreter.NumV_1;
+import ds.generated.interpreter.ObjV_1;
 import ds.generated.interpreter.StringV_1;
 
 public class Natives {
@@ -51,6 +52,10 @@ public class Natives {
 
 		if (v instanceof FunV_3) {
 			return ((FunV_3) v).get_1();
+		}
+
+		if (v instanceof ObjV_1) {
+			return ((ObjV_1) v).get_1() + "";
 		}
 
 		return v + "";
