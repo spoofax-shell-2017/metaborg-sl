@@ -27,3 +27,11 @@ while [  $COUNTER -lt 10 ]; do
     org.metaborg.lang.sl.interp.Main "${*:2}"
   let COUNTER=COUNTER+1
 done
+
+COUNTER=0
+while [  $COUNTER -lt 10 ]; do
+  java -server \
+    -Xbootclasspath/a:target/classes:$CLASSPATH \
+    org.metaborg.lang.sl.interp.Main "${*:2}"
+  let COUNTER=COUNTER+1
+done
