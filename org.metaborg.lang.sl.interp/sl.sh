@@ -23,7 +23,7 @@ cp data.csv.model $DATAFILE
 COUNTER=0
 while [  $COUNTER -lt 10 ]; do
   mx --primary-suite-path $GRAAL_SUITE \
-    --vm server vm $GRAAL_FLAGS \
+    --vm server vm $GRAAL_FLAGS -Xss32m \
     -Xbootclasspath/a:target/classes:$CLASSPATH \
     org.metaborg.lang.sl.interp.Main "${*:2}" $DATAFILE
   let COUNTER=COUNTER+1
@@ -34,7 +34,7 @@ DATAFILE="data_$DATESTAMP.csv"
 cp data.csv.model $DATAFILE
 COUNTER=0
 while [  $COUNTER -lt 10 ]; do
-  java -server \
+  java -server -Xss32m \
     -Xbootclasspath/a:target/classes:$CLASSPATH \
     org.metaborg.lang.sl.interp.Main "${*:2}" $DATAFILE
   let COUNTER=COUNTER+1
