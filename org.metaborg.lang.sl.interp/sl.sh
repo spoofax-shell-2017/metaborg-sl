@@ -17,7 +17,7 @@ GRAAL_SUITE='/Users/vladvergu/tud/slde/software/truffle/graal-root/graal-compile
 
 CLASSPATH="$1"
 
-DATESTAMP=`date +%Y%M%d_%H%M%S`
+DATESTAMP=`date +%Y%m%d_%H%M%S`
 DATAFILE="data_$DATESTAMP.csv"
 cp data.csv.model $DATAFILE
 COUNTER=0
@@ -29,7 +29,7 @@ while [  $COUNTER -lt 10 ]; do
   let COUNTER=COUNTER+1
 done
 
-DATESTAMP=`date +%Y%M%d_%H%M%S`
+DATESTAMP=`date +%Y%m%d_%H%M%S`
 DATAFILE="data_$DATESTAMP.csv"
 cp data.csv.model $DATAFILE
 COUNTER=0
