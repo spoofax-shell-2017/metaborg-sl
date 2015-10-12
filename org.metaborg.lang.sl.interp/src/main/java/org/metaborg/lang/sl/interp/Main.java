@@ -3,8 +3,6 @@ package org.metaborg.lang.sl.interp;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.Callable;
 
 import org.metaborg.tools.serfer.Benchmark;
@@ -29,9 +27,7 @@ public class Main {
 		BenchmarkConfiguration benchconfig = new BenchmarkConfiguration();
 		benchconfig.warmuprounds = 1;
 		benchconfig.repetitions = 65;
-		benchconfig.dataFile = new File("data_"
-				+ new SimpleDateFormat("yyyyMMdd_HHmm_ss").format(new Date())
-				+ ".csv");
+		benchconfig.dataFile = new File(args[1]);
 
 		Benchmark benchmark = new Benchmark(callee, benchconfig);
 		benchmark.execute();
