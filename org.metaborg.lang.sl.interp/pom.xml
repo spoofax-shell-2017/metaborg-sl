@@ -32,7 +32,9 @@
 					<executable>sl.sh</executable>
 					<arguments>
 						<classpath />
-						<argument>${inputfile}</argument>
+            <argument>${inputfile}</argument>
+            <arguments>${graaldatafile}</arguments>
+            <arguments>${jdkdatafile}</arguments>
 					</arguments>
 				</configuration>
 			</plugin>
