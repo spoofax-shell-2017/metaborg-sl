@@ -70,12 +70,22 @@ rules
   NoArgSeq() --> NoVSeq().
   
   ArgSeq(e, aseq) --> VSeq(e, aseq).
-
-  bind(NoVSeq(), NoParamSeq()) :: C C(E) --> E :: C C(E).
   
-  bind(VSeq(v, vseq), ParamSeq(p, pseq)) --> {p |--> v, E}
+  bind(vals, params) :: E, C --> Ecall :: E', C'
   where
-    bind(vseq, pseq) --> E.
+    vals => NoVSeq()
+    < {
+	    params => NoParamSeq();
+	    C => C(Etop);
+	    Etop => Ecall;
+	    E => E';
+	    C => C'
+	  } + {
+	    vals => VSeq(av, avseq);
+      params => ParamSeq(p, pseq);
+      bind(avseq, pseq) :: E, C --> Ebind :: E', C';
+      {p |--> av, Ebind} => Ecall
+	  }.
   
   ReturnVoid() --> U()
   where
