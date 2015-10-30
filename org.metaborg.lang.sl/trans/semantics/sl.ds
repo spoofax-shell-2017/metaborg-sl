@@ -2,46 +2,21 @@ module trans/semantics/sl
 
 imports
   trans/semantics/functions
+  trans/semantics/statements
+  trans/semantics/expressions
+  trans/semantics/objects
+  trans/semantics/builtins
 
 signature
   arrows
-    Program -init-> U
-    FunDefSeq -load-> U
-    FunDef -load-> U
+    Program -init-> V
+    
 
 rules // loading and init
 
-  ProgramDesug(fdefseq, stmt) -init-> U()
+  ProgramDesug(fdefseq, e) -init-> v
   where
-    fdefseq :: F {} -load-> _ :: F';
-    stmt :: F', E {} --> _ :: F _, E _.
-
-  FunDefSeq(fdef, fdefseq) -load-> U()
-  where
-    fdef -load-> _;
-    fdefseq -load-> _.
-
-  fdef@FunDefDesug(name, _, _) :: F -load-> U() :: F {name |--> fdef, F}.
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-    
-
-
-
-
-
+    fdefseq :: C C({}), E {} -load-> _ :: C C(E), E';
+    e :: C C(E), E' --> v :: C _, E _.
 
 

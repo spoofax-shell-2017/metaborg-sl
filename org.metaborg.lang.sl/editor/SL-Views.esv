@@ -2,7 +2,7 @@ module SL-Views
 
 views
   
-  outline view: editor-outline (source)
+  outline view: outline
     expand to level: 3
     
   properties view: editor-properties

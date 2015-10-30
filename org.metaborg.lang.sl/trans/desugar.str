@@ -1,0 +1,92 @@
+module trans/desugar
+
+imports
+  src-gen/signatures/SL-sig
+  libstratego-lib
+
+signature
+  sorts FunDefSeq ParamSeq ArgSeq
+
+  constructors
+    ProgramDesug : FunDefSeq * Expr -> Program
+    FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
+    NoFunDefSeq : FunDefSeq
+
+    FunDefDesug : String * ParamSeq * Stmt -> FunDef
+    ParamSeq : String * ParamSeq -> ParamSeq
+    NoParamSeq : ParamSeq
+
+    FunCallDesug : String * ArgSeq -> Expr
+    ArgSeq : Expr * ArgSeq -> ArgSeq
+    NoArgSeq : ArgSeq
+
+    MethodCallDesug: Expr * String * ArgSeq -> Expr
+
+  constructors // built-ins
+    SLDefineFunction : Expr -> Expr
+    SLNanoTime : Expr
+    SLNewObject : Expr
+    SLPrintln : Expr -> Expr
+    SLReadln : Expr
+    SLStacktrace : Expr
+
+rules
+
+  desugar-editor:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := <desugar-all> ast
+  
+  desugar-all = innermost(desugar); alltd(unquote(?'"'))
+
+  desugar:
+    Program(funcs) -> ProgramDesug(<desugar-funcs> funcs, FunCallDesug("main", NoArgSeq()))
+
+  desugar-funcs:
+    [] -> NoFunDefSeq()
+  
+  desugar-funcs:
+    [func|funcs] -> FunDefSeq(func, <desugar-funcs> funcs) 
+
+  desugar:
+    FunDef(name, params, body) -> FunDefDesug(name, <desugar-params> params, body)
+  
+  desugar-params:
+    [] -> NoParamSeq()
+  
+  desugar-params:
+    [name|params] -> ParamSeq(name, <desugar-params> params)
+  
+  desugar:
+    FunCall(name, args) -> FunCallDesug(name, <desugar-args> args)
+  
+  desugar:
+    IfNoElse(cond, block) -> IfThenElse(cond, block, EmptyBlock())
+  
+  desugar-args:
+    [] -> NoArgSeq()
+  
+  desugar-args:
+    [e|es] -> ArgSeq(e, <desugar-args> es)
+  
+  desugar:
+    MethodCall(e, name, args) -> MethodCallDesug(e, name, <desugar-args> args)
+  
+  desugar:
+    FunCallDesug("defineFunction", ArgSeq(e, NoArgSeq())) -> SLDefineFunction(e)
+  
+  desugar:
+    FunCallDesug("nanoTime", NoArgSeq()) -> SLNanoTime()
+  
+  desugar:
+    FunCallDesug("new", NoArgSeq()) -> SLNewObject()
+  
+  desugar:
+    FunCallDesug("println", ArgSeq(e, NoArgSeq())) -> SLPrintln(e)
+  
+  desugar:
+    FunCallDesug("readln", NoArgSeq()) -> SLReadln()
+  
+  desugar:
+    FunCallDesug("stacktrace", NoArgSeq()) -> SLStacktrace()

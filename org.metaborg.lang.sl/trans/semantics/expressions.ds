@@ -1,30 +1,47 @@
 module trans/semantics/expressions
 
 imports
+  src-gen/ds-signatures/Common-sig
   trans/semantics/desugared-sig
   trans/semantics/values
-  src-gen/ds-signatures/Common-sig
+  trans/semantics/natives/arithmetics
 
 signature
   native operators
-    s2i: String -> Int
-    lteI: Int * Int -> Bool
-    ltI: Int * Int -> Bool
     eqV: V * V -> Bool
     notB: Bool -> Bool
     andB: Bool * Bool -> Bool
     orB: Bool * Bool -> Bool
-
-  variables
-    v : V
+    concatS: String * String -> String
+    isS : V -> Bool
+  
+  native operators
+    v2s : V -> String
+    
 rules
 
-  VarRead(__String2ID__(name)) :: E --> E[name] :: E.
-  VarWrite(__String2ID__(name), v) :: E --> v :: E {name |--> v, E}.
+  VarRead(__String2ID__(name)) --> lookup(name).
   
-  Int(__String2INT__(s)) --> NumV(s2i(s)).
+  VarWrite(__String2ID__(name), v) --> write(name, v).
+  
+  Int(__String2INT__(s)) --> NumV(newBigInteger(s)).
+  
+  Sub(NumV(i1), NumV(i2)) --> NumV(subtract[i1](i2)).
+  Mul(NumV(i1), NumV(i2)) --> NumV(multiply[i1](i2)).
+  Div(NumV(i1), NumV(i2)) --> NumV(divide[i1](i2)).
   
   String(__String2STRING__(s)) --> StringV(s).
+  
+  Add(v1, v2) --> vout
+  where
+    orB(isS(v1), isS(v2)) == true
+    < {
+      StringV(concatS(v2s(v1), v2s(v2))) => vout
+    } + {
+      v1 => NumV(i1);
+      v2 => NumV(i2);
+      NumV(add[i1](i2)) => vout
+    }.
   
   True() --> BoolV(true).
   False() --> BoolV(false).
@@ -35,8 +52,8 @@ rules
   
   Lte(NumV(i1), NumV(i2)) --> BoolV(lteI(i1, i2)).
   Lt(NumV(i1), NumV(i2)) --> BoolV(ltI(i1, i2)).
-  Gte(NumV(i1), NumV(i2)) --> BoolV(ltI(i2, i1)).
-  Gt(NumV(i1), NumV(i2)) --> BoolV(lteI(i2, i1)).
+  Gte(NumV(i1), NumV(i2)) --> BoolV(lteI(i2, i1)).
+  Gt(NumV(i1), NumV(i2)) --> BoolV(ltI(i2, i1)).
   
   And(BoolV(b1), BoolV(b2)) --> BoolV(andB(b1, b2)).
   Or(BoolV(b1), BoolV(b2)) --> BoolV(orB(b1, b2)).

@@ -1,0 +1,11 @@
+module outline
+
+imports
+  include/SL
+  runtime/editor/outline-library
+
+rules
+
+  outline = simple-label-outline(to-outline-label)
+  to-outline-label = fail
+  outline-expand-to-level = !0

@@ -6,7 +6,7 @@ imports
 
 context-free start-symbols
   
-  Program
+  Program FunDef
 
 context-free syntax
   
@@ -96,7 +96,8 @@ context-free syntax
   ID = [else] {reject}
 
 context-free priorities
-  {right: Expr.Not}
+  {left: Expr.MethodCall}
+  > {right: Expr.Not}
   > {left: Expr.Mul Expr.And}
   > {non-assoc: Expr.Eq Expr.Lt Expr.Lte Expr.Neq Expr.Gt Expr.Gte}
   > {left: Expr.Add Expr.Sub Expr.Or}

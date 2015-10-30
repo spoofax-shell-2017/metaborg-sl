@@ -3,18 +3,41 @@ module trans/semantics/functions
 imports
   trans/semantics/values
 
+/*
+* Function definitions
+*/
+signature
+  arrows
+    FunDefSeq -load-> U
+    FunDef -load-> U
+    FunDef -fun2val-> V
+    
+rules
+
+  NoFunDefSeq() -load-> U().
+
+  FunDefSeq(fundef, fundefs) -load-> U()
+  where
+    fundef -load-> _;
+    fundefs -load-> _.
+
+  FunDefDesug(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
+  where
+    {name |--> FunV(name, params, body)} => entry.
+
 rules
 
   FunCallDesug(name, args) --> v
   where
-    lookupFun(name) --> FunDefDesug(_, params, stmt);
+    lookup(name) --> FunV(_, params, body);
     args --> vargs;
-    invoke(vargs, params, stmt) --> v.
+    invoke(vargs, params, body) --> v.
 
-// Function calls
+/*
+* Function calls
+*/
 signature
   constructors
-    lookupFun: String --> FunDef
     invoke: VSeq * ParamSeq * Stmt --> V
     bind: VSeq * ParamSeq --> E
   
@@ -38,8 +61,6 @@ signature
     ArgSeq --> VSeq
 
 rules  
-  
-  lookupFun(name) :: F --> F[name] :: F.
 
   invoke(vseq, parseq, stmt) :: E --> v :: E
   where
@@ -49,17 +70,30 @@ rules
   NoArgSeq() --> NoVSeq().
   
   ArgSeq(e, aseq) --> VSeq(e, aseq).
-
-  bind(NoVSeq(), NoParamSeq()) --> {}.
   
-  bind(VSeq(v, vseq), ParamSeq(p, pseq)) --> {p |--> v, E}
+  bind(vals, params) :: E, C --> Ecall :: E', C'
   where
-    bind(vseq, pseq) --> E.
+    vals => NoVSeq()
+    < {
+	    params => NoParamSeq();
+	    C => C(Etop);
+	    Etop => Ecall;
+	    E => E';
+	    C => C'
+	  } + {
+	    vals => VSeq(av, avseq);
+      params => ParamSeq(p, pseq);
+      bind(avseq, pseq) :: E, C --> Ebind :: E', C';
+      {p |--> av, Ebind} => Ecall
+	  }.
   
   ReturnVoid() --> U()
   where
-    doReturn(U()) --> _.
+    doReturn(NullV()) --> _.
 
-  Return(e) --> U()
+  Return(v) --> U()
   where
-    doReturn(e) --> _.
+    doReturn(v) --> _.
+
+
+

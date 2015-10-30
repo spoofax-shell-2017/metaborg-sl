@@ -7,7 +7,7 @@ signature
   sorts FunDefSeq ParamSeq ArgSeq
 
   constructors
-    ProgramDesug : FunDefSeq * Stmt -> Program
+    ProgramDesug : FunDefSeq * Expr -> Program
     FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
     NoFunDefSeq : FunDefSeq
 
@@ -19,4 +19,14 @@ signature
     ArgSeq : Expr * ArgSeq -> ArgSeq
     NoArgSeq : ArgSeq
 
+    MethodCallDesug: Expr * String * ArgSeq -> Expr
+
+  constructors // built-ins
+    SLPrintln : Expr -> Expr
+    SLReadln : Expr
+    SLDefineFunction : Expr -> Expr
+    SLNanoTime : Expr
+    SLNewObject : Expr
+    SLStacktrace : Expr
+  
   

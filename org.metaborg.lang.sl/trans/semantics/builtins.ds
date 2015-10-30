@@ -1,0 +1,31 @@
+module trans/semantics/builtins
+
+imports
+  trans/semantics/desugared-sig
+  trans/semantics/values
+  trans/semantics/expressions
+  trans/semantics/sl
+  trans/semantics/natives/arithmetics
+  
+signature
+  native operators
+    println : String -> String
+    readln : String
+    nanoTime: BigInteger
+    parseFunDef : String -> FunDef
+
+rules
+  
+  SLPrintln(e) --> v 
+  where
+    e --> v;
+    println(v2s(v)) => _.
+  
+  SLReadln() --> StringV(readln()).
+  
+  SLNanoTime() --> NumV(nanoTime()).
+  
+  SLDefineFunction(StringV(s)) --> NullV()
+  where
+    parseFunDef(s) -load-> _.
+  

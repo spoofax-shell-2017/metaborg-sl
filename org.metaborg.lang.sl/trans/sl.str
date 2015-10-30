@@ -15,6 +15,8 @@ imports
 	runtime/task/-
 	runtime/analysis/-
 	runtime/editor/-
+	desugar
+	outline
 	pp
 
 rules // Analysis

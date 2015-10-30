@@ -5,9 +5,8 @@ imports
   include/SL
   runtime/editor/outline-library
   runtime/editor/origins
-  editor/SL-Outliner.generated
 
 rules
   
-  to-outline-label = fail
+  outline-expand-to-level = !3
   

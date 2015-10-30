@@ -21,36 +21,50 @@ signature
     ContinueHandler --> U
 
   constructors
-    while : Expr * Block -> Stmt
+    whileHelper : Expr * Block -> Stmt
 
 rules
   
   While(e, block) --> U()
   where
-    onBreak(onContinue(while(e, block))) --> _.
+    onBreak(onContinue(whileHelper(e, block))) --> _.
 
-  Continue() --> U()
+  w@whileHelper(e, block) :: C, E --> u :: C''', E'''
   where
-    doContinue() --> _.
+    e :: C, E --> BoolV(bv) :: C', E';
+    bv == true
+    < {
+    	__Block2Stmt__(block) :: C', E' --> _ :: C'', E'';
+    	w :: C'', E'' --> _ :: C''', E''';
+    	U() => u
+    } + {
+    	E' => E''';
+    	C' => C''';
+    	U() => u
+    }.
+
+  Continue() --> u
+  where
+    doContinue() --> u.
   
-  Break() --> U()
+  Break() --> u
   where
-    doBreak() --> _.
-
-// IfThenElse (IfNoElse gets desugared into IfThenElse(Expr, body, EmptyBlock))
+    doBreak() --> u.
 
 rules
 
-  IfThenElse(e, then, _) --> U()
+  IfThenElse(e, then, else) :: C, E --> u :: C'', E''
   where
-    e --> BoolV(true);
-    then --> _.
-  
-  IfThenElse(e, _, else) --> U()
-  where
-    e --> BoolV(false);
-    else --> _.
-
+    e :: C, E --> BoolV(bv) :: C', E';
+    bv == true
+    < {
+    	__Block2Stmt__(then) :: C', E' --> _ :: C'', E'';
+    	U() => u
+    } + {
+    	__Block2Stmt__(else) :: C', E' --> _ :: C'', E'';
+    	U() => u
+    }.
+    
   Block(stmt) --> stmt.
   
   EmptyBlock() --> U().

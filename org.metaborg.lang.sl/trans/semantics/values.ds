@@ -2,27 +2,51 @@ module trans/semantics/values
 
 imports
   trans/semantics/desugared-sig
+  trans/semantics/natives/arithmetics
 
 signature
   sorts U V
 
   constructors
     U: U
-    __u2v__: U -> V {implicit}
+    NullV: V
     BoolV : Bool -> V
-    NumV : Int -> V
+    NumV : BigInteger -> V
     StringV : String -> V
-
+    FunV: String * ParamSeq * Stmt -> V
+    
   arrows
     Expr --> V
     Stmt --> U
  
   sort aliases
     E = Map<String, V>
-    F = Map<String, FunDef>
+  
+  sorts
+    C
+  
+  constructors
+    C : E -> C
   
   variables
-    F : F
     E : E
+    C : C
 
-  
+  variables
+    v : V
+    u : U
+
+signature
+  constructors
+    lookup : String --> V
+    write : String * V --> V
+
+rules
+
+  lookup(name) :: E --> E[name] :: E.
+
+  write(name, v) :: E --> v :: E {name |--> v, E}.
+
+
+
+

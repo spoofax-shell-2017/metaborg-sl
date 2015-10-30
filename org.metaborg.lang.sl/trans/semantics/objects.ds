@@ -1,0 +1,33 @@
+module trans/semantics/objects
+
+imports
+  trans/semantics/desugared-sig
+  trans/semantics/values
+  trans/semantics/functions
+
+signature
+  constructors
+    ObjV : ObjData -> V
+
+  native operators
+    newObj : ObjData
+  
+  native datatypes
+    "ObjData" as ObjData {
+      readProp : String -> V
+      writeProp : String * V -> V
+    }
+
+rules
+
+  SLNewObject() --> ObjV(newObj()).
+  
+  PropRead(ObjV(od), __String2ID__(prop)) --> readProp[od](prop).
+  PropWrite(ObjV(od), __String2ID__(prop), v) --> writeProp[od](prop, v).
+
+  MethodCallDesug(ObjV(od), fun, eseq) --> v
+  where
+    readProp[od](fun) => FunV(_, pseq, body);
+    eseq --> vseq;
+    invoke(vseq, pseq, body) --> v.
+
