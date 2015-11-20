@@ -2,9 +2,10 @@ package org.metaborg.lang.sl.interp;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.nio.file.Paths;
 import java.util.concurrent.Callable;
 
@@ -15,13 +16,14 @@ import org.spoofax.interpreter.terms.IStrategoTerm;
 import com.oracle.truffle.api.CallTarget;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
-import com.oracle.truffle.api.debug.DebugSupportProvider;
 import com.oracle.truffle.api.frame.FrameDescriptor;
-import com.oracle.truffle.api.instrument.ToolSupportProvider;
+import com.oracle.truffle.api.frame.MaterializedFrame;
+import com.oracle.truffle.api.instrument.Visualizer;
+import com.oracle.truffle.api.instrument.WrapperNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.source.Source;
-import com.oracle.truffle.api.vm.TruffleVM;
-import com.oracle.truffle.api.vm.TruffleVM.Symbol;
+import com.oracle.truffle.api.vm.PolyglotEngine;
+import com.oracle.truffle.api.vm.PolyglotEngine.Value;
 
 import ds.generated.interpreter.A_Program;
 import ds.generated.interpreter.Generic_A_Program;
@@ -74,27 +76,26 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 		return findContext(createFindContextNode());
 	}
 
-	public <T> Callable<T> getCallable(String filename, Reader inputReader,
-			Writer outputWriter, Writer errWriter) {
-		TruffleVM vm = TruffleVM.newVM().stdIn(inputReader)
-				.stdOut(outputWriter).stdErr(errWriter).build();
+	public Callable<Value> getCallable(String filename,
+			InputStream inputStream, OutputStream outputStream,
+			OutputStream errStream) throws IOException {
 
+		PolyglotEngine vm = PolyglotEngine.buildNew().setIn(inputStream)
+				.setOut(outputStream).setErr(errStream).build();
 		assert vm.getLanguages().containsKey("application/x-sllang");
-
 		try {
 			vm.eval(Source.fromFileName(filename).withMimeType(
 					"application/x-sllang"));
 		} catch (IOException e) {
 			throw new InterpreterException("Eval failed", e);
 		}
-		Symbol program = vm.findGlobalSymbol("program");
+		Value program = vm.findGlobalSymbol("program");
 
-		return new Callable<T>() {
+		return new Callable<Value>() {
 
 			@Override
-			@SuppressWarnings("unchecked")
-			public T call() throws Exception {
-				return (T) program.invoke(null).get();
+			public Value call() throws Exception {
+				return program.invoke(null);
 			}
 		};
 
@@ -102,9 +103,13 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 
 	@Override
 	protected SLContext createContext(Env env) {
-		return new SLContext(this, new BufferedReader(env.stdIn()),
-				new PrintWriter(env.stdOut(), true), new PrintWriter(
-						env.stdErr(), true));
+		final BufferedReader in = new BufferedReader(new InputStreamReader(
+				env.in()));
+		final PrintWriter out = new PrintWriter(env.out(), true);
+		final PrintWriter err = new PrintWriter(env.err(), true);
+		SLContext context = new SLContext(this, in, out, err);
+
+		return context;
 	}
 
 	@Override
@@ -114,23 +119,35 @@ public final class SLLanguage extends TruffleLanguage<SLContext> {
 	}
 
 	@Override
-	protected DebugSupportProvider getDebugSupport() {
-		return null;
+	protected Object evalInContext(Source source, Node node,
+			MaterializedFrame mFrame) throws IOException {
+		throw new IllegalStateException(
+				"evalInContext not supported in this language");
 	}
 
 	@Override
-	protected Object getLanguageGlobal(SLContext ctx) {
-		return ctx;
+	protected Object getLanguageGlobal(SLContext context) {
+		return context;
 	}
 
 	@Override
-	protected ToolSupportProvider getToolSupport() {
+	protected boolean isInstrumentable(Node node) {
+		return false;
+	}
+
+	@Override
+	protected Visualizer getVisualizer() {
 		return null;
 	}
 
 	@Override
 	protected boolean isObjectOfLanguage(Object arg0) {
 		return arg0 instanceof SLProgram;
+	}
+
+	@Override
+	protected WrapperNode createWrapperNode(Node arg0) {
+		return null;
 	}
 
 }

@@ -7,10 +7,6 @@ import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.Writer;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -18,7 +14,7 @@ import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.NullReader;
+import org.apache.commons.io.input.NullInputStream;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.junit.After;
 import org.junit.Before;
@@ -26,6 +22,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+
+import com.oracle.truffle.api.vm.PolyglotEngine.Value;
 
 import ds.generated.interpreter.NullV_0;
 import ds.generated.interpreter.R_init_V;
@@ -35,10 +33,9 @@ import ds.manual.interpreter.Natives;
 public class TestSL {
 
 	private TestData testData;
-	private Reader inputReader;
-	private ByteArrayOutputStream outbos, errbos;
-	private Writer outputWriter;
-	private Writer errorWriter;
+	private InputStream inputStream;
+	private ByteArrayOutputStream outputStream;
+	private ByteArrayOutputStream errorStream;
 
 	public TestSL(TestData td) {
 		this.testData = td;
@@ -48,45 +45,43 @@ public class TestSL {
 	public void setUp() throws IOException {
 		if (testData.inputFile != null) {
 			InputStream is = new FileInputStream(new File(testData.inputFile));
-			inputReader = new InputStreamReader(is);
+			inputStream = is;
 		} else {
-			inputReader = new NullReader(0);
+			inputStream = new NullInputStream(0);
 		}
 
-		outbos = new ByteArrayOutputStream();
-		errbos = new ByteArrayOutputStream();
-		outputWriter = new OutputStreamWriter(outbos);
-		errorWriter = new OutputStreamWriter(errbos);
+		outputStream = new ByteArrayOutputStream();
+		errorStream = new ByteArrayOutputStream();
 	}
 
 	@After
 	public void tearDown() throws IOException {
 
-		inputReader.close();
-		outbos.close();
-		outputWriter.close();
-		errbos.close();
-		errorWriter.close();
+		inputStream.close();
+		outputStream.close();
+		errorStream.close();
 	}
 
 	@Test
 	public void test() throws Exception {
-		Callable<R_init_V> invokable = SLLanguage.INSTANCE.getCallable(
-				testData.programFile, inputReader, outputWriter, errorWriter);
+		Callable<Value> invokable = SLLanguage.INSTANCE.getCallable(
+				testData.programFile, inputStream, outputStream, errorStream);
 
-		R_init_V res = invokable.call();
+		Value v = invokable.call();
+
+		R_init_V res = v.as(R_init_V.class);
 		if (!(res.value instanceof NullV_0)) {
-			outputWriter.write(Natives.v2s_1(res.value) + "\n");
+			outputStream.write((Natives.v2s_1(res.value) + "\n").getBytes());
 		}
-		outputWriter.flush();
-		errorWriter.flush();
+		outputStream.flush();
+		errorStream.flush();
 
 		String expectedOutput = IOUtils.toString(new FileInputStream(
 				testData.outputFile));
-		String actualOutput = new String(outbos.toByteArray());
+		String actualOutput = new String(outputStream.toByteArray());
 
-		if (errbos.size() > 0) {
-			actualOutput = new String(errbos.toByteArray()) + "\n";
+		if (errorStream.size() > 0) {
+			actualOutput = new String(errorStream.toByteArray()) + "\n";
 		}
 		assertEquals(expectedOutput, actualOutput);
 	}
