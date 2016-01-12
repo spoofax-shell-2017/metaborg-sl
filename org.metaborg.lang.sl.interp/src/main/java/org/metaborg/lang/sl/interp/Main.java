@@ -1,14 +1,12 @@
 package org.metaborg.lang.sl.interp;
 
 import java.io.File;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.concurrent.Callable;
 
 import org.metaborg.tools.serfer.Benchmark;
 import org.metaborg.tools.serfer.BenchmarkConfiguration;
 
-import ds.generated.interpreter.R_init_V;
+import com.oracle.truffle.api.vm.PolyglotEngine.Value;
 
 public class Main {
 
@@ -16,9 +14,8 @@ public class Main {
 		String file = args[0];
 		SLLanguage language = SLLanguage.INSTANCE;
 
-		Callable<R_init_V> callee = language.getCallable(file,
-				new InputStreamReader(System.in), new OutputStreamWriter(
-						System.out), new OutputStreamWriter(System.err));
+		Callable<Value> callee = language.getCallable(file, System.in,
+				System.out, System.err);
 
 		// R_init_V result = callee.call();
 		// if (!(result.value instanceof NullV_0))
@@ -34,5 +31,4 @@ public class Main {
 
 		benchmark.writeToFile();
 	}
-
 }
