@@ -48,6 +48,11 @@
 				<artifactId>spoofax-maven-plugin</artifactId>
 				<version>${metaborg-version}</version>
 				<extensions>true</extensions>
+				<configuration>
+					<pardonedLanguages combine.children="append">
+						<pardonedLanguage>ds</pardonedLanguage>
+					</pardonedLanguages>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
