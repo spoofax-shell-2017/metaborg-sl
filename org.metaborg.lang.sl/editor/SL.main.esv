@@ -1,11 +1,9 @@
 module SL.main
 
 imports
+  SL-Menus
   SL-Colorer
   SL-Completions
-  SL-Folding
-  SL-Menus
-  SL-Refactorings
   SL-References
   SL-Syntax
   SL-Views
