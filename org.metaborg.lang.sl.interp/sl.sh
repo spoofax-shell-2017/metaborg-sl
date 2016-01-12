@@ -19,7 +19,7 @@ CLASSPATH="$1"
 
 cp data.csv.model $3
 COUNTER=0
-while [  $COUNTER -lt 10 ]; do
+while [  $COUNTER -lt 2 ]; do
   mx --primary-suite-path $GRAAL_SUITE \
     --vm server vm $GRAAL_FLAGS -Xss32m \
     -Xbootclasspath/a:target/classes:$CLASSPATH \
@@ -27,11 +27,11 @@ while [  $COUNTER -lt 10 ]; do
   let COUNTER=COUNTER+1
 done
 
-cp data.csv.model $4
-COUNTER=0
-while [  $COUNTER -lt 10 ]; do
-  java -server -Xss32m \
-    -Xbootclasspath/a:target/classes:$CLASSPATH \
-    org.metaborg.lang.sl.interp.Main "$2" "$4"
-  let COUNTER=COUNTER+1
-done
+#cp data.csv.model $4
+#COUNTER=0
+#while [  $COUNTER -lt 10 ]; do
+#  java -server -Xss32m \
+#    -Xbootclasspath/a:target/classes:$CLASSPATH \
+#    org.metaborg.lang.sl.interp.Main "$2" "$4"
+#  let COUNTER=COUNTER+1
+#done

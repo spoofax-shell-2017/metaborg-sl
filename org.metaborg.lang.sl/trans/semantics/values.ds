@@ -47,6 +47,6 @@ rules
 
   write(name, v) :: E --> v :: E {name |--> v, E}.
 
-
-
-
+  lookup(name) :: E --> E[name]
+  where
+    E[name?] == true.

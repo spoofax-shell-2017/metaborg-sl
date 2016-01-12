@@ -17,13 +17,9 @@ public class Main {
 		Callable<Value> callee = language.getCallable(file, System.in,
 				System.out, System.err);
 
-		// R_init_V result = callee.call();
-		// if (!(result.value instanceof NullV_0))
-		// System.out.println(Natives.v2s_1(result.value));
-
 		BenchmarkConfiguration benchconfig = new BenchmarkConfiguration();
 		benchconfig.warmuprounds = 1;
-		benchconfig.repetitions = 65;
+		benchconfig.repetitions = 11;
 		benchconfig.dataFile = new File(args[1]);
 
 		Benchmark benchmark = new Benchmark(callee, benchconfig);

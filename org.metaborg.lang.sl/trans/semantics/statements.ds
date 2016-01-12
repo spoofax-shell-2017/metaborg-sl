@@ -16,41 +16,56 @@ signature
     doContinue : ContinueHandler // will throw a ContinueException with the value and the semantic components
     onContinue : Stmt -> Stmt // will handle a ContinueException with the value and the semantic components
 
-  arrows
-    BreakHandler --> U
-    ContinueHandler --> U
+//   arrows
+//     BreakHandler --> U
+//     ContinueHandler --> U
+// 
+//   constructors
+//     whileHelper : Expr * Block -> Stmt
+// 
+// rules
+//   
+//   While(e, block) --> U()
+//   where
+//     onBreak(onContinue(whileHelper(e, block))) --> _.
+// 
+//   w@whileHelper(e, block) :: C, E --> u :: C''', E'''
+//   where
+//     e :: C, E --> BoolV(bv) :: C', E';
+//     bv == true
+//     < {
+//     	__Block2Stmt__(block) :: C', E' --> _ :: C'', E'';
+//     	w :: C'', E'' --> _ :: C''', E''';
+//     	U() => u
+//     } + {
+//     	E' => E''';
+//     	C' => C''';
+//     	U() => u
+//     }.
+// 
+//   Continue() --> u
+//   where
+//     doContinue() --> u.
+//   
+//   Break() --> u
+//   where
+//     doBreak() --> u.
 
-  constructors
-    whileHelper : Expr * Block -> Stmt
+signature
+  sorts
+    RepeatingNode
+  
+  native constructors
+    SLRepeatingNode : Expr * V * Block -> RepeatingNode
+  
+  arrows
+    RepeatingNode --> U 
+    
 
 rules
   
-  While(e, block) --> U()
-  where
-    onBreak(onContinue(whileHelper(e, block))) --> _.
-
-  w@whileHelper(e, block) :: C, E --> u :: C''', E'''
-  where
-    e :: C, E --> BoolV(bv) :: C', E';
-    bv == true
-    < {
-    	__Block2Stmt__(block) :: C', E' --> _ :: C'', E'';
-    	w :: C'', E'' --> _ :: C''', E''';
-    	U() => u
-    } + {
-    	E' => E''';
-    	C' => C''';
-    	U() => u
-    }.
-
-  Continue() --> u
-  where
-    doContinue() --> u.
+  While(e, block) --> SLRepeatingNode(e, BoolV(true), block).
   
-  Break() --> u
-  where
-    doBreak() --> u.
-
 rules
 
   IfThenElse(e, then, else) :: C, E --> u :: C'', E''
