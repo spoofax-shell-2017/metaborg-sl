@@ -12,6 +12,7 @@ import org.metaborg.meta.interpreter.framework.InterpreterException;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 import org.spoofax.jsglr.client.ParseTable;
 import org.spoofax.jsglr.client.SGLR;
+import org.spoofax.jsglr.client.SGLRParseResult;
 import org.spoofax.jsglr.client.imploder.TermTreeFactory;
 import org.spoofax.jsglr.client.imploder.TreeBuilder;
 import org.spoofax.terms.TermFactory;
@@ -35,10 +36,11 @@ public class SLParser {
 		}
 
 		try {
-			IStrategoTerm programterm = (IStrategoTerm) parser.parse(
+
+			SGLRParseResult parseResult = parser.parse(
 					IOUtils.toString(src.getInputStream()), src.getName(),
 					startSymbol);
-
+			IStrategoTerm programterm = (IStrategoTerm) parseResult.output;
 			return desugar_all_0_0.instance.invoke(desugar.init(), programterm);
 		} catch (Exception e) {
 			throw new InterpreterException("Parse failure", e);
