@@ -18,8 +18,8 @@ public class Main {
 				System.out, System.err);
 
 		BenchmarkConfiguration benchconfig = new BenchmarkConfiguration();
-		benchconfig.warmuprounds = 1;
-		benchconfig.repetitions = 11;
+		benchconfig.warmuprounds = 0;
+		benchconfig.repetitions = 1;
 		benchconfig.dataFile = new File(args[1]);
 
 		Benchmark benchmark = new Benchmark(callee, benchconfig);

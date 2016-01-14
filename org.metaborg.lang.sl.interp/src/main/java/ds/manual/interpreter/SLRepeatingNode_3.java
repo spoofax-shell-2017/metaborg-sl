@@ -55,14 +55,11 @@ public class SLRepeatingNode_3 extends A_RepeatingNode {
 		calleeFrame.setObject(inputSlot1, _1);
 		calleeFrame.setObject(inputSlot2, _2);
 
-		System.out.println(getRootNode());
-
 		loopNode.executeLoop(calleeFrame);
 
 		try {
 			return (R_default_U) calleeFrame.getObject(outputSlot);
 		} catch (FrameSlotTypeException e) {
-			System.out.println("Fail 1");
 			throw new InterpreterException("Slot access failed", e);
 		}
 	}
@@ -99,18 +96,29 @@ public class SLRepeatingNode_3 extends A_RepeatingNode {
 
 				R_default_V eres = e.execute_default(frame, _1, _2);
 				if (eres.value.equals(v)) {
-					R_default_U bres = b.execute_default(frame, eres.get_1(),
-							eres.get_2());
-					frame.setObject(inputSlot1, bres.get_1());
-					frame.setObject(inputSlot2, bres.get_2());
-					return true;
+					try {
+						R_default_U bres = b.execute_default(frame,
+								eres.get_1(), eres.get_2());
+						frame.setObject(inputSlot1, bres.get_1());
+						frame.setObject(inputSlot2, bres.get_2());
+						return true;
+					} catch (ContinueException b) {
+						frame.setObject(inputSlot1, b.getRootenv());
+						frame.setObject(inputSlot2, b.getEnv());
+						return true;
+					} catch (BreakException b) {
+						frame.setObject(outputSlot, new R_default_U(new U_0(
+								getSourceSection()), _1, _2));
+						frame.setObject(inputSlot1, b.getRootenv());
+						frame.setObject(inputSlot2, b.getEnv());
+						return false;
+					}
 				} else {
 					frame.setObject(outputSlot, new R_default_U(new U_0(
 							getSourceSection()), _1, _2));
 					return false;
 				}
 			} catch (FrameSlotTypeException e) {
-				System.out.println("Fail 2");
 				throw new InterpreterException("Slot access failure", e);
 			}
 		}

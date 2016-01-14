@@ -20,7 +20,7 @@ public class doContinue_0 extends A_ContinueHandler {
 
 	public R_default_U execute_default(VirtualFrame frame, A_C ctx,
 			PersistentMap<String, A_V> env) {
-		throw new ContinueException(env);
+		throw new ContinueException(ctx, env);
 	}
 
 	@Override
