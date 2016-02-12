@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.concurrent.Callable;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -22,12 +21,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
+import org.metaborg.lang.sl.interpreter.generated.SLLanguage;
+import org.metaborg.lang.sl.interpreter.generated.TypesGen;
+import org.metaborg.lang.sl.interpreter.generated.terms.IVTerm;
+import org.metaborg.lang.sl.interpreter.natives.ObjData;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 
 import com.oracle.truffle.api.vm.PolyglotEngine.Value;
-
-import ds.generated.interpreter.NullV_0;
-import ds.generated.interpreter.R_init_V;
-import ds.manual.interpreter.Natives;
 
 @RunWith(Parameterized.class)
 public class TestSL {
@@ -64,15 +64,16 @@ public class TestSL {
 
 	@Test
 	public void test() throws Exception {
-		Callable<Value> invokable = SLLanguage.INSTANCE.getCallable(
-				testData.programFile, inputStream, outputStream, errorStream);
 
-		Value v = invokable.call();
+		Value v = SLLanguage.evaluate(testData.programFile, inputStream,
+				outputStream, errorStream);
 
-		R_init_V res = v.as(R_init_V.class);
-		if (!(res.value instanceof NullV_0)) {
-			outputStream.write((Natives.v2s_1(res.value) + "\n").getBytes());
+		RuleResult res = v.as(RuleResult.class);
+		IVTerm val = TypesGen.asIVTerm(res.result);
+		if (!TypesGen.isNullV_0_Term(val)) {
+			outputStream.write((ObjData.v2s_1(val) + "\n").getBytes());
 		}
+
 		outputStream.flush();
 		errorStream.flush();
 
