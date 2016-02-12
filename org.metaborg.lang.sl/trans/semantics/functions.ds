@@ -44,12 +44,14 @@ signature
   sorts
     ReturnHandler
   
-  native constructors
+  constructors
     doReturn : V -> ReturnHandler // will throw a ReturnException with the value and the semantic components
     onReturn : Stmt -> ReturnHandler // will catch a ReturnException with the value and the semantic components
   
+  
+  
   arrows
-    ReturnHandler --> V
+    ReturnHandler --> V // natively implemented
   
   sorts VSeq
   

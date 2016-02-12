@@ -7,7 +7,12 @@ import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 public class SLRuleRegistry extends RuleRegistry {
 
 	public SLRuleRegistry(File specFile) {
+		init();
 		populate(this, specFile);
+	}
+
+	public void init() {
+		registerRule(new rule_onReturn_1());
 	}
 
 }

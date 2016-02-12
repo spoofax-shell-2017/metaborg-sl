@@ -79,10 +79,19 @@ rules
     	__Block2Stmt__(else) :: C', E' --> _ :: C'', E'';
     	U() => u
     }.
-    
-  Block(stmt) --> stmt.
   
-  EmptyBlock() --> U().
+  __Block2Stmt__(b) --> U()
+  where
+    b => Block(stmt)
+    < {
+      stmt --> _
+    } + {
+      true == true
+    }.
+  
+//  Block(stmt) --> stmt.
+//  
+//  EmptyBlock() --> U().
   
   Stmt(e) --> U()
   where

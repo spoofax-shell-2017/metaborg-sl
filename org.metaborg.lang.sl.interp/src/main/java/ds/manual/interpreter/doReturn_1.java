@@ -1,5 +1,6 @@
 package ds.manual.interpreter;
 
+import org.metaborg.lang.sl.interpreter.natives.ReturnException;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 import org.spoofax.interpreter.terms.ITermFactory;
 
