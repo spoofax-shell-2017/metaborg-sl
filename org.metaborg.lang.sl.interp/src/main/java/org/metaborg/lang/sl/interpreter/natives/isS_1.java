@@ -1,6 +1,6 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
-import org.metaborg.lang.sl.interpreter.generated.terms.String_1_Term;
+import org.metaborg.lang.sl.interpreter.generated.terms.StringV_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 
 import com.oracle.truffle.api.dsl.Fallback;
@@ -17,7 +17,7 @@ public abstract class isS_1 extends TermBuild {
 	}
 
 	@Specialization
-	public boolean checkSpecific(String_1_Term s) {
+	public boolean checkSpecific(StringV_1_Term s) {
 		return true;
 	}
 
