@@ -3,6 +3,7 @@ package org.metaborg.lang.sl.interpreter.natives;
 import metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
 
+import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
@@ -37,7 +38,7 @@ public class rule_onReturn_1 extends Rule {
 	}
 
 	@Override
-	public RuleResult execute(VirtualFrame frame) {
+	protected RuleResult executeSafe(VirtualFrame frame) {
 		IConTerm stmt = BuiltinTypesGen.asIConTerm((frame.getArguments()[0]));
 		DynSemContext context = DynSemContext.LANGUAGE
 				.findContext0(DynSemContext.LANGUAGE.createFindContextNode0());
@@ -57,7 +58,10 @@ public class rule_onReturn_1 extends Rule {
 		RuleResult rr = null;
 		try {
 			CallTarget ct = r.getCallTarget();
-			rr = (RuleResult) ct.call(args);
+			RuleResult rrSub = (RuleResult) ct.call(args);
+			rr = new RuleResult();
+			rr.result = new NullV_0_Term();
+			rr.components = rrSub.components;
 		} catch (ReturnException rex) {
 			rr = rex.getResult();
 		}
