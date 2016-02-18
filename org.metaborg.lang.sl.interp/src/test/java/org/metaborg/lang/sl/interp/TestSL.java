@@ -23,7 +23,6 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 import org.metaborg.lang.sl.interpreter.generated.SLLanguage;
 import org.metaborg.lang.sl.interpreter.generated.TypesGen;
-import org.metaborg.lang.sl.interpreter.generated.terms.IVTerm;
 import org.metaborg.lang.sl.interpreter.natives.ObjData;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 
@@ -69,9 +68,12 @@ public class TestSL {
 				outputStream, errorStream);
 
 		RuleResult res = v.as(RuleResult.class);
-		IVTerm val = TypesGen.asIVTerm(res.result);
-		if (!TypesGen.isNullV_0_Term(val)) {
-			outputStream.write((ObjData.v2s_1(val) + "\n").getBytes());
+
+		Object val = res.result;
+
+		if (TypesGen.isIVTerm(val) && !TypesGen.isNullV_0_Term(val)) {
+			outputStream.write((ObjData.v2s_1(TypesGen.asIVTerm(val)) + "\n")
+					.getBytes());
 		}
 
 		outputStream.flush();
