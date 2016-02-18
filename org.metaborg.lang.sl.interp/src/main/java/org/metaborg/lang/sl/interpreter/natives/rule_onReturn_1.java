@@ -38,7 +38,7 @@ public class rule_onReturn_1 extends Rule {
 	}
 
 	@Override
-	protected RuleResult executeSafe(VirtualFrame frame) {
+	public RuleResult execute(VirtualFrame frame) {
 		IConTerm stmt = BuiltinTypesGen.asIConTerm((frame.getArguments()[0]));
 		DynSemContext context = DynSemContext.LANGUAGE
 				.findContext0(DynSemContext.LANGUAGE.createFindContextNode0());

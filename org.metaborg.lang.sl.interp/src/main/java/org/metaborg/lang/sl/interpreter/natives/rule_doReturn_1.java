@@ -32,7 +32,7 @@ public class rule_doReturn_1 extends Rule {
 	}
 
 	@Override
-	protected RuleResult executeSafe(VirtualFrame frame) {
+	public RuleResult execute(VirtualFrame frame) {
 		RuleResult rr = new RuleResult();
 		rr.result = frame.getArguments()[0];
 		rr.components = new Object[2];
