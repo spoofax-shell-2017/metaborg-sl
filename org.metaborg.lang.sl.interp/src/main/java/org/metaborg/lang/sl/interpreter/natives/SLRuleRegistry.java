@@ -13,6 +13,7 @@ public class SLRuleRegistry extends RuleRegistry {
 
 	public void init() {
 		registerRule(new rule_onReturn_1());
+		registerRule(new rule_doReturn_1());
 	}
 
 }
