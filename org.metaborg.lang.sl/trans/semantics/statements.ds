@@ -31,28 +31,28 @@ rules
  
 
 signature
-  sorts
-    RepeatingNode
+//  sorts
+//    RepeatingNode
   
-  native constructors
-    SLRepeatingNode : Expr * V * Block -> RepeatingNode
+//  native constructors
+//    SLRepeatingNode : Expr * V * Block -> RepeatingNode
   
-  arrows
-    RepeatingNode --> U
+//  arrows
+//    RepeatingNode --> U
   
   sorts
     BreakHandler
     ContinueHandler
     
-  native constructors
+  constructors
     doBreak : BreakHandler // will throw a BreakException with the value and the semantic components 
     onBreak : Stmt -> Stmt // will handle a BreakException with the value and the semantic components
     doContinue : ContinueHandler // will throw a ContinueException with the value and the semantic components
     onContinue : Stmt -> Stmt // will handle a ContinueException with the value and the semantic components  
 
    arrows
-     BreakHandler --> U
-     ContinueHandler --> U
+     BreakHandler --> U // natively implemented
+     ContinueHandler --> U // natively implemented
 
 rules
   
