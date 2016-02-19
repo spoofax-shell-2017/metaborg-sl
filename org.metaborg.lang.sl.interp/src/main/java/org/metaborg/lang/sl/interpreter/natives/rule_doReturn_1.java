@@ -34,9 +34,10 @@ public class rule_doReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		RuleResult rr = new RuleResult();
-		rr.result = frame.getArguments()[1];
+		Object[] arguments = frame.getArguments();
+		rr.result = arguments[1];
 		rr.components = new Object[2];
-		System.arraycopy(frame.getArguments(), 1, rr.components, 0, 2);
+		System.arraycopy(arguments, 2, rr.components, 0, arguments.length - 2);
 
 		throw new ReturnException(rr);
 	}
