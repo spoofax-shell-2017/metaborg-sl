@@ -1,5 +1,7 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
+import java.util.Arrays;
+
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 
@@ -36,8 +38,7 @@ public class rule_doReturn_1 extends Rule {
 		RuleResult rr = new RuleResult();
 		Object[] arguments = frame.getArguments();
 		rr.result = arguments[1];
-		rr.components = new Object[2];
-		System.arraycopy(arguments, 2, rr.components, 0, arguments.length - 2);
+		rr.components = Arrays.copyOfRange(arguments, 2, arguments.length);
 
 		throw new ReturnException(rr);
 	}
