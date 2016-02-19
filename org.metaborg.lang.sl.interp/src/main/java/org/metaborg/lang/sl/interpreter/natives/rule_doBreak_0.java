@@ -8,22 +8,22 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
-public class rule_doReturn_1 extends Rule {
+public class rule_doBreak_0 extends Rule {
 
-	public rule_doReturn_1() {
-		super(SourceSection.createUnavailable("Rule", "doReturn"),
+	public rule_doBreak_0() {
+		super(SourceSection.createUnavailable("Rule", "doBreak"),
 				FrameDescriptor.create());
 		Truffle.getRuntime().createCallTarget(this);
 	}
 
 	@Override
 	public int getArity() {
-		return 1;
+		return 0;
 	}
 
 	@Override
 	public String getConstructor() {
-		return "doReturn";
+		return "doBreak";
 	}
 
 	@Override
@@ -33,11 +33,9 @@ public class rule_doReturn_1 extends Rule {
 
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
-		RuleResult rr = new RuleResult();
-		rr.result = frame.getArguments()[1];
-		rr.components = new Object[2];
-		System.arraycopy(frame.getArguments(), 1, rr.components, 0, 2);
 
-		throw new ReturnException(rr);
+		Object[] components = new Object[2];
+		System.arraycopy(frame.getArguments(), 0, components, 0, 2);
+		throw new BreakException(components);
 	}
 }

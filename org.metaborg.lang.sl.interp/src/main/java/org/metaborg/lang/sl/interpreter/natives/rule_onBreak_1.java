@@ -16,10 +16,10 @@ import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
-public class rule_onReturn_1 extends Rule {
+public class rule_onBreak_1 extends Rule {
 
-	public rule_onReturn_1() {
-		super(SourceSection.createUnavailable("Rule", "onReturn"),
+	public rule_onBreak_1() {
+		super(SourceSection.createUnavailable("Rule", "onContinue"),
 				FrameDescriptor.create());
 		Truffle.getRuntime().createCallTarget(this);
 	}
@@ -31,7 +31,7 @@ public class rule_onReturn_1 extends Rule {
 
 	@Override
 	public String getConstructor() {
-		return "onReturn";
+		return "onContinue";
 	}
 
 	@Override
@@ -42,8 +42,8 @@ public class rule_onReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
-		IConTerm stmt = BuiltinTypesGen.asIConTerm(arguments[1]);
 
+		IConTerm stmt = BuiltinTypesGen.asIConTerm((arguments[1]));
 		DynSemContext context = DynSemContext.LANGUAGE
 				.findContext0(DynSemContext.LANGUAGE.createFindContextNode0());
 
@@ -60,9 +60,12 @@ public class rule_onReturn_1 extends Rule {
 			rr = new RuleResult();
 			rr.result = new NullV_0_Term();
 			rr.components = rrSub.components;
-		} catch (ReturnException rex) {
-			rr = rex.getResult();
+		} catch (BreakException bex) {
+			rr = new RuleResult();
+			rr.result = new NullV_0_Term();
+			rr.components = bex.getComponents();
 		}
 		return rr;
 	}
+
 }

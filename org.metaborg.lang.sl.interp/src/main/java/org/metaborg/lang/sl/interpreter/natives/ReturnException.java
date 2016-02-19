@@ -10,7 +10,7 @@ public class ReturnException extends ControlFlowException {
 	 * 
 	 */
 	private static final long serialVersionUID = 3217000063919712695L;
-	private RuleResult result;
+	private final RuleResult result;
 
 	public ReturnException(RuleResult result) {
 		this.result = result;
