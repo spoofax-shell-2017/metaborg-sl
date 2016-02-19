@@ -17,7 +17,8 @@ public class ObjData {
 	private Map<String, IVTerm> store = new HashMap<>();
 
 	public IVTerm writeProp(String prop, IVTerm v) {
-		return store.put(prop, v);
+		store.put(prop, v);
+		return v;
 	}
 
 	public IVTerm readProp(String prop) {
