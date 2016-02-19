@@ -80,13 +80,15 @@ rules
     	U() => u
     }.
   
-  __Block2Stmt__(b) --> U()
+  __Block2Stmt__(b)  :: C, E --> U() :: C', E'
   where
     b => Block(stmt)
     < {
-      stmt --> _
+      stmt :: C, E --> _  :: C', E'      
     } + {
-      true == true
+      true == true;
+      C => C';
+      E => E'
     }.
   
 //  Block(stmt) --> stmt.
