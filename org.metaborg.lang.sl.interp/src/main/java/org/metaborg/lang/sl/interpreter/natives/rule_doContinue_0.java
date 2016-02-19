@@ -35,7 +35,7 @@ public class rule_doContinue_0 extends Rule {
 	public RuleResult execute(VirtualFrame frame) {
 
 		Object[] components = new Object[2];
-		System.arraycopy(frame.getArguments(), 0, components, 0, 2);
+		System.arraycopy(frame.getArguments(), 1, components, 0, 2);
 		throw new ContinueException(components);
 	}
 }
