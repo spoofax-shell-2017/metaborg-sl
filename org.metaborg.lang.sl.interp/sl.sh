@@ -7,19 +7,18 @@ BASE_DIR=`pwd`
 GRAAL_FLAGS='
   -ea
   -G:TruffleCompilationThreshold=10
+  -G:+TraceTruffleCompilation
+  -G:+TraceTrufflePerformanceWarnings
+  -G:+TraceTrufflePerformanceWarnings
   '
-#  -G:+TraceTruffleCompilation
-#  -G:+TraceTrufflePerformanceWarnings
-#  -G:+FailedLoopExplosionIsFatal
-#  -G:+TruffleCompilationExceptionsAreFatal
+  # -G:+FailedLoopExplosionIsFatal
+  # -G:+TruffleCompilationExceptionsAreFatal
 
 GRAAL_SUITE='/Users/vladvergu/tud/slde/software/truffle/graal-root/graal-compiler'
 
 CLASSPATH="$1"
 
 cp data.csv.model $3
-
-echo $CLASSPATH
 
 # COUNTER=0
 # while [  $COUNTER -lt 2 ]; do
@@ -33,8 +32,8 @@ echo $CLASSPATH
 cp data.csv.model $4
 # COUNTER=0
 # while [  $COUNTER -lt 10 ]; do
- # java -server -Xss32m \
-  #  -Xbootclasspath/a:target/classes:$CLASSPATH \
-  #  org.metaborg.lang.sl.interpreter.generated.BenchmarkRunner "$2" "$4"
+ java -server -Xss32m \
+   -Xbootclasspath/a:target/classes:$CLASSPATH \
+   org.metaborg.lang.sl.interpreter.generated.BenchmarkRunner "$2" "$4"
  # let COUNTER=COUNTER+1
 # done
