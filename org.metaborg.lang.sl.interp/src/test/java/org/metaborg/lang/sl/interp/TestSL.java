@@ -60,10 +60,36 @@ public class TestSL {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testEagerEval() throws Exception {
 
 		RuleResult res = SLLanguage.evaluate(testData.programFile, inputStream,
 				outputStream, errorStream);
+
+		Object val = res.result;
+
+		if (TypesGen.isIVTerm(val) && !TypesGen.isNullV_0_Term(val)) {
+			outputStream.write((ObjData.v2s_1(TypesGen.asIVTerm(val)) + "\n")
+					.getBytes());
+		}
+
+		outputStream.flush();
+		errorStream.flush();
+
+		String expectedOutput = IOUtils.toString(new FileInputStream(
+				testData.outputFile));
+		String actualOutput = new String(outputStream.toByteArray());
+
+		if (errorStream.size() > 0) {
+			actualOutput = new String(errorStream.toByteArray()) + "\n";
+		}
+		assertEquals(expectedOutput, actualOutput);
+	}
+
+	@Test
+	public void testDeferredEval() throws Exception {
+
+		RuleResult res = SLLanguage.getCallable(testData.programFile,
+				inputStream, outputStream, errorStream).call();
 
 		Object val = res.result;
 
