@@ -26,8 +26,6 @@ import org.metaborg.lang.sl.interpreter.generated.TypesGen;
 import org.metaborg.lang.sl.interpreter.natives.ObjData;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 
-import com.oracle.truffle.api.vm.PolyglotEngine.Value;
-
 @RunWith(Parameterized.class)
 public class TestSL {
 
@@ -64,10 +62,8 @@ public class TestSL {
 	@Test
 	public void test() throws Exception {
 
-		Value v = SLLanguage.evaluate(testData.programFile, inputStream,
+		RuleResult res = SLLanguage.evaluate(testData.programFile, inputStream,
 				outputStream, errorStream);
-
-		RuleResult res = v.as(RuleResult.class);
 
 		Object val = res.result;
 
