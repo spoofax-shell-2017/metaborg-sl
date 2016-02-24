@@ -6,7 +6,7 @@ BASE_DIR=`pwd`
 
 GRAAL_FLAGS='
   -ea
-  -G:TruffleCompilationThreshold=10
+  -G:TruffleCompilationThreshold=2
   -G:+TraceTruffleCompilation
   -G:+TraceTrufflePerformanceWarnings
   -G:+TraceTrufflePerformanceWarnings
