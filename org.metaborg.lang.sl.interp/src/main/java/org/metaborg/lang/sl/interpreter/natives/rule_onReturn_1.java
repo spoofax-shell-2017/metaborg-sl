@@ -10,9 +10,11 @@ import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
 
 import com.oracle.truffle.api.CallTarget;
+import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onReturn_1 extends Rule {
@@ -21,6 +23,15 @@ public class rule_onReturn_1 extends Rule {
 		super(SourceSection.createUnavailable("Rule", "onReturn"),
 				FrameDescriptor.create());
 		Truffle.getRuntime().createCallTarget(this);
+	}
+
+	@CompilationFinal private Node createContext;
+
+	protected DynSemContext getContext() {
+		if (createContext == null) {
+			createContext = DynSemContext.LANGUAGE.createFindContextNode0();
+		}
+		return DynSemContext.LANGUAGE.findContext0(createContext);
 	}
 
 	@Override
@@ -43,8 +54,7 @@ public class rule_onReturn_1 extends Rule {
 		Object[] arguments = frame.getArguments();
 		IConTerm stmt = BuiltinTypesGen.asIConTerm(arguments[1]);
 
-		DynSemContext context = DynSemContext.LANGUAGE
-				.findContext0(DynSemContext.LANGUAGE.createFindContextNode0());
+		DynSemContext context = getContext();
 
 		Rule r = context.getRuleRegistry().lookupRule(getName(),
 				stmt.constructor(), stmt.arity());
