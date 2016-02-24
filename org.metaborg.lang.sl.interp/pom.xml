@@ -35,6 +35,8 @@
 						<argument>${inputfile}</argument>
 						<arguments>${graaldatafile}</arguments>
 						<arguments>${jdkdatafile}</arguments>
+						<arguments>${countwarmups}</arguments>
+						<arguments>${countrepeats}</arguments>
 					</arguments>
 				</configuration>
 			</plugin>
