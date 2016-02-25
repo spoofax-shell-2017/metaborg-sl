@@ -18,7 +18,7 @@ import com.oracle.truffle.api.source.SourceSection;
 public class rule_onContinue_1 extends Rule {
 
 	public rule_onContinue_1() {
-		super(SourceSection.createUnavailable("Rule", "onBreak"),
+		super(SourceSection.createUnavailable("Rule", "onContinue"),
 				FrameDescriptor.create());
 		Truffle.getRuntime().createCallTarget(this);
 	}
