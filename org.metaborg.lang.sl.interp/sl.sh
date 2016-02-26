@@ -7,13 +7,16 @@ BASE_DIR=`pwd`
 GRAAL_FLAGS='
   -ea
   -G:TruffleCompilationThreshold=2
-  -G:+TraceTruffleCompilation
-  -G:+TraceTrufflePerformanceWarnings
-  -G:+TraceTrufflePerformanceWarnings
+  -G:TruffleMaximumRecursiveInlining=10
   '
-#  -G:+FailedLoopExplosionIsFatal
-#  -G:+TruffleCompilationExceptionsAreFatal
-#  '
+#   -G:+TraceTruffleCompilation
+#   -G:+TraceTruffleCompilationCallTree
+#   -G:+TraceTruffleInlining
+#   -G:+TraceTruffleSplitting
+#   -G:+TraceTrufflePerformanceWarnings
+#   -G:+FailedLoopExplosionIsFatal
+#   -G:+TruffleCompilationExceptionsAreFatal
+# '
 
 GRAAL_SUITE='/Users/vladvergu/tud/slde/software/truffle/graal-root/graal-compiler'
 
