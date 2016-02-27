@@ -1,6 +1,8 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
@@ -23,7 +25,8 @@ public class readln_0 extends TermBuild {
 	public String executeString(VirtualFrame frame) {
 		DynSemContext ctx = getContext();
 		try {
-			return ctx.getInput().readLine();
+			return new BufferedReader(new InputStreamReader(ctx.getInput()))
+					.readLine();
 		} catch (IOException e) {
 			throw new IllegalStateException("Failed to read input stream", e);
 		}

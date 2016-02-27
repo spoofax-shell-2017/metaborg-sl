@@ -4,6 +4,7 @@ import java.math.BigInteger;
 
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -15,6 +16,11 @@ public class nanoTime_0 extends TermBuild {
 
 	@Override
 	public Object executeGeneric(VirtualFrame frame) {
+		return doLogic();
+	}
+
+	@TruffleBoundary
+	private BigInteger doLogic() {
 		return BigInteger.valueOf(System.nanoTime());
 	}
 

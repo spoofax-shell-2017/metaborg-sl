@@ -3,7 +3,6 @@ package org.metaborg.lang.sl.interpreter.natives;
 import java.nio.charset.Charset;
 
 import org.metaborg.lang.sl.interpreter.generated.terms.IFunDefTerm;
-import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 
@@ -22,7 +21,7 @@ public abstract class parseFunDef_1 extends TermBuild {
 
 	@Specialization
 	public IFunDefTerm doEvaluated(String s) {
-		IStrategoTerm funDefTerm = DynSemContext.LANGUAGE.getParser().parse(
+		IStrategoTerm funDefTerm = getContext().getParser().parse(
 				Source.fromBytes(s.getBytes(), "Dynamically defined function",
 						Charset.defaultCharset()), "FunDef");
 
