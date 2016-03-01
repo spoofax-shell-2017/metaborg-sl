@@ -14,10 +14,10 @@ import java.lang.ref.WeakReference;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail69:
+    Fail67:
     { 
       if(term.getTermType() != IStrategoTerm.APPL || desugar._consSLReadln_0 != ((IStrategoAppl)term).getConstructor())
-        break Fail69;
+        break Fail67;
       if(true)
         return term;
     }

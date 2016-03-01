@@ -1,5 +1,5 @@
-desugar/: \
+/Users/vladvergu/tud/slde/software/languages/nonmeta/metaborg-sl-core/org.metaborg.lang.sl.interp/src/main/java/org/metaborg/lang/sl/desugar/: \
 	 \
-	../../../../../../org.metaborg.lang.sl//src-gen/signatures/Common-sig.str \
-	../../../../../../org.metaborg.lang.sl//src-gen/signatures/SL-sig.str \
-	../../../../../../org.metaborg.lang.sl/trans/desugar.str
+	../src-gen//signatures/Common-sig.str \
+	..//src-gen/signatures/SL-sig.str \
+	./desugar.str

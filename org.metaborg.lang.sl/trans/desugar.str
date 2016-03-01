@@ -62,7 +62,7 @@ rules
     FunCall(name, args) -> FunCallDesug(name, <desugar-args> args)
   
   desugar:
-    IfNoElse(cond, block) -> IfThenElse(cond, block, EmptyBlock())
+    IfNoElse(cond, block) -> IfThenElse(cond, block, Block([]))
   
   desugar-args:
     [] -> NoArgSeq()

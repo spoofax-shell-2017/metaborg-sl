@@ -30,7 +30,9 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constSLNanoTime0;
 
-  protected static IStrategoTerm constEmptyBlock0;
+  protected static IStrategoTerm constBlock0;
+
+  protected static IStrategoTerm constNil0;
 
   protected static IStrategoTerm constFunCallDesug0;
 
@@ -95,10 +97,6 @@ import java.lang.ref.WeakReference;
   public static IStrategoConstructor _consWhile_2;
 
   public static IStrategoConstructor _consBlock_1;
-
-  public static IStrategoConstructor _consEmptyBlock_0;
-
-  public static IStrategoConstructor _consSeq_2;
 
   public static IStrategoConstructor _consStmt_1;
 
@@ -226,8 +224,6 @@ import java.lang.ref.WeakReference;
     _consIfNoElse_2 = termFactory.makeConstructor("IfNoElse", 2);
     _consWhile_2 = termFactory.makeConstructor("While", 2);
     _consBlock_1 = termFactory.makeConstructor("Block", 1);
-    _consEmptyBlock_0 = termFactory.makeConstructor("EmptyBlock", 0);
-    _consSeq_2 = termFactory.makeConstructor("Seq", 2);
     _consStmt_1 = termFactory.makeConstructor("Stmt", 1);
     _consMethodCall_3 = termFactory.makeConstructor("MethodCall", 3);
     _consPropWrite_3 = termFactory.makeConstructor("PropWrite", 3);
@@ -265,7 +261,8 @@ import java.lang.ref.WeakReference;
     const2 = termFactory.makeString("main");
     constNoArgSeq0 = termFactory.makeAppl(desugar._consNoArgSeq_0, NO_TERMS);
     constFunCallDesug0 = termFactory.makeAppl(desugar._consFunCallDesug_2, new IStrategoTerm[]{desugar.const2, desugar.constNoArgSeq0});
-    constEmptyBlock0 = termFactory.makeAppl(desugar._consEmptyBlock_0, NO_TERMS);
+    constNil0 = (IStrategoTerm)termFactory.makeList(Term.NO_TERMS);
+    constBlock0 = termFactory.makeAppl(desugar._consBlock_1, new IStrategoTerm[]{desugar.constNil0});
     constSLNanoTime0 = termFactory.makeAppl(desugar._consSLNanoTime_0, NO_TERMS);
     constSLNewObject0 = termFactory.makeAppl(desugar._consSLNewObject_0, NO_TERMS);
     constSLReadln0 = termFactory.makeAppl(desugar._consSLReadln_0, NO_TERMS);

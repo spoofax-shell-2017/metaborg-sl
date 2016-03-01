@@ -26,9 +26,9 @@ import java.lang.ref.WeakReference;
         { 
           Fail4:
           { 
-            IStrategoTerm c_4 = null;
-            c_4 = term.getSubterm(0);
-            term = desugar_funcs_0_0.instance.invoke(context, c_4);
+            IStrategoTerm a_4 = null;
+            a_4 = term.getSubterm(0);
+            term = desugar_funcs_0_0.instance.invoke(context, a_4);
             if(term == null)
               break Fail4;
             term = termFactory.makeAppl(desugar._consProgramDesug_2, new IStrategoTerm[]{term, desugar.constFunCallDesug0});
@@ -43,16 +43,16 @@ import java.lang.ref.WeakReference;
           { 
             Fail5:
             { 
+              IStrategoTerm v_3 = null;
+              IStrategoTerm w_3 = null;
               IStrategoTerm x_3 = null;
-              IStrategoTerm y_3 = null;
-              IStrategoTerm z_3 = null;
-              x_3 = term.getSubterm(0);
-              y_3 = term.getSubterm(1);
-              z_3 = term.getSubterm(2);
-              term = desugar_params_0_0.instance.invoke(context, y_3);
+              v_3 = term.getSubterm(0);
+              w_3 = term.getSubterm(1);
+              x_3 = term.getSubterm(2);
+              term = desugar_params_0_0.instance.invoke(context, w_3);
               if(term == null)
                 break Fail5;
-              term = termFactory.makeAppl(desugar._consFunDefDesug_3, new IStrategoTerm[]{x_3, term, z_3});
+              term = termFactory.makeAppl(desugar._consFunDefDesug_3, new IStrategoTerm[]{v_3, term, x_3});
               if(true)
                 break Success2;
             }
@@ -64,14 +64,14 @@ import java.lang.ref.WeakReference;
             { 
               Fail6:
               { 
-                IStrategoTerm t_3 = null;
-                IStrategoTerm u_3 = null;
-                t_3 = term.getSubterm(0);
-                u_3 = term.getSubterm(1);
-                term = desugar_args_0_0.instance.invoke(context, u_3);
+                IStrategoTerm r_3 = null;
+                IStrategoTerm s_3 = null;
+                r_3 = term.getSubterm(0);
+                s_3 = term.getSubterm(1);
+                term = desugar_args_0_0.instance.invoke(context, s_3);
                 if(term == null)
                   break Fail6;
-                term = termFactory.makeAppl(desugar._consFunCallDesug_2, new IStrategoTerm[]{t_3, term});
+                term = termFactory.makeAppl(desugar._consFunCallDesug_2, new IStrategoTerm[]{r_3, term});
                 if(true)
                   break Success3;
               }
@@ -83,11 +83,11 @@ import java.lang.ref.WeakReference;
               { 
                 Fail7:
                 { 
-                  IStrategoTerm r_3 = null;
-                  IStrategoTerm s_3 = null;
-                  r_3 = term.getSubterm(0);
-                  s_3 = term.getSubterm(1);
-                  term = termFactory.makeAppl(desugar._consIfThenElse_3, new IStrategoTerm[]{r_3, s_3, desugar.constEmptyBlock0});
+                  IStrategoTerm p_3 = null;
+                  IStrategoTerm q_3 = null;
+                  p_3 = term.getSubterm(0);
+                  q_3 = term.getSubterm(1);
+                  term = termFactory.makeAppl(desugar._consIfThenElse_3, new IStrategoTerm[]{p_3, q_3, desugar.constBlock0});
                   if(true)
                     break Success4;
                 }
@@ -99,16 +99,16 @@ import java.lang.ref.WeakReference;
                 { 
                   Fail8:
                   { 
+                    IStrategoTerm k_3 = null;
+                    IStrategoTerm l_3 = null;
                     IStrategoTerm m_3 = null;
-                    IStrategoTerm n_3 = null;
-                    IStrategoTerm o_3 = null;
-                    m_3 = term.getSubterm(0);
-                    n_3 = term.getSubterm(1);
-                    o_3 = term.getSubterm(2);
-                    term = desugar_args_0_0.instance.invoke(context, o_3);
+                    k_3 = term.getSubterm(0);
+                    l_3 = term.getSubterm(1);
+                    m_3 = term.getSubterm(2);
+                    term = desugar_args_0_0.instance.invoke(context, m_3);
                     if(term == null)
                       break Fail8;
-                    term = termFactory.makeAppl(desugar._consMethodCallDesug_3, new IStrategoTerm[]{m_3, n_3, term});
+                    term = termFactory.makeAppl(desugar._consMethodCallDesug_3, new IStrategoTerm[]{k_3, l_3, term});
                     if(true)
                       break Success5;
                   }
@@ -120,18 +120,18 @@ import java.lang.ref.WeakReference;
                   { 
                     Fail9:
                     { 
-                      IStrategoTerm l_3 = null;
+                      IStrategoTerm j_3 = null;
                       IStrategoTerm arg14 = term.getSubterm(0);
                       if(arg14.getTermType() != IStrategoTerm.STRING || !"defineFunction".equals(((IStrategoString)arg14).stringValue()))
                         break Fail9;
                       IStrategoTerm arg15 = term.getSubterm(1);
                       if(arg15.getTermType() != IStrategoTerm.APPL || desugar._consArgSeq_2 != ((IStrategoAppl)arg15).getConstructor())
                         break Fail9;
-                      l_3 = arg15.getSubterm(0);
+                      j_3 = arg15.getSubterm(0);
                       IStrategoTerm arg16 = arg15.getSubterm(1);
                       if(arg16.getTermType() != IStrategoTerm.APPL || desugar._consNoArgSeq_0 != ((IStrategoAppl)arg16).getConstructor())
                         break Fail9;
-                      term = termFactory.makeAppl(desugar._consSLDefineFunction_1, new IStrategoTerm[]{l_3});
+                      term = termFactory.makeAppl(desugar._consSLDefineFunction_1, new IStrategoTerm[]{j_3});
                       if(true)
                         break Success6;
                     }
@@ -179,18 +179,18 @@ import java.lang.ref.WeakReference;
                         { 
                           Fail12:
                           { 
-                            IStrategoTerm k_3 = null;
+                            IStrategoTerm i_3 = null;
                             IStrategoTerm arg21 = term.getSubterm(0);
                             if(arg21.getTermType() != IStrategoTerm.STRING || !"println".equals(((IStrategoString)arg21).stringValue()))
                               break Fail12;
                             IStrategoTerm arg22 = term.getSubterm(1);
                             if(arg22.getTermType() != IStrategoTerm.APPL || desugar._consArgSeq_2 != ((IStrategoAppl)arg22).getConstructor())
                               break Fail12;
-                            k_3 = arg22.getSubterm(0);
+                            i_3 = arg22.getSubterm(0);
                             IStrategoTerm arg23 = arg22.getSubterm(1);
                             if(arg23.getTermType() != IStrategoTerm.APPL || desugar._consNoArgSeq_0 != ((IStrategoAppl)arg23).getConstructor())
                               break Fail12;
-                            term = termFactory.makeAppl(desugar._consSLPrintln_1, new IStrategoTerm[]{k_3});
+                            term = termFactory.makeAppl(desugar._consSLPrintln_1, new IStrategoTerm[]{i_3});
                             if(true)
                               break Success9;
                           }

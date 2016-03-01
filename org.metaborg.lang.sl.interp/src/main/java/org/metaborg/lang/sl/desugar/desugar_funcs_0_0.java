@@ -30,16 +30,16 @@ import java.lang.ref.WeakReference;
             break Success11;
         }
         term = term22;
-        IStrategoTerm f_4 = null;
-        IStrategoTerm g_4 = null;
+        IStrategoTerm d_4 = null;
+        IStrategoTerm e_4 = null;
         if(term.getTermType() != IStrategoTerm.LIST || ((IStrategoList)term).isEmpty())
           break Fail14;
-        f_4 = ((IStrategoList)term).head();
-        g_4 = ((IStrategoList)term).tail();
-        term = this.invoke(context, g_4);
+        d_4 = ((IStrategoList)term).head();
+        e_4 = ((IStrategoList)term).tail();
+        term = this.invoke(context, e_4);
         if(term == null)
           break Fail14;
-        term = termFactory.makeAppl(desugar._consFunDefSeq_2, new IStrategoTerm[]{f_4, term});
+        term = termFactory.makeAppl(desugar._consFunDefSeq_2, new IStrategoTerm[]{d_4, term});
       }
       context.popOnSuccess();
       if(true)

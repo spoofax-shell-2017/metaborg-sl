@@ -18,45 +18,45 @@ import java.lang.ref.WeakReference;
     context.push("desugar_editor_0_0");
     Fail0:
     { 
+      IStrategoTerm z_2 = null;
+      IStrategoTerm a_3 = null;
       IStrategoTerm b_3 = null;
       IStrategoTerm c_3 = null;
       IStrategoTerm d_3 = null;
-      IStrategoTerm e_3 = null;
-      IStrategoTerm f_3 = null;
       if(term.getTermType() != IStrategoTerm.TUPLE || term.getSubtermCount() != 5)
         break Fail0;
-      d_3 = term.getSubterm(2);
-      b_3 = term.getSubterm(3);
-      f_3 = term;
+      b_3 = term.getSubterm(2);
+      z_2 = term.getSubterm(3);
+      d_3 = term;
       IStrategoTerm term0 = term;
       Success0:
       { 
         Fail1:
         { 
-          IStrategoTerm h_3 = null;
-          h_3 = b_3;
-          term = guarantee_extension_0_1.instance.invoke(context, h_3, desugar.const0);
+          IStrategoTerm f_3 = null;
+          f_3 = z_2;
+          term = guarantee_extension_0_1.instance.invoke(context, f_3, desugar.const0);
+          if(term == null)
+            break Fail1;
+          a_3 = term;
+          term = desugar_all_0_0.instance.invoke(context, b_3);
           if(term == null)
             break Fail1;
           c_3 = term;
-          term = desugar_all_0_0.instance.invoke(context, d_3);
-          if(term == null)
-            break Fail1;
-          e_3 = term;
           if(true)
             break Success0;
         }
         term = term0;
-        IStrategoTerm j_3 = null;
-        j_3 = term;
-        term = report_with_failure_0_1.instance.invoke(context, j_3, desugar.const1);
+        IStrategoTerm h_3 = null;
+        h_3 = term;
+        term = report_with_failure_0_1.instance.invoke(context, h_3, desugar.const1);
         if(term == null)
           break Fail0;
       }
-      term = f_3;
-      if(c_3 == null || e_3 == null)
+      term = d_3;
+      if(a_3 == null || c_3 == null)
         break Fail0;
-      term = termFactory.makeTuple(c_3, e_3);
+      term = termFactory.makeTuple(a_3, c_3);
       context.popOnSuccess();
       if(true)
         return term;

@@ -73,34 +73,25 @@ rules
     e :: C, E --> BoolV(bv) :: C', E';
     bv == true
     < {
-    	__Block2Stmt__(then) :: C', E' --> _ :: C'', E'';
+    	then :: C', E' --> _ :: C'', E'';
     	U() => u
     } + {
-    	__Block2Stmt__(else) :: C', E' --> _ :: C'', E'';
+    	else :: C', E' --> _ :: C'', E'';
     	U() => u
     }.
-  
-  __Block2Stmt__(b)  :: C, E --> U() :: C', E'
-  where
-    b => Block(stmt)
-    < {
-      stmt :: C, E --> _  :: C', E'      
-    } + {
-      true == true;
-      C => C';
-      E => E'
-    }.
-  
-//  Block(stmt) --> stmt.
-//  
-//  EmptyBlock() --> U().
   
   Stmt(e) --> U()
   where
     e --> _.
-  
-  Seq(stmt1, stmt2) --> U()
+    
+  Block(ss) :: C, E --> U() :: C'', E''
   where
-    stmt1 --> _;
-    stmt2 --> _.
-  
+    ss => [s | xs]
+    < {
+      s  :: C, E --> _ :: C', E';
+      __Block2Stmt__(Block(xs)) :: C', E' --> _ :: C'', E''
+    } + {
+      C => C'';
+      E => E''
+    }.
+

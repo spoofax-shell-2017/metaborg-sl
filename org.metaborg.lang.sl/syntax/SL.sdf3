@@ -57,21 +57,11 @@ context-free syntax
 
   Stmt.Stmt = [[Expr];]
   
-  Stmt.Seq  = [
-    [Stmt]
-    [Stmt]
-  ] {left}
-
   Stmt = Block
-
-  Block.EmptyBlock = [
-    {
-    }
-  ]
 
   Block.Block = [
     {
-      [Stmt]
+      [{Stmt "\n"}*]
     }
   ]
 
@@ -102,5 +92,4 @@ context-free priorities
   > {non-assoc: Expr.Eq Expr.Lt Expr.Lte Expr.Neq Expr.Gt Expr.Gte}
   > {left: Expr.Add Expr.Sub Expr.Or}
   > {right: Expr.VarWrite Expr.PropWrite}
-  > {left: Stmt.Seq}
 
