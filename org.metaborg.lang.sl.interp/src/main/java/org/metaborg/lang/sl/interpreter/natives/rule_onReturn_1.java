@@ -5,8 +5,8 @@ import java.util.Arrays;
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.ReductionDispatch;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.ReductionDispatchNodeGen;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.ConReductionDispatch;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.ConReductionDispatchNodeGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
 
@@ -17,24 +17,15 @@ import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onReturn_1 extends Rule {
 
-	@Child protected ReductionDispatch dispatchNode;
+	@Child protected ConReductionDispatch dispatchNode;
 
 	public rule_onReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "onReturn"),
 				FrameDescriptor.create());
-		this.dispatchNode = ReductionDispatchNodeGen.create(getName(),
+		this.dispatchNode = ConReductionDispatchNodeGen.create(getName(),
 				getSourceSection());
 		Truffle.getRuntime().createCallTarget(this);
 	}
-
-	// @CompilationFinal private Node createContext;
-	//
-	// protected DynSemContext getContext() {
-	// if (createContext == null) {
-	// createContext = DynSemContext.LANGUAGE.createFindContextNode0();
-	// }
-	// return DynSemContext.LANGUAGE.findContext0(createContext);
-	// }
 
 	@Override
 	public int getArity() {

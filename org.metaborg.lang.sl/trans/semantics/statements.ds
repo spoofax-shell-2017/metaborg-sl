@@ -83,15 +83,43 @@ rules
   Stmt(e) --> U()
   where
     e --> _.
-    
-  Block(ss) :: C, E --> U() :: C'', E''
+  
+  __Block2Stmt__(Block(ss)) --> U()
   where
-    ss => [s | xs]
+    ss --> _.
+  
+//  __Block2Stmt__(Block(ss)) :: C, E --> U() :: C'', E''
+//  where
+//    ss => [s | xs]
+//    < {
+//      s  :: C, E --> _ :: C', E';
+//      __Block2Stmt__(Block(xs)) :: C', E' --> _ :: C'', E''
+//    } + {
+//      C => C'';
+//      E => E''
+//    }.
+
+signature
+  arrows
+    List(Stmt) --> U
+
+rules
+
+  stmts : List(Stmt) :: C, E --> U() :: C'', E''
+  where
+    stmts => [s | xs]
     < {
-      s  :: C, E --> _ :: C', E';
-      __Block2Stmt__(Block(xs)) :: C', E' --> _ :: C'', E''
+      s :: C, E --> _ :: C', E';
+      xs :: C', E' --> _ :: C'', E''
     } + {
       C => C'';
       E => E''
     }.
+
+//  [] : List(Stmt) --> U().
+//  
+//  [s | xs] : List(Stmt) --> U()
+//  where
+//    s --> _;
+//    xs --> _.
 
