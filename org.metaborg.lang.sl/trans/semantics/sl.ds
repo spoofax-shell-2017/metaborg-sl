@@ -14,9 +14,9 @@ signature
 
 rules // loading and init
 
-  ProgramDesug(fdefseq, e) -init-> v
+  ProgramDesug(fdefs, e) -init-> v
   where
-    fdefseq :: C C({}), E {} -load-> _ :: C C(E), E';
+    fdefs :: C C({}), E {} -load-> _ :: C C(E), E';
     e :: C C(E), E' --> v :: C _, E _.
 
 

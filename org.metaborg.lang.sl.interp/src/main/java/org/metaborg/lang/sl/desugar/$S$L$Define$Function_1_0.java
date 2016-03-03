@@ -12,23 +12,23 @@ import java.lang.ref.WeakReference;
 { 
   public static $S$L$Define$Function_1_0 instance = new $S$L$Define$Function_1_0();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy g_7)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy a_7)
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("SLDefineFunction_1_0");
-    Fail63:
+    Fail61:
     { 
-      IStrategoTerm w_75 = null;
-      IStrategoTerm v_75 = null;
+      IStrategoTerm q_75 = null;
+      IStrategoTerm p_75 = null;
       if(term.getTermType() != IStrategoTerm.APPL || desugar._consSLDefineFunction_1 != ((IStrategoAppl)term).getConstructor())
-        break Fail63;
-      v_75 = term.getSubterm(0);
+        break Fail61;
+      p_75 = term.getSubterm(0);
       IStrategoList annos35 = term.getAnnotations();
-      w_75 = annos35;
-      term = g_7.invoke(context, v_75);
+      q_75 = annos35;
+      term = a_7.invoke(context, p_75);
       if(term == null)
-        break Fail63;
-      term = termFactory.annotateTerm(termFactory.makeAppl(desugar._consSLDefineFunction_1, new IStrategoTerm[]{term}), checkListAnnos(termFactory, w_75));
+        break Fail61;
+      term = termFactory.annotateTerm(termFactory.makeAppl(desugar._consSLDefineFunction_1, new IStrategoTerm[]{term}), checkListAnnos(termFactory, q_75));
       context.popOnSuccess();
       if(true)
         return term;

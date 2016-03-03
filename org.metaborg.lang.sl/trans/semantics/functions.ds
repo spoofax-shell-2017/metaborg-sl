@@ -8,18 +8,22 @@ imports
 */
 signature
   arrows
-    FunDefSeq -load-> U
+    List(FunDef) -load-> U
     FunDef -load-> U
     FunDef -fun2val-> V
     
 rules
 
-  NoFunDefSeq() -load-> U().
-
-  FunDefSeq(fundef, fundefs) -load-> U()
+  fundefs : List(FunDef) :: C, E -load-> U() :: C'', E''
   where
-    fundef -load-> _;
-    fundefs -load-> _.
+    fundefs => [f | fs]
+    < {
+      f :: C, E -load-> _ :: C', E';
+      fs :: C', E' -load-> _ :: C'', E''
+    } + {
+      C => C'';
+      E => E''
+    }.
 
   FunDefDesug(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
   where

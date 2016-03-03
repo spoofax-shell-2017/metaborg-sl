@@ -10,15 +10,15 @@ import java.lang.ref.WeakReference;
 
 @SuppressWarnings("all") final class lifted0 extends Strategy 
 { 
-  Strategy o_78;
+  Strategy a_78;
 
   @Override public IStrategoTerm invoke(Context context, IStrategoTerm term)
   { 
-    Fail82:
+    Fail80:
     { 
-      term = m_78.instance.invoke(context, term, o_78);
+      term = y_77.instance.invoke(context, term, a_78);
       if(term == null)
-        break Fail82;
+        break Fail80;
       if(true)
         return term;
     }

@@ -12,37 +12,37 @@ import java.lang.ref.WeakReference;
 { 
   public static $Method$Call$Desug_3_0 instance = new $Method$Call$Desug_3_0();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy d_7, Strategy e_7, Strategy f_7)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy x_6, Strategy y_6, Strategy z_6)
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("MethodCallDesug_3_0");
-    Fail62:
+    Fail60:
     { 
-      IStrategoTerm r_75 = null;
-      IStrategoTerm o_75 = null;
-      IStrategoTerm p_75 = null;
-      IStrategoTerm q_75 = null;
-      IStrategoTerm s_75 = null;
-      IStrategoTerm t_75 = null;
+      IStrategoTerm l_75 = null;
+      IStrategoTerm i_75 = null;
+      IStrategoTerm j_75 = null;
+      IStrategoTerm k_75 = null;
+      IStrategoTerm m_75 = null;
+      IStrategoTerm n_75 = null;
       if(term.getTermType() != IStrategoTerm.APPL || desugar._consMethodCallDesug_3 != ((IStrategoAppl)term).getConstructor())
-        break Fail62;
-      o_75 = term.getSubterm(0);
-      p_75 = term.getSubterm(1);
-      q_75 = term.getSubterm(2);
+        break Fail60;
+      i_75 = term.getSubterm(0);
+      j_75 = term.getSubterm(1);
+      k_75 = term.getSubterm(2);
       IStrategoList annos34 = term.getAnnotations();
-      r_75 = annos34;
-      term = d_7.invoke(context, o_75);
+      l_75 = annos34;
+      term = x_6.invoke(context, i_75);
       if(term == null)
-        break Fail62;
-      s_75 = term;
-      term = e_7.invoke(context, p_75);
+        break Fail60;
+      m_75 = term;
+      term = y_6.invoke(context, j_75);
       if(term == null)
-        break Fail62;
-      t_75 = term;
-      term = f_7.invoke(context, q_75);
+        break Fail60;
+      n_75 = term;
+      term = z_6.invoke(context, k_75);
       if(term == null)
-        break Fail62;
-      term = termFactory.annotateTerm(termFactory.makeAppl(desugar._consMethodCallDesug_3, new IStrategoTerm[]{s_75, t_75, term}), checkListAnnos(termFactory, r_75));
+        break Fail60;
+      term = termFactory.annotateTerm(termFactory.makeAppl(desugar._consMethodCallDesug_3, new IStrategoTerm[]{m_75, n_75, term}), checkListAnnos(termFactory, l_75));
       context.popOnSuccess();
       if(true)
         return term;

@@ -20,8 +20,6 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constNoParamSeq0;
 
-  protected static IStrategoTerm constNoFunDefSeq0;
-
   protected static IStrategoTerm constSLStacktrace0;
 
   protected static IStrategoTerm constSLReadln0;
@@ -267,7 +265,6 @@ import java.lang.ref.WeakReference;
     constSLNewObject0 = termFactory.makeAppl(desugar._consSLNewObject_0, NO_TERMS);
     constSLReadln0 = termFactory.makeAppl(desugar._consSLReadln_0, NO_TERMS);
     constSLStacktrace0 = termFactory.makeAppl(desugar._consSLStacktrace_0, NO_TERMS);
-    constNoFunDefSeq0 = termFactory.makeAppl(desugar._consNoFunDefSeq_0, NO_TERMS);
     constNoParamSeq0 = termFactory.makeAppl(desugar._consNoParamSeq_0, NO_TERMS);
   }
 

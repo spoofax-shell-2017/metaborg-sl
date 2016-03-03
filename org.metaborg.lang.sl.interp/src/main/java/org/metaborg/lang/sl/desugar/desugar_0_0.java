@@ -28,10 +28,7 @@ import java.lang.ref.WeakReference;
           { 
             IStrategoTerm a_4 = null;
             a_4 = term.getSubterm(0);
-            term = desugar_funcs_0_0.instance.invoke(context, a_4);
-            if(term == null)
-              break Fail4;
-            term = termFactory.makeAppl(desugar._consProgramDesug_2, new IStrategoTerm[]{term, desugar.constFunCallDesug0});
+            term = termFactory.makeAppl(desugar._consProgramDesug_2, new IStrategoTerm[]{a_4, desugar.constFunCallDesug0});
             if(true)
               break Success1;
           }

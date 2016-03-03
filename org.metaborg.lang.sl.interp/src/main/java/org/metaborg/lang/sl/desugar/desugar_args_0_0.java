@@ -16,30 +16,30 @@ import java.lang.ref.WeakReference;
   { 
     ITermFactory termFactory = context.getFactory();
     context.push("desugar_args_0_0");
-    Fail18:
+    Fail16:
     { 
-      IStrategoTerm term24 = term;
-      Success13:
+      IStrategoTerm term23 = term;
+      Success12:
       { 
-        Fail19:
+        Fail17:
         { 
           if(term.getTermType() != IStrategoTerm.LIST || !((IStrategoList)term).isEmpty())
-            break Fail19;
+            break Fail17;
           term = desugar.constNoArgSeq0;
           if(true)
-            break Success13;
+            break Success12;
         }
-        term = term24;
-        IStrategoTerm l_4 = null;
-        IStrategoTerm m_4 = null;
+        term = term23;
+        IStrategoTerm f_4 = null;
+        IStrategoTerm g_4 = null;
         if(term.getTermType() != IStrategoTerm.LIST || ((IStrategoList)term).isEmpty())
-          break Fail18;
-        l_4 = ((IStrategoList)term).head();
-        m_4 = ((IStrategoList)term).tail();
-        term = this.invoke(context, m_4);
+          break Fail16;
+        f_4 = ((IStrategoList)term).head();
+        g_4 = ((IStrategoList)term).tail();
+        term = this.invoke(context, g_4);
         if(term == null)
-          break Fail18;
-        term = termFactory.makeAppl(desugar._consArgSeq_2, new IStrategoTerm[]{l_4, term});
+          break Fail16;
+        term = termFactory.makeAppl(desugar._consArgSeq_2, new IStrategoTerm[]{f_4, term});
       }
       context.popOnSuccess();
       if(true)
