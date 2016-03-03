@@ -18,45 +18,45 @@ import java.lang.ref.WeakReference;
     context.push("desugar_editor_0_0");
     Fail0:
     { 
-      IStrategoTerm z_2 = null;
-      IStrategoTerm a_3 = null;
-      IStrategoTerm b_3 = null;
-      IStrategoTerm c_3 = null;
-      IStrategoTerm d_3 = null;
+      IStrategoTerm s_2 = null;
+      IStrategoTerm t_2 = null;
+      IStrategoTerm u_2 = null;
+      IStrategoTerm v_2 = null;
+      IStrategoTerm w_2 = null;
       if(term.getTermType() != IStrategoTerm.TUPLE || term.getSubtermCount() != 5)
         break Fail0;
-      b_3 = term.getSubterm(2);
-      z_2 = term.getSubterm(3);
-      d_3 = term;
+      u_2 = term.getSubterm(2);
+      s_2 = term.getSubterm(3);
+      w_2 = term;
       IStrategoTerm term0 = term;
       Success0:
       { 
         Fail1:
         { 
-          IStrategoTerm f_3 = null;
-          f_3 = z_2;
-          term = guarantee_extension_0_1.instance.invoke(context, f_3, desugar.const0);
+          IStrategoTerm y_2 = null;
+          y_2 = s_2;
+          term = guarantee_extension_0_1.instance.invoke(context, y_2, desugar.const0);
           if(term == null)
             break Fail1;
-          a_3 = term;
-          term = desugar_all_0_0.instance.invoke(context, b_3);
+          t_2 = term;
+          term = desugar_all_0_0.instance.invoke(context, u_2);
           if(term == null)
             break Fail1;
-          c_3 = term;
+          v_2 = term;
           if(true)
             break Success0;
         }
         term = term0;
-        IStrategoTerm h_3 = null;
-        h_3 = term;
-        term = report_with_failure_0_1.instance.invoke(context, h_3, desugar.const1);
+        IStrategoTerm a_3 = null;
+        a_3 = term;
+        term = report_with_failure_0_1.instance.invoke(context, a_3, desugar.const1);
         if(term == null)
           break Fail0;
       }
-      term = d_3;
-      if(a_3 == null || c_3 == null)
+      term = w_2;
+      if(t_2 == null || v_2 == null)
         break Fail0;
-      term = termFactory.makeTuple(a_3, c_3);
+      term = termFactory.makeTuple(t_2, v_2);
       context.popOnSuccess();
       if(true)
         return term;

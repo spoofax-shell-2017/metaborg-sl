@@ -13,7 +13,7 @@ signature
     BoolV : Bool -> V
     NumV : BigInteger -> V
     StringV : String -> V
-    FunV: String * ParamSeq * Stmt -> V
+    FunV: String * List(String) * Stmt -> V
     
   arrows
     Expr --> V

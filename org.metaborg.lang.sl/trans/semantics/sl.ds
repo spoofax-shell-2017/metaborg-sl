@@ -19,4 +19,3 @@ rules // loading and init
     fdefs :: C C({}), E {} -load-> _ :: C C(E), E';
     e :: C C(E), E' --> v :: C _, E _.
 
-

@@ -18,8 +18,6 @@ import java.lang.ref.WeakReference;
 
   private static boolean isIniting;
 
-  protected static IStrategoTerm constNoParamSeq0;
-
   protected static IStrategoTerm constSLStacktrace0;
 
   protected static IStrategoTerm constSLReadln0;
@@ -67,16 +65,6 @@ import java.lang.ref.WeakReference;
   public static IStrategoConstructor _consArgSeq_2;
 
   public static IStrategoConstructor _consFunCallDesug_2;
-
-  public static IStrategoConstructor _consNoParamSeq_0;
-
-  public static IStrategoConstructor _consParamSeq_2;
-
-  public static IStrategoConstructor _consFunDefDesug_3;
-
-  public static IStrategoConstructor _consNoFunDefSeq_0;
-
-  public static IStrategoConstructor _consFunDefSeq_2;
 
   public static IStrategoConstructor _consProgramDesug_2;
 
@@ -208,11 +196,6 @@ import java.lang.ref.WeakReference;
     _consNoArgSeq_0 = termFactory.makeConstructor("NoArgSeq", 0);
     _consArgSeq_2 = termFactory.makeConstructor("ArgSeq", 2);
     _consFunCallDesug_2 = termFactory.makeConstructor("FunCallDesug", 2);
-    _consNoParamSeq_0 = termFactory.makeConstructor("NoParamSeq", 0);
-    _consParamSeq_2 = termFactory.makeConstructor("ParamSeq", 2);
-    _consFunDefDesug_3 = termFactory.makeConstructor("FunDefDesug", 3);
-    _consNoFunDefSeq_0 = termFactory.makeConstructor("NoFunDefSeq", 0);
-    _consFunDefSeq_2 = termFactory.makeConstructor("FunDefSeq", 2);
     _consProgramDesug_2 = termFactory.makeConstructor("ProgramDesug", 2);
     _consContinue_0 = termFactory.makeConstructor("Continue", 0);
     _consBreak_0 = termFactory.makeConstructor("Break", 0);
@@ -265,7 +248,6 @@ import java.lang.ref.WeakReference;
     constSLNewObject0 = termFactory.makeAppl(desugar._consSLNewObject_0, NO_TERMS);
     constSLReadln0 = termFactory.makeAppl(desugar._consSLReadln_0, NO_TERMS);
     constSLStacktrace0 = termFactory.makeAppl(desugar._consSLStacktrace_0, NO_TERMS);
-    constNoParamSeq0 = termFactory.makeAppl(desugar._consNoParamSeq_0, NO_TERMS);
   }
 
   public static void registerInterop(org.spoofax.interpreter.core.IContext context, Context compiledContext)

@@ -5,16 +5,10 @@ imports
   libstratego-lib
 
 signature
-  sorts FunDefSeq ParamSeq ArgSeq
+  sorts FunDefSeq ArgSeq
 
   constructors
     ProgramDesug : List(FunDef) * Expr -> Program
-    FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
-    NoFunDefSeq : FunDefSeq
-
-    FunDefDesug : String * ParamSeq * Stmt -> FunDef
-    ParamSeq : String * ParamSeq -> ParamSeq
-    NoParamSeq : ParamSeq
 
     FunCallDesug : String * ArgSeq -> Expr
     ArgSeq : Expr * ArgSeq -> ArgSeq
@@ -42,15 +36,6 @@ rules
 
   desugar:
     Program(funcs) -> ProgramDesug(funcs, FunCallDesug("main", NoArgSeq()))
-
-  desugar:
-    FunDef(name, params, body) -> FunDefDesug(name, <desugar-params> params, body)
-  
-  desugar-params:
-    [] -> NoParamSeq()
-  
-  desugar-params:
-    [name|params] -> ParamSeq(name, <desugar-params> params)
   
   desugar:
     FunCall(name, args) -> FunCallDesug(name, <desugar-args> args)

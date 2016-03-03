@@ -4,16 +4,10 @@ imports
   src-gen/ds-signatures/SL-sig
 
 signature
-  sorts FunDefSeq ParamSeq ArgSeq
+  sorts ArgSeq
 
   constructors
     ProgramDesug : List(FunDef) * Expr -> Program
-    FunDefSeq : FunDef * FunDefSeq -> FunDefSeq
-    NoFunDefSeq : FunDefSeq
-
-    FunDefDesug : String * ParamSeq * Stmt -> FunDef
-    ParamSeq : String * ParamSeq -> ParamSeq
-    NoParamSeq : ParamSeq
 
     FunCallDesug : String * ArgSeq -> Expr
     ArgSeq : Expr * ArgSeq -> ArgSeq

@@ -11,7 +11,9 @@ signature
     List(FunDef) -load-> U
     FunDef -load-> U
     FunDef -fun2val-> V
-    
+    ID -id2str-> String
+    List(ID) -id2str-> List(String)
+
 rules
 
   fundefs : List(FunDef) :: C, E -load-> U() :: C'', E''
@@ -25,9 +27,24 @@ rules
       E => E''
     }.
 
-  FunDefDesug(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
+  FunDef(nameid, paramids, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
   where
-    {name |--> FunV(name, params, body)} => entry.
+    nameid -id2str-> name;
+    paramids -id2str-> params;
+    {name |--> FunV(name, params, __Block2Stmt__(body))} => entry.
+
+  __String2ID__(name) -id2str-> name.
+  
+  ids : List(ID) -id2str-> names
+  where
+    ids => [id | ids']
+    < {
+      id -id2str-> name;
+      ids' -id2str-> names';
+      [name | names'] => names
+    } + {
+      [] => names
+    }.
 
 rules
 
@@ -42,8 +59,8 @@ rules
 */
 signature
   constructors
-    invoke: VSeq * ParamSeq * Stmt --> V
-    bind: VSeq * ParamSeq --> E
+    invoke: VSeq * List(String) * Stmt --> V
+    bind: VSeq * List(String) --> E
   
   sorts
     ReturnHandler
@@ -81,15 +98,15 @@ rules
   where
     vals => NoVSeq()
     < {
-	    params => NoParamSeq();
+	    params => [];
 	    C => C(Etop);
 	    Etop => Ecall;
 	    E => E';
 	    C => C'
 	  } + {
 	    vals => VSeq(av, avseq);
-      params => ParamSeq(p, pseq);
-      bind(avseq, pseq) :: E, C --> Ebind :: E', C';
+      params => [p | ps];
+      bind(avseq, ps) :: E, C --> Ebind :: E', C';
       {p |--> av, Ebind} => Ecall
 	  }.
   
