@@ -7,39 +7,30 @@ imports
 // While loops
 signature
   constructors
-  whileHelper : Expr * Block -> Stmt
+  whileHelper : Expr * List(Stmt) -> Stmt
 
 rules
   
-  While(e, block) --> U()
+  While(e, Block(ss)) --> U()
    where
-     onBreak(onContinue(whileHelper(e, block))) --> _.
+     onBreak(onContinue(whileHelper(e, ss))) --> _.
  
-   w@whileHelper(e, block) :: C, E --> u :: C''', E'''
-   where
-     e :: C, E --> BoolV(bv) :: C', E';
-     bv == true
-     < {
-     	__Block2Stmt__(block) :: C', E' --> _ :: C'', E'';
-     	w :: C'', E'' --> _ :: C''', E''';
-     	U() => u
-     } + {
-     	E' => E''';
-     	C' => C''';
-     	U() => u
-     }.
- 
+  w@whileHelper(e, ss) :: C, E --> u :: C''', E'''
+  where
+    e :: C, E --> BoolV(bv) :: C', E';
+    bv == true
+    < {
+      ss :: C', E' --> _ :: C'', E'';
+      w :: C'', E'' --> _ :: C''', E''';
+      U() => u
+    } + {
+      E' => E''';
+      C' => C''';
+      U() => u
+    }.
+
 
 signature
-//  sorts
-//    RepeatingNode
-  
-//  native constructors
-//    SLRepeatingNode : Expr * V * Block -> RepeatingNode
-  
-//  arrows
-//    RepeatingNode --> U
-  
   sorts
     BreakHandler
     ContinueHandler
@@ -56,8 +47,6 @@ signature
 
 rules
   
-//  While(e, block) --> SLRepeatingNode(e, BoolV(true), block).
-  
   Continue() --> u
   where
     doContinue() --> u.
@@ -68,15 +57,15 @@ rules
 
 rules
 
-  IfThenElse(e, then, else) :: C, E --> u :: C'', E''
+  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> u :: C'', E''
   where
     e :: C, E --> BoolV(bv) :: C', E';
     bv == true
     < {
-    	then :: C', E' --> _ :: C'', E'';
+    	s1 :: C', E' --> _ :: C'', E'';
     	U() => u
     } + {
-    	else :: C', E' --> _ :: C'', E'';
+    	s2 :: C', E' --> _ :: C'', E'';
     	U() => u
     }.
   
@@ -84,21 +73,8 @@ rules
   where
     e --> _.
   
-  __Block2Stmt__(Block(ss)) --> U()
-  where
-    ss --> _.
+  __Block2Stmt__(Block(ss)) --> ss.
   
-//  __Block2Stmt__(Block(ss)) :: C, E --> U() :: C'', E''
-//  where
-//    ss => [s | xs]
-//    < {
-//      s  :: C, E --> _ :: C', E';
-//      __Block2Stmt__(Block(xs)) :: C', E' --> _ :: C'', E''
-//    } + {
-//      C => C'';
-//      E => E''
-//    }.
-
 signature
   arrows
     List(Stmt) --> U
@@ -115,11 +91,4 @@ rules
       C => C'';
       E => E''
     }.
-
-//  [] : List(Stmt) --> U().
-//  
-//  [s | xs] : List(Stmt) --> U()
-//  where
-//    s --> _;
-//    xs --> _.
 
