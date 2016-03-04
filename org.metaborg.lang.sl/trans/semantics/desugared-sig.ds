@@ -4,16 +4,9 @@ imports
   src-gen/ds-signatures/SL-sig
 
 signature
-  sorts ArgSeq
 
   constructors
     ProgramDesug : List(FunDef) * Expr -> Program
-
-    FunCallDesug : String * ArgSeq -> Expr
-    ArgSeq : Expr * ArgSeq -> ArgSeq
-    NoArgSeq : ArgSeq
-
-    MethodCallDesug: Expr * String * ArgSeq -> Expr
 
   constructors // built-ins
     SLPrintln : Expr -> Expr

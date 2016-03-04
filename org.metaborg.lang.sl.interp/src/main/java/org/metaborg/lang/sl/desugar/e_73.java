@@ -8,22 +8,22 @@ import org.spoofax.interpreter.library.AbstractPrimitive;
 import java.util.ArrayList;
 import java.lang.ref.WeakReference;
 
-@SuppressWarnings("all") final class w_75 extends Strategy 
+@SuppressWarnings("all") final class e_73 extends Strategy 
 { 
-  public static final w_75 instance = new w_75();
+  public static final e_73 instance = new e_73();
 
-  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy y_75)
+  @Override public IStrategoTerm invoke(Context context, IStrategoTerm term, Strategy g_73)
   { 
-    Fail70:
+    Fail60:
     { 
       lifted0 lifted00 = new lifted0();
-      lifted00.y_75 = y_75;
+      lifted00.g_73 = g_73;
       term = SRTS_all.instance.invoke(context, term, lifted00);
       if(term == null)
-        break Fail70;
-      term = y_75.invoke(context, term);
+        break Fail60;
+      term = g_73.invoke(context, term);
       if(term == null)
-        break Fail70;
+        break Fail60;
       if(true)
         return term;
     }

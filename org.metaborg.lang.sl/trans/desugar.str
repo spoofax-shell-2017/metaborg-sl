@@ -10,12 +10,6 @@ signature
   constructors
     ProgramDesug : List(FunDef) * Expr -> Program
 
-    FunCallDesug : String * ArgSeq -> Expr
-    ArgSeq : Expr * ArgSeq -> ArgSeq
-    NoArgSeq : ArgSeq
-
-    MethodCallDesug: Expr * String * ArgSeq -> Expr
-
   constructors // built-ins
     SLDefineFunction : Expr -> Expr
     SLNanoTime : Expr
@@ -35,37 +29,25 @@ rules
   desugar-all = innermost(desugar); alltd(unquote(?'"'))
 
   desugar:
-    Program(funcs) -> ProgramDesug(funcs, FunCallDesug("main", NoArgSeq()))
-  
-  desugar:
-    FunCall(name, args) -> FunCallDesug(name, <desugar-args> args)
+    Program(funcs) -> ProgramDesug(funcs, FunCall("main", []))
   
   desugar:
     IfNoElse(cond, block) -> IfThenElse(cond, block, Block([]))
   
-  desugar-args:
-    [] -> NoArgSeq()
-  
-  desugar-args:
-    [e|es] -> ArgSeq(e, <desugar-args> es)
+  desugar:
+    FunCall("defineFunction", [e]) -> SLDefineFunction(e)
   
   desugar:
-    MethodCall(e, name, args) -> MethodCallDesug(e, name, <desugar-args> args)
+    FunCall("nanoTime", []) -> SLNanoTime()
   
   desugar:
-    FunCallDesug("defineFunction", ArgSeq(e, NoArgSeq())) -> SLDefineFunction(e)
+    FunCall("new", []) -> SLNewObject()
   
   desugar:
-    FunCallDesug("nanoTime", NoArgSeq()) -> SLNanoTime()
+    FunCall("println", [e]) -> SLPrintln(e)
   
   desugar:
-    FunCallDesug("new", NoArgSeq()) -> SLNewObject()
+    FunCall("readln", []) -> SLReadln()
   
   desugar:
-    FunCallDesug("println", ArgSeq(e, NoArgSeq())) -> SLPrintln(e)
-  
-  desugar:
-    FunCallDesug("readln", NoArgSeq()) -> SLReadln()
-  
-  desugar:
-    FunCallDesug("stacktrace", NoArgSeq()) -> SLStacktrace()
+    FunCall("stacktrace", []) -> SLStacktrace()

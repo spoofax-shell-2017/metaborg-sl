@@ -48,7 +48,7 @@ rules
 
 rules
 
-  FunCallDesug(name, args) --> v
+  FunCall(name, args) --> v
   where
     lookup(name) --> FunV(_, params, body);
     args --> vargs;
@@ -59,8 +59,8 @@ rules
 */
 signature
   constructors
-    invoke: VSeq * List(String) * Stmt --> V
-    bind: VSeq * List(String) --> E
+    invoke: List(V) * List(String) * Stmt --> V
+    bind: List(V) * List(String) --> E
   
   sorts
     ReturnHandler
@@ -74,14 +74,8 @@ signature
   arrows
     ReturnHandler --> V // natively implemented
   
-  sorts VSeq
-  
-  constructors
-    VSeq: V * VSeq -> VSeq
-    NoVSeq: VSeq
-  
   arrows
-    ArgSeq --> VSeq
+    List(Expr) --> List(V)
 
 rules  
 
@@ -90,13 +84,23 @@ rules
     bind(vseq, parseq) :: E --> E' :: E _;
     onReturn(stmt) :: E' --> v :: E _.
   
-  NoArgSeq() --> NoVSeq().
-  
-  ArgSeq(e, aseq) --> VSeq(e, aseq).
-  
-  bind(vals, params) :: E, C --> Ecall :: E', C'
+  es : List(Expr) :: E, C --> vs :: E'', C''
   where
-    vals => NoVSeq()
+    es => [e | es']
+    < {
+      e :: E, C --> v :: E', C';
+      es' :: E', C' --> vs' :: E'', C'';
+      [v | vs'] => vs
+    } + {
+      E => E'';
+      C => C'';
+      [] => vs
+    }.
+
+  
+  bind(vs, params) :: E, C --> Ecall :: E', C'
+  where
+    vs => []
     < {
 	    params => [];
 	    C => C(Etop);
@@ -104,10 +108,10 @@ rules
 	    E => E';
 	    C => C'
 	  } + {
-	    vals => VSeq(av, avseq);
+	    vs => [v | vs'];
       params => [p | ps];
-      bind(avseq, ps) :: E, C --> Ebind :: E', C';
-      {p |--> av, Ebind} => Ecall
+      bind(vs', ps) :: E, C --> Ebind :: E', C';
+      {p |--> v, Ebind} => Ecall
 	  }.
   
   ReturnVoid() --> U()

@@ -25,9 +25,9 @@ rules
   PropRead(ObjV(od), __String2ID__(prop)) --> readProp[od](prop).
   PropWrite(ObjV(od), __String2ID__(prop), v) --> writeProp[od](prop, v).
 
-  MethodCallDesug(ObjV(od), fun, eseq) --> v
+  MethodCall(ObjV(od), fun, args) --> v
   where
-    readProp[od](fun) => FunV(_, pseq, body);
-    eseq --> vseq;
-    invoke(vseq, pseq, body) --> v.
+    readProp[od](fun) => FunV(_, params, body);
+    args --> vs;
+    invoke(vs, params, body) --> v.
 

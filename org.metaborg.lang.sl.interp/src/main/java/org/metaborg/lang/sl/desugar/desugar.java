@@ -28,11 +28,9 @@ import java.lang.ref.WeakReference;
 
   protected static IStrategoTerm constBlock0;
 
+  protected static IStrategoTerm constFunCall0;
+
   protected static IStrategoTerm constNil0;
-
-  protected static IStrategoTerm constFunCallDesug0;
-
-  protected static IStrategoTerm constNoArgSeq0;
 
   protected static IStrategoTerm const2;
 
@@ -57,14 +55,6 @@ import java.lang.ref.WeakReference;
   public static IStrategoConstructor _consSLNanoTime_0;
 
   public static IStrategoConstructor _consSLDefineFunction_1;
-
-  public static IStrategoConstructor _consMethodCallDesug_3;
-
-  public static IStrategoConstructor _consNoArgSeq_0;
-
-  public static IStrategoConstructor _consArgSeq_2;
-
-  public static IStrategoConstructor _consFunCallDesug_2;
 
   public static IStrategoConstructor _consProgramDesug_2;
 
@@ -192,10 +182,6 @@ import java.lang.ref.WeakReference;
     _consSLNewObject_0 = termFactory.makeConstructor("SLNewObject", 0);
     _consSLNanoTime_0 = termFactory.makeConstructor("SLNanoTime", 0);
     _consSLDefineFunction_1 = termFactory.makeConstructor("SLDefineFunction", 1);
-    _consMethodCallDesug_3 = termFactory.makeConstructor("MethodCallDesug", 3);
-    _consNoArgSeq_0 = termFactory.makeConstructor("NoArgSeq", 0);
-    _consArgSeq_2 = termFactory.makeConstructor("ArgSeq", 2);
-    _consFunCallDesug_2 = termFactory.makeConstructor("FunCallDesug", 2);
     _consProgramDesug_2 = termFactory.makeConstructor("ProgramDesug", 2);
     _consContinue_0 = termFactory.makeConstructor("Continue", 0);
     _consBreak_0 = termFactory.makeConstructor("Break", 0);
@@ -240,9 +226,8 @@ import java.lang.ref.WeakReference;
     const0 = termFactory.makeString("aterm");
     const1 = termFactory.makeString("'desugar-editor'");
     const2 = termFactory.makeString("main");
-    constNoArgSeq0 = termFactory.makeAppl(desugar._consNoArgSeq_0, NO_TERMS);
-    constFunCallDesug0 = termFactory.makeAppl(desugar._consFunCallDesug_2, new IStrategoTerm[]{desugar.const2, desugar.constNoArgSeq0});
     constNil0 = (IStrategoTerm)termFactory.makeList(Term.NO_TERMS);
+    constFunCall0 = termFactory.makeAppl(desugar._consFunCall_2, new IStrategoTerm[]{desugar.const2, desugar.constNil0});
     constBlock0 = termFactory.makeAppl(desugar._consBlock_1, new IStrategoTerm[]{desugar.constNil0});
     constSLNanoTime0 = termFactory.makeAppl(desugar._consSLNanoTime_0, NO_TERMS);
     constSLNewObject0 = termFactory.makeAppl(desugar._consSLNewObject_0, NO_TERMS);
