@@ -16,16 +16,12 @@ signature
 
 rules
 
-  fundefs : List(FunDef) :: C, E -load-> U() :: C'', E''
+  [] : List(FunDef) -load-> U().
+  
+  [f | fs] : List(FunDef) -load-> U()
   where
-    fundefs => [f | fs]
-    < {
-      f :: C, E -load-> _ :: C', E';
-      fs :: C', E' -load-> _ :: C'', E''
-    } + {
-      C => C'';
-      E => E''
-    }.
+    f -load-> _;
+    fs -load-> _.
 
   FunDef(nameid, paramids, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
   where
@@ -35,17 +31,13 @@ rules
 
   __String2ID__(name) -id2str-> name.
   
-  ids : List(ID) -id2str-> names
+  [] : List(ID) -id2str-> [].
+  
+  [id | ids] : List(ID) -id2str-> [name | names]
   where
-    ids => [id | ids']
-    < {
-      id -id2str-> name;
-      ids' -id2str-> names';
-      [name | names'] => names
-    } + {
-      [] => names
-    }.
-
+    id -id2str-> name;
+    ids -id2str-> names.
+  
 rules
 
   FunCall(name, args) --> v
@@ -69,8 +61,6 @@ signature
     doReturn : V -> ReturnHandler // will throw a ReturnException with the value and the semantic components
     onReturn : Stmt -> ReturnHandler // will catch a ReturnException with the value and the semantic components
   
-  
-  
   arrows
     ReturnHandler --> V // natively implemented
   
@@ -84,35 +74,18 @@ rules
     bind(vseq, parseq) :: E --> E' :: E _;
     onReturn(stmt) :: E' --> v :: E _.
   
-  es : List(Expr) :: E, C --> vs :: E'', C''
-  where
-    es => [e | es']
-    < {
-      e :: E, C --> v :: E', C';
-      es' :: E', C' --> vs' :: E'', C'';
-      [v | vs'] => vs
-    } + {
-      E => E'';
-      C => C'';
-      [] => vs
-    }.
-
+  [] : List(Expr) --> [].
   
-  bind(vs, params) :: E, C --> Ecall :: E', C'
+  [e | es] : List(Expr) --> [v | vs]
   where
-    vs => []
-    < {
-	    params => [];
-	    C => C(Etop);
-	    Etop => Ecall;
-	    E => E';
-	    C => C'
-	  } + {
-	    vs => [v | vs'];
-      params => [p | ps];
-      bind(vs', ps) :: E, C --> Ebind :: E', C';
-      {p |--> v, Ebind} => Ecall
-	  }.
+    e --> v;
+    es --> vs.
+  
+  bind([], []) :: C c@C(E) --> E :: C c. 
+  
+  bind([v | vs], [p | ps]) --> {p |--> v, E}
+  where
+    bind(vs, ps) --> E.
   
   ReturnVoid() --> U()
   where

@@ -49,17 +49,9 @@ rules
 
 rules
 
-  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> u :: C'', E''
-  where
-    e :: C, E --> BoolV(bv) :: C', E';
-    bv == true
-    < {
-    	s1 :: C', E' --> _ :: C'', E'';
-    	U() => u
-    } + {
-    	s2 :: C', E' --> _ :: C'', E'';
-    	U() => u
-    }.
+  IfThenElse(BoolV(true), Block(s1), _) --> s1.
+  
+  IfThenElse(BoolV(false), _, Block(s2)) --> s2.
   
   Stmt(e) --> U()
   where
@@ -73,14 +65,9 @@ signature
 
 rules
 
-  stmts : List(Stmt) :: C, E --> U() :: C'', E''
+  [] : List(Stmt) --> U().
+  
+  [s | xs] : List(Stmt) --> U()
   where
-    stmts => [s | xs]
-    < {
-      s :: C, E --> _ :: C', E';
-      xs :: C', E' --> _ :: C'', E''
-    } + {
-      C => C'';
-      E => E''
-    }.
-
+    s --> _;
+    xs --> _.
