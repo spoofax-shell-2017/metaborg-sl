@@ -15,20 +15,12 @@ rules
    where
      onBreak(onContinue(whileHelper(e, ss))) --> _.
  
-  w@whileHelper(e, ss) :: C, E --> u :: C''', E'''
+  w@whileHelper(BoolV(true), ss) --> U()
   where
-    e :: C, E --> BoolV(bv) :: C', E';
-    bv == true
-    < {
-      ss :: C', E' --> _ :: C'', E'';
-      w :: C'', E'' --> _ :: C''', E''';
-      U() => u
-    } + {
-      E' => E''';
-      C' => C''';
-      U() => u
-    }.
-
+    ss --> _;
+    w --> _.
+  
+  whileHelper(BoolV(false), _) --> U().
 
 signature
   sorts
