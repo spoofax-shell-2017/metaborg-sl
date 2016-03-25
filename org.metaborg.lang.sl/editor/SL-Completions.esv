@@ -1,7 +1,5 @@
 module SL-Completions
 
-imports completions/SL-esv
-
 completions
                                                                    
   // This file is used to define content completion.               

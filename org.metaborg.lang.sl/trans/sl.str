@@ -1,11 +1,11 @@
-module sl
+module trans/sl
 
 imports
 	
 	libstratego-lib
 	libstratego-gpp
 	libstratego-aterm
-	include/SL
+	signatures/SL-sig
 	editor/SL-Outliner
 	editor-common.generated
 	runtime/index/-

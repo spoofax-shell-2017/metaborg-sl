@@ -2,7 +2,7 @@ module editor/SL-Outliner
 
 imports
   
-  include/SL
+  signatures/SL-sig
   runtime/editor/outline-library
   runtime/editor/origins
 

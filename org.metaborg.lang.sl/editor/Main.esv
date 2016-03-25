@@ -18,11 +18,11 @@ language General properties
   url:           http://strategoxt.org
   
   extensions:    sl
-  table:         include/SL.tbl
+  table:         target/metaborg/sdf.tbl
   start symbols: Program
   
-  provider:      include/sl.ctree
-  provider:      include/sl-java.jar
+  provider:      target/metaborg/stratego.ctree
+  provider:      target/metaborg/stratego-javastrat.jar
   
   observer:      editor-analyze
   
