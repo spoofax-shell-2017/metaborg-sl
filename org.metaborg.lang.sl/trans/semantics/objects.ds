@@ -22,10 +22,10 @@ rules
 
   SLNewObject() --> ObjV(newObj()).
   
-  PropRead(ObjV(od), __String2ID__(prop)) --> readProp[od](prop).
-  PropWrite(ObjV(od), __String2ID__(prop), v) --> writeProp[od](prop, v).
+  PropRead(ObjV(od), prop) --> readProp[od](prop).
+  PropWrite(ObjV(od), prop, v) --> writeProp[od](prop, v).
 
-  MethodCall(ObjV(od), __String2ID__(fun), args) --> v
+  MethodCall(ObjV(od), fun, args) --> v
   where
     readProp[od](fun) => FunV(_, params, body);
     args --> vs;

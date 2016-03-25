@@ -11,8 +11,6 @@ signature
     List(FunDef) -load-> U
     FunDef -load-> U
     FunDef -fun2val-> V
-    ID -id2str-> String
-    List(ID) -id2str-> List(String)
 
 rules
 
@@ -23,21 +21,10 @@ rules
     f -load-> _;
     fs -load-> _.
 
-  FunDef(nameid, paramids, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
+  FunDef(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
   where
-    nameid -id2str-> name;
-    paramids -id2str-> params;
     {name |--> FunV(name, params, __Block2Stmt__(body))} => entry.
 
-  __String2ID__(name) -id2str-> name.
-  
-  [] : List(ID) -id2str-> [].
-  
-  [id | ids] : List(ID) -id2str-> [name | names]
-  where
-    id -id2str-> name;
-    ids -id2str-> names.
-  
 rules
 
   FunCall(name, args) --> v

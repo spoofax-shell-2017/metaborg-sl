@@ -20,17 +20,17 @@ signature
     
 rules
 
-  VarRead(__String2ID__(name)) --> lookup(name).
+  VarRead(name) --> lookup(name).
   
-  VarWrite(__String2ID__(name), v) --> write(name, v).
+  VarWrite(name, v) --> write(name, v).
   
-  Int(__String2INT__(s)) --> NumV(newBigInteger(s)).
+  Int(s) --> NumV(newBigInteger(s)).
   
   Sub(NumV(i1), NumV(i2)) --> NumV(subtract[i1](i2)).
   Mul(NumV(i1), NumV(i2)) --> NumV(multiply[i1](i2)).
   Div(NumV(i1), NumV(i2)) --> NumV(divide[i1](i2)).
   
-  String(__String2STRING__(s)) --> StringV(s).
+  String(s) --> StringV(s).
   
   Add(v1, v2) --> vout
   where
