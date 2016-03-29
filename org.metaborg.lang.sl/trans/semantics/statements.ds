@@ -15,12 +15,26 @@ rules
    where
      onBreak(onContinue(whileHelper(e, ss))) --> _.
  
-  w@whileHelper(BoolV(true), ss) --> U()
+ 
+  w@whileHelper(BoolV(bv), ss) :: C, E --> u :: C'', E''
   where
-    ss --> _;
-    w --> _.
-  
-  whileHelper(BoolV(false), _) --> U().
+    bv == true
+    < {
+      ss :: C, E --> _ :: C', E';
+      w :: C', E' --> _ :: C'', E'';
+      U() => u
+    } + {
+      U() => u;
+      C => C'';
+      E => E''
+    }.
+ 
+//  w@whileHelper(BoolV(true), ss) --> U()
+//  where
+//    ss --> _;
+//    w --> _.
+//  
+//  whileHelper(BoolV(false), _) --> U().
 
 signature
   sorts
@@ -49,9 +63,22 @@ rules
 
 rules
 
-  IfThenElse(BoolV(true), Block(s1), _) --> s1.
-  
-  IfThenElse(BoolV(false), _, Block(s2)) --> s2.
+  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> u :: C'', E''
+  where
+    e :: C, E --> BoolV(bv) :: C', E';
+    bv == true
+    < {
+      s1 :: C', E' --> _ :: C'', E'';
+      U() => u
+    } + {
+      s2 :: C', E' --> _ :: C'', E'';
+      U() => u
+    }.
+
+
+//  IfThenElse(BoolV(true), Block(s1), _) --> s1.
+//  
+//  IfThenElse(BoolV(false), _, Block(s2)) --> s2.
   
   Stmt(e) --> U()
   where
@@ -65,9 +92,20 @@ signature
 
 rules
 
-  [] : List(Stmt) --> U().
-  
-  [s | xs] : List(Stmt) --> U()
+  stmts : List(Stmt) :: C, E --> U() :: C'', E''
   where
-    s --> _;
-    xs --> _.
+    stmts => [s | xs]
+    < {
+      s :: C, E --> _ :: C', E';
+      xs :: C', E' --> _ :: C'', E''
+    } + {
+      C => C'';
+      E => E''
+    }.
+
+//  [] : List(Stmt) --> U().
+//  
+//  [s | xs] : List(Stmt) --> U()
+//  where
+//    s --> _;
+//    xs --> _.

@@ -14,12 +14,25 @@ signature
 
 rules
 
-  [] : List(FunDef) -load-> U().
-  
-  [f | fs] : List(FunDef) -load-> U()
+  fs : List(FunDef) :: C, E -load-> u :: C'', E''
   where
-    f -load-> _;
-    fs -load-> _.
+    fs => [f | fs']
+    < {
+      f :: C, E -load-> _ :: C', E';
+      fs' :: C', E' -load-> _ :: C'', E'';
+      U() => u
+    } + {
+      U() => u;
+      C => C'';
+      E => E''
+    }.
+
+//  [] : List(FunDef) -load-> U().
+//  
+//  [f | fs] : List(FunDef) -load-> U()
+//  where
+//    f -load-> _;
+//    fs -load-> _.
 
   FunDef(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
   where
@@ -61,18 +74,49 @@ rules
     bind(vseq, parseq) :: E --> E' :: E _;
     onReturn(stmt) :: E' --> v :: E _.
   
-  [] : List(Expr) --> [].
-  
-  [e | es] : List(Expr) --> [v | vs]
+  es : List(Expr) :: C, E --> vs :: C'', E''
   where
-    e --> v;
-    es --> vs.
+    es => [e | es']
+    < {
+      e :: C, E --> v :: C', E';
+      es' :: C', E' --> vs' :: C'', E'';
+      [v | vs'] => vs
+    } + {
+      [] => vs;
+      C => C'';
+      E => E''
+    }.
   
-  bind([], []) :: C c@C(E) --> E :: C c. 
+//  [] : List(Expr) --> [].
+//  
+//  [e | es] : List(Expr) --> [v | vs]
+//  where
+//    e --> v;
+//    es --> vs.
   
-  bind([v | vs], [p | ps]) --> {p |--> v, E}
+  bind(vs, params) :: E, C --> Ecall :: E', C'
   where
-    bind(vs, ps) --> E.
+    vs => []
+    < {
+      params => [];
+      C => C(Etop);
+      Etop => Ecall;
+      E => E';
+      C => C'
+    } + {
+      vs => [v | vs'];
+      params => [p | ps];
+      bind(vs', ps) :: E, C --> Ebind :: E', C';
+      {p |--> v, Ebind} => Ecall
+    }.
+
+        
+  
+//  bind([], []) :: C c@C(E) --> E :: C c. 
+//  
+//  bind([v | vs], [p | ps]) --> {p |--> v, E}
+//  where
+//    bind(vs, ps) --> E.
   
   ReturnVoid() --> U()
   where
