@@ -5,8 +5,8 @@ import java.util.Arrays;
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.ConReductionDispatch;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.ConReductionDispatchNodeGen;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatchNodeGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
 
@@ -15,11 +15,11 @@ import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onReturn_1 extends Rule {
 
-	@Child protected ConReductionDispatch dispatchNode;
+	@Child protected IndirectReductionDispatch dispatchNode;
 
 	public rule_onReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "onReturn"));
-		this.dispatchNode = ConReductionDispatchNodeGen.create(getName(),
+		this.dispatchNode = IndirectReductionDispatchNodeGen.create(getName(),
 				getSourceSection());
 	}
 
