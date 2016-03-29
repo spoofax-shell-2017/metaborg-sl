@@ -7,7 +7,7 @@ imports
 	libstratego-aterm
 	signatures/SL-sig
 	editor/SL-Outliner
-	editor-common.generated
+	stratego/metaborg
 	runtime/index/-
 	runtime/nabl/-
 	runtime/properties/-
