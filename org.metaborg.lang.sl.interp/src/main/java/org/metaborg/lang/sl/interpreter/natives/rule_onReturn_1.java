@@ -10,8 +10,6 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
 
-import com.oracle.truffle.api.Truffle;
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -20,11 +18,9 @@ public class rule_onReturn_1 extends Rule {
 	@Child protected ConReductionDispatch dispatchNode;
 
 	public rule_onReturn_1() {
-		super(SourceSection.createUnavailable("Rule", "onReturn"),
-				FrameDescriptor.create());
+		super(SourceSection.createUnavailable("Rule", "onReturn"));
 		this.dispatchNode = ConReductionDispatchNodeGen.create(getName(),
 				getSourceSection());
-		Truffle.getRuntime().createCallTarget(this);
 	}
 
 	@Override

@@ -5,12 +5,11 @@ import java.util.Arrays;
 import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
 
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
-import com.oracle.truffle.api.Truffle;
-import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.source.SourceSection;
@@ -18,9 +17,7 @@ import com.oracle.truffle.api.source.SourceSection;
 public class rule_onContinue_1 extends Rule {
 
 	public rule_onContinue_1() {
-		super(SourceSection.createUnavailable("Rule", "onContinue"),
-				FrameDescriptor.create());
-		Truffle.getRuntime().createCallTarget(this);
+		super(SourceSection.createUnavailable("Rule", "onContinue"));
 	}
 
 	@CompilationFinal private Node createContext;
@@ -52,24 +49,24 @@ public class rule_onContinue_1 extends Rule {
 		IConTerm stmt = BuiltinTypesGen.asIConTerm((arguments[1]));
 		DynSemContext context = getContext();
 
-		Rule r = context.getRuleRegistry().lookupRule(getName(),
+		RuleRoot rr = context.getRuleRegistry().lookupRule(getName(),
 				stmt.constructor(), stmt.arity());
 
 		Object[] args = Rule.buildArguments(stmt, stmt.allSubterms(),
 				Arrays.copyOfRange(arguments, 2, arguments.length));
 
-		return invoke(r, args);
+		return invoke(rr, args);
 	}
 
-	private RuleResult invoke(Rule r, Object[] args) {
+	private RuleResult invoke(RuleRoot rr, Object[] args) {
 		try {
-			return (RuleResult) r.getCallTarget().call(args);
+			return (RuleResult) rr.getCallTarget().call(args);
 		} catch (ContinueException cex) {
-
 			Object[] components = cex.getComponents();
 			System.arraycopy(components, 0, args, args.length
 					- components.length, components.length);
-			return invoke(r, args);
+			// FIXME eliminate this recursive call
+			return invoke(rr, args);
 		}
 	}
 
