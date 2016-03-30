@@ -4,18 +4,47 @@ imports
   trans/semantics/desugared-sig
   trans/semantics/values
 
-// While loops
-signature
-  constructors
-  whileHelper : Expr * List(Stmt) -> Stmt
-
 rules
   
-  While(e, Block(ss)) --> U()
+  While(e, b) --> U()
    where
-     onBreak(onContinue(whileHelper(e, ss))) --> _.
- 
- 
+//     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), true, __Block2Stmt__(b))))) --> _.
+     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
+
+signature
+  sorts
+    Loop
+  
+  constructors
+    loop: BoolVExpand * Bool * Stmt -> Loop
+    loop2stmt : Loop -> Stmt
+  
+  arrows
+    Loop --> U // natively implemented
+  
+  sorts
+    BoolVExpand
+  
+  constructors
+    expandBoolV : Expr -> BoolVExpand
+  
+  arrows
+    BoolVExpand --> Bool
+//
+//rules
+//
+//  loop2stmt(l) --> l.
+//
+//  expandBoolV(e) --> bv
+//  where
+//    e --> BoolV(bv).
+
+signature
+  constructors
+    whileHelper : Expr * Stmt -> Stmt
+
+rules
+
   w@whileHelper(BoolV(bv), ss) :: C, E --> u :: C'', E''
   where
     bv == true
