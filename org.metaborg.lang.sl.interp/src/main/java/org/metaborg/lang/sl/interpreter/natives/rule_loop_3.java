@@ -5,17 +5,21 @@ import org.metaborg.lang.sl.interpreter.generated.terms.IStmtTerm;
 import org.metaborg.lang.sl.interpreter.generated.terms.U_0_Term;
 import org.metaborg.lang.sl.interpreter.generated.terms.expandBoolV_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ArgRead;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.RelationDispatch;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationAppLhs;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
 import com.oracle.truffle.api.CompilerAsserts;
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.DirectCallNode;
 import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.nodes.NodeUtil;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -59,110 +63,69 @@ public class rule_loop_3 extends Rule {
 		}
 	}
 
-	@CompilationFinal private DirectCallNode condCallNode;
-
-	@CompilationFinal private DirectCallNode bodyCallNode;
+	@Child protected RelationDispatch condDispatch;
+	@Child protected RelationDispatch bodyDispatch;
 
 	private RuleResult executeSafe(VirtualFrame frame)
 			throws UnexpectedResultException {
+		SourceSection ss = this.getSourceSection();
 		Object[] args = frame.getArguments();
-
-		Object[] semComps = new Object[] { args[4], args[5] };
-
-		expandBoolV_1_Term condExpr = TypesGen
-				.expectexpandBoolV_1_Term(args[1]);
 
 		boolean expectedValue = BuiltinTypesGen.expectBoolean(args[2]);
 
-		IStmtTerm body = TypesGen.expectIStmtTerm(args[3]);
-
-		if (condCallNode == null) {
+		if (condDispatch == null) {
 			CompilerAsserts.neverPartOfCompilation();
-			RuleRoot condRule = getContext().getRuleRegistry().lookupRule(
+			RuleRoot condRR = getContext().getRuleRegistry().lookupRule(
 					"default", expandBoolV_1_Term.CONSTRUCTOR,
 					expandBoolV_1_Term.ARITY);
 
-			condCallNode = DirectCallNode.create(condRule.getCallTarget());
+			RelationAppLhs lhs = new RelationAppLhs(new ArgRead(1, ss),
+					new TermBuild[0], new TermBuild[] { new ArgRead(4, ss),
+							new ArgRead(5, ss) }, ss);
+			condDispatch = new RelationDispatch.InlinedRelationDispatch(lhs,
+					NodeUtil.cloneNode(condRR.getRule()),
+					condRR.getFrameDescriptor(), ss);
+			condDispatch.adoptChildren();
+			adoptChildren();
 		}
 
-		Object[] bodyArgs = Rule.buildArguments(body, body.allSubterms(),
-				semComps);
-
-		if (bodyCallNode == null) {
+		if (bodyDispatch == null) {
 			CompilerAsserts.neverPartOfCompilation();
-			RuleRoot bodyRule = getContext().getRuleRegistry().lookupRule(
+
+			IStmtTerm body = TypesGen.expectIStmtTerm(args[3]);
+			RuleRoot bodyRR = getContext().getRuleRegistry().lookupRule(
 					"default", body.constructor(), body.arity());
-			bodyCallNode = DirectCallNode.create(bodyRule.getCallTarget());
+
+			RelationAppLhs lhs = new RelationAppLhs(new ArgRead(3, ss),
+					new TermBuild[0], new TermBuild[] { new ArgRead(4, ss),
+							new ArgRead(5, ss) }, ss);
+			bodyDispatch = new RelationDispatch.InlinedRelationDispatch(lhs,
+					NodeUtil.cloneNode(bodyRR.getRule()),
+					bodyRR.getFrameDescriptor(), ss);
+			bodyDispatch.adoptChildren();
+			adoptChildren();
 		}
 
-		while (evaluateCondition(frame, condCallNode, condExpr, expectedValue,
-				semComps)) {
-			System.arraycopy(semComps, 0, bodyArgs, bodyArgs.length
-					- semComps.length, semComps.length);
-			RuleResult bodyRes = (RuleResult) bodyCallNode
-					.call(frame, bodyArgs);
+		while (evaluateCondition(frame) == expectedValue) {
+			RuleResult bodyRes = bodyDispatch.execute(frame);
 			Object[] bodyComps = bodyRes.components;
-			System.arraycopy(bodyComps, 0, semComps, 0, bodyComps.length);
+			args[4] = bodyComps[0];
+			args[5] = bodyComps[1];
 		}
 
-		return new RuleResult(new U_0_Term(), semComps);
+		return new RuleResult(new U_0_Term(), new Object[] { args[4], args[5] });
 	}
 
-	private boolean evaluateCondition(VirtualFrame frame,
-			DirectCallNode condCall, expandBoolV_1_Term condExpr,
-			boolean expectedValue, Object[] semComps)
+	private boolean evaluateCondition(VirtualFrame frame)
 			throws UnexpectedResultException {
-		Object[] condArgs = Rule.buildArguments(condExpr,
-				condExpr.allSubterms(), semComps);
 
-		RuleResult condRes = (RuleResult) condCall.call(frame, condArgs);
-		Object[] semComps2 = condRes.components;
+		RuleResult condRes = condDispatch.execute(frame);
 
-		System.arraycopy(semComps2, 0, semComps, 0, semComps2.length);
+		// update the semantic components into the frame
+		Object[] args = frame.getArguments();
+		args[4] = condRes.components[0];
+		args[5] = condRes.components[1];
 
 		return BuiltinTypesGen.expectBoolean(condRes.result);
 	}
-
-	// private RuleResult executeSafeRec(VirtualFrame frame)
-	// throws UnexpectedResultException {
-	// Object[] args = frame.getArguments();
-	// DynSemContext context = getContext();
-	//
-	// expandBoolV_1_Term cExpr = TypesGen.expectexpandBoolV_1_Term(args[1]);
-	// RuleRoot crr = context.getRuleRegistry().lookupRule("default",
-	// expandBoolV_1_Term.CONSTRUCTOR, expandBoolV_1_Term.ARITY);
-	//
-	// Object[] args2 = Rule.buildArguments(cExpr, cExpr.allSubterms(),
-	// new Object[] { args[4], args[5] });
-	// DirectCallNode ccallNode = DirectCallNode.create(crr.getCallTarget());
-	// RuleResult cr = (RuleResult) ccallNode.call(frame, args2);
-	//
-	// if (BuiltinTypesGen.expectBoolean(cr.result)) {
-	// IStmtTerm stmt = TypesGen.expectIStmtTerm(args[3]);
-	// RuleRoot srr = context.getRuleRegistry().lookupRule("default",
-	// stmt.constructor(), stmt.arity());
-	//
-	// Object[] args3 = Rule.buildArguments(stmt, stmt.allSubterms(),
-	// new Object[] { cr.components[0], cr.components[1] });
-	// DirectCallNode scallNode = DirectCallNode.create(srr
-	// .getCallTarget());
-	// RuleResult sr = (RuleResult) scallNode.call(frame, args3);
-	//
-	// IConTerm recTerm = BuiltinTypesGen.expectIConTerm(args[0]);
-	//
-	// Object[] args4 = Rule.buildArguments(recTerm,
-	// recTerm.allSubterms(), new Object[] { sr.components[0],
-	// sr.components[1] });
-	// RuleRoot wrr = context.getRuleRegistry().lookupRule("default",
-	// getConstructor(), getArity());
-	//
-	// DirectCallNode wcallNode = DirectCallNode.create(wrr
-	// .getCallTarget());
-	// return (RuleResult) wcallNode.call(frame, args4);
-	// } else {
-	// return new RuleResult(new U_0_Term(), new Object[] {
-	// cr.components[0], cr.components[1] });
-	// }
-	//
-	// }
 }
