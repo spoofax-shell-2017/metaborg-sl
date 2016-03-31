@@ -8,7 +8,7 @@ rules
   
   While(e, b) --> U()
    where
-     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), true, __Block2Stmt__(b))))) --> _.
+     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))))) --> _.
 //    loop(expandBoolV(e), true, __Block2Stmt__(b)) --> _.
 //     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
 
@@ -17,7 +17,7 @@ signature
     Loop
   
   constructors
-    loop: BoolVExpand * Bool * Stmt -> Loop
+    loop: BoolVExpand * Stmt -> Loop
     loop2stmt : Loop -> Stmt
   
   arrows
