@@ -8,8 +8,9 @@ rules
   
   While(e, b) --> U()
    where
-//     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), true, __Block2Stmt__(b))))) --> _.
-     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
+     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), true, __Block2Stmt__(b))))) --> _.
+//    loop(expandBoolV(e), true, __Block2Stmt__(b)) --> _.
+//     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
 
 signature
   sorts
@@ -30,14 +31,14 @@ signature
   
   arrows
     BoolVExpand --> Bool
-//
-//rules
-//
-//  loop2stmt(l) --> l.
-//
-//  expandBoolV(e) --> bv
-//  where
-//    e --> BoolV(bv).
+
+rules
+
+  loop2stmt(l) --> l.
+
+  expandBoolV(e) --> bv
+  where
+    e --> BoolV(bv).
 
 signature
   constructors
@@ -45,18 +46,18 @@ signature
 
 rules
 
-  w@whileHelper(BoolV(bv), ss) :: C, E --> u :: C'', E''
-  where
-    bv == true
-    < {
-      ss :: C, E --> _ :: C', E';
-      w :: C', E' --> _ :: C'', E'';
-      U() => u
-    } + {
-      U() => u;
-      C => C'';
-      E => E''
-    }.
+//  w@whileHelper(BoolV(bv), ss) :: C, E --> u :: C'', E''
+//  where
+//    bv == true
+//    < {
+//      ss :: C, E --> _ :: C', E';
+//      w :: C', E' --> _ :: C'', E'';
+//      U() => u
+//    } + {
+//      U() => u;
+//      C => C'';
+//      E => E''
+//    }.
  
 //  w@whileHelper(BoolV(true), ss) --> U()
 //  where
@@ -113,7 +114,9 @@ rules
   where
     e --> _.
   
-  __Block2Stmt__(Block(ss)) --> ss.
+  __Block2Stmt__(Block(ss)) --> U()
+  where
+    ss --> _.
   
 signature
   arrows
