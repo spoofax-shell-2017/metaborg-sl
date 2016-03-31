@@ -15,8 +15,8 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
 import com.oracle.truffle.api.CompilerAsserts;
-import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
+import com.oracle.truffle.api.dsl.UnsupportedSpecializationException;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeUtil;
@@ -53,25 +53,15 @@ public class rule_loop_3 extends Rule {
 		return "default";
 	}
 
-	@Override
-	public RuleResult execute(VirtualFrame frame) {
-		try {
-			return executeSafe(frame);
-		} catch (UnexpectedResultException e) {
-			CompilerDirectives.transferToInterpreterAndInvalidate();
-			throw new RuntimeException(e);
-		}
-	}
-
 	@Child protected RelationDispatch condDispatch;
 	@Child protected RelationDispatch bodyDispatch;
 
-	private RuleResult executeSafe(VirtualFrame frame)
-			throws UnexpectedResultException {
+	@Override
+	public RuleResult execute(VirtualFrame frame) {
 		SourceSection ss = this.getSourceSection();
 		Object[] args = frame.getArguments();
 
-		boolean expectedValue = BuiltinTypesGen.expectBoolean(args[2]);
+		boolean expectedValue = BuiltinTypesGen.asBoolean(args[2]);
 
 		if (condDispatch == null) {
 			CompilerAsserts.neverPartOfCompilation();
@@ -92,7 +82,7 @@ public class rule_loop_3 extends Rule {
 		if (bodyDispatch == null) {
 			CompilerAsserts.neverPartOfCompilation();
 
-			IStmtTerm body = TypesGen.expectIStmtTerm(args[3]);
+			IStmtTerm body = TypesGen.asIStmtTerm(args[3]);
 			RuleRoot bodyRR = getContext().getRuleRegistry().lookupRule(
 					"default", body.constructor(), body.arity());
 
@@ -116,8 +106,7 @@ public class rule_loop_3 extends Rule {
 		return new RuleResult(new U_0_Term(), new Object[] { args[4], args[5] });
 	}
 
-	private boolean evaluateCondition(VirtualFrame frame)
-			throws UnexpectedResultException {
+	private boolean evaluateCondition(VirtualFrame frame) {
 
 		RuleResult condRes = condDispatch.execute(frame);
 
@@ -126,6 +115,12 @@ public class rule_loop_3 extends Rule {
 		args[4] = condRes.components[0];
 		args[5] = condRes.components[1];
 
-		return BuiltinTypesGen.expectBoolean(condRes.result);
+		try {
+			return BuiltinTypesGen.expectBoolean(condRes.result);
+		} catch (UnexpectedResultException ex) {
+			throw new UnsupportedSpecializationException(this,
+					new Node[] { condDispatch }, ex.getResult());
+		}
 	}
+
 }
