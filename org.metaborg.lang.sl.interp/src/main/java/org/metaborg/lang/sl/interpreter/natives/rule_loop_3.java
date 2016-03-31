@@ -66,7 +66,6 @@ public class rule_loop_3 extends Rule {
 	private RuleResult executeSafe(VirtualFrame frame)
 			throws UnexpectedResultException {
 		Object[] args = frame.getArguments();
-		DynSemContext context = getContext();
 
 		Object[] semComps = new Object[] { args[4], args[5] };
 
@@ -79,8 +78,9 @@ public class rule_loop_3 extends Rule {
 
 		if (condCallNode == null) {
 			CompilerAsserts.neverPartOfCompilation();
-			RuleRoot condRule = context.getRuleRegistry().lookupRule("default",
-					expandBoolV_1_Term.CONSTRUCTOR, expandBoolV_1_Term.ARITY);
+			RuleRoot condRule = getContext().getRuleRegistry().lookupRule(
+					"default", expandBoolV_1_Term.CONSTRUCTOR,
+					expandBoolV_1_Term.ARITY);
 
 			condCallNode = DirectCallNode.create(condRule.getCallTarget());
 		}
@@ -90,8 +90,8 @@ public class rule_loop_3 extends Rule {
 
 		if (bodyCallNode == null) {
 			CompilerAsserts.neverPartOfCompilation();
-			RuleRoot bodyRule = context.getRuleRegistry().lookupRule("default",
-					body.constructor(), body.arity());
+			RuleRoot bodyRule = getContext().getRuleRegistry().lookupRule(
+					"default", body.constructor(), body.arity());
 			bodyCallNode = DirectCallNode.create(bodyRule.getCallTarget());
 		}
 
@@ -112,7 +112,6 @@ public class rule_loop_3 extends Rule {
 			DirectCallNode condCall, expandBoolV_1_Term condExpr,
 			boolean expectedValue, Object[] semComps)
 			throws UnexpectedResultException {
-		DynSemContext context = getContext();
 		Object[] condArgs = Rule.buildArguments(condExpr,
 				condExpr.allSubterms(), semComps);
 
