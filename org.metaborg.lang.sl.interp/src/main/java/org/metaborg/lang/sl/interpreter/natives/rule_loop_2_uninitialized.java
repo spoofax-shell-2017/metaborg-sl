@@ -16,10 +16,13 @@ import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
 import com.oracle.truffle.api.CompilerAsserts;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
+import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.dsl.UnsupportedSpecializationException;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.nodes.LoopNode;
 import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.nodes.NodeUtil;
+import com.oracle.truffle.api.nodes.RepeatingNode;
 import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -55,7 +58,6 @@ public class rule_loop_2_uninitialized extends Rule {
 
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
-		// CompilerDirectives.transferToInterpreterAndInvalidate();
 		CompilerAsserts.neverPartOfCompilation();
 		SourceSection ss = this.getSourceSection();
 
@@ -84,12 +86,33 @@ public class rule_loop_2_uninitialized extends Rule {
 				.execute(frame);
 	}
 
-	public static class rule_loop_2_initialized extends
-			rule_loop_2_uninitialized {
-		@Child protected RelationDispatch condDispatch;
-		@Child protected RelationDispatch bodyDispatch;
+	private class rule_loop_2_initialized extends rule_loop_2_uninitialized {
+
+		@Child private LoopNode loopNode;
 
 		public rule_loop_2_initialized(RelationDispatch condDispatch,
+				RelationDispatch bodyDispatch) {
+			super();
+			this.loopNode = Truffle.getRuntime().createLoopNode(
+					new loop_2_repeatingnode(condDispatch, bodyDispatch));
+		}
+
+		@Override
+		public RuleResult execute(VirtualFrame frame) {
+			loopNode.executeLoop(frame);
+			Object[] args = frame.getArguments();
+			return new RuleResult(new U_0_Term(), new Object[] { args[3],
+					args[4] });
+		}
+
+	}
+
+	private class loop_2_repeatingnode extends Node implements RepeatingNode {
+
+		@Child private RelationDispatch condDispatch;
+		@Child private RelationDispatch bodyDispatch;
+
+		public loop_2_repeatingnode(RelationDispatch condDispatch,
 				RelationDispatch bodyDispatch) {
 			super();
 			this.condDispatch = condDispatch;
@@ -97,17 +120,17 @@ public class rule_loop_2_uninitialized extends Rule {
 		}
 
 		@Override
-		public RuleResult execute(VirtualFrame frame) {
-			Object[] args = frame.getArguments();
-			while (evaluateCondition(frame)) {
+		public boolean executeRepeating(VirtualFrame frame) {
+			if (evaluateCondition(frame)) {
+				// evaluate body
 				RuleResult bodyRes = bodyDispatch.execute(frame);
-				Object[] bodyComps = bodyRes.components;
-				args[3] = bodyComps[0];
-				args[4] = bodyComps[1];
+				Object[] args = frame.getArguments();
+				args[3] = bodyRes.components[0];
+				args[4] = bodyRes.components[1];
+				return true;
+			} else {
+				return false;
 			}
-
-			return new RuleResult(new U_0_Term(), new Object[] { args[3],
-					args[4] });
 		}
 
 		private boolean evaluateCondition(VirtualFrame frame) {
@@ -125,6 +148,7 @@ public class rule_loop_2_uninitialized extends Rule {
 						new Node[] { condDispatch }, ex.getResult());
 			}
 		}
+
 	}
 
 }
