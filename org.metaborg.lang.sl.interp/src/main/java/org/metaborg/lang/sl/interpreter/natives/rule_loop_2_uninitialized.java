@@ -26,18 +26,19 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_loop_2_uninitialized extends Rule {
+	private final Node contextNode;
+	@CompilationFinal private DynSemContext cachedContext;
 
 	public rule_loop_2_uninitialized() {
 		super(SourceSection.createUnavailable("Rule", "loop"));
+		this.contextNode = DynSemContext.LANGUAGE.createFindContextNode0();
 	}
 
-	@CompilationFinal private Node createContext;
-
 	protected DynSemContext getContext() {
-		if (createContext == null) {
-			createContext = DynSemContext.LANGUAGE.createFindContextNode0();
+		if (cachedContext == null) {
+			cachedContext = DynSemContext.LANGUAGE.findContext0(contextNode);
 		}
-		return DynSemContext.LANGUAGE.findContext0(createContext);
+		return cachedContext;
 	}
 
 	@Override
@@ -127,9 +128,8 @@ public class rule_loop_2_uninitialized extends Rule {
 				args[3] = bodyRes.components[0];
 				args[4] = bodyRes.components[1];
 				return true;
-			} else {
-				return false;
 			}
+			return false;
 		}
 
 		private boolean evaluateCondition(VirtualFrame frame) {

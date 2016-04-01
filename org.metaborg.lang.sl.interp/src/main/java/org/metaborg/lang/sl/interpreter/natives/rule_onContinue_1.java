@@ -7,7 +7,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
-import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
+import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -46,7 +46,7 @@ public class rule_onContinue_1 extends Rule {
 
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
-		IConTerm stmt = BuiltinTypesGen.asIConTerm((arguments[1]));
+		ITerm stmt = BuiltinTypesGen.asITerm((arguments[1]));
 		DynSemContext context = getContext();
 
 		RuleRoot rr = context.getRuleRegistry().lookupRule(getName(),

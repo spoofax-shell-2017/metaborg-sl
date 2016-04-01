@@ -5,22 +5,21 @@ import java.util.Arrays;
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatchNodeGen;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch2;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
-import org.metaborg.meta.lang.dynsem.interpreter.terms.IConTerm;
+import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onReturn_1 extends Rule {
 
-	@Child protected IndirectReductionDispatch dispatchNode;
+	@Child protected IndirectReductionDispatch2 dispatchNode;
 
 	public rule_onReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "onReturn"));
-		this.dispatchNode = IndirectReductionDispatchNodeGen.create(getName(),
-				getSourceSection());
+		this.dispatchNode = new IndirectReductionDispatch2._Uninitialized(
+				getName(), getSourceSection());
 	}
 
 	@Override
@@ -41,14 +40,14 @@ public class rule_onReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
-		IConTerm stmt = BuiltinTypesGen.asIConTerm(arguments[1]);
+		ITerm stmt = BuiltinTypesGen.asITerm(arguments[1]);
 
 		Object[] args = Rule.buildArguments(stmt, stmt.allSubterms(),
 				Arrays.copyOfRange(arguments, 2, arguments.length));
 
 		RuleResult rr = null;
 		try {
-			RuleResult rrSub = dispatchNode.executeDispatch(frame, stmt, args);
+			RuleResult rrSub = dispatchNode.executeDispatch(frame, args);
 			rr = new RuleResult(new NullV_0_Term(), rrSub.components);
 		} catch (ReturnException rex) {
 			rr = rex.getResult();
