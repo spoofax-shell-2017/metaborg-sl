@@ -18,7 +18,7 @@ GRAAL_FLAGS='
 #   -G:+TruffleCompilationExceptionsAreFatal
 # '
 
-GRAAL_SUITE='/Users/vladvergu/tud/slde/software/truffle/graal-root/graal-compiler'
+GRAAL_SUITE='/Users/vladvergu/tud/slde/software/truffle/graal-root/graal-core'
 
 CLASSPATH="$1"
 
