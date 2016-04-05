@@ -8,7 +8,7 @@ GRAAL_FLAGS='
   -ea
   -G:TruffleCompilationThreshold=2
   -G:TruffleMaximumRecursiveInlining=10
-  '
+'
 
 # GRAAL_FLAGS='
 #   -G:TruffleCompilationThreshold=2
