@@ -14,6 +14,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.RelationDi
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationAppLhs;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
+import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.dsl.UnsupportedSpecializationException;
@@ -58,7 +59,7 @@ public class rule_loop_2_uninitialized extends Rule {
 
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
-		// CompilerAsserts.neverPartOfCompilation();
+		CompilerDirectives.transferToInterpreter();
 		SourceSection ss = this.getSourceSection();
 
 		RuleRoot condRR = getContext().getRuleRegistry().lookupRule("default",

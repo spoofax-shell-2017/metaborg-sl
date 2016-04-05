@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch2;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
@@ -16,8 +16,12 @@ import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onContinue_1 extends Rule {
 
+	@Child protected IndirectReductionDispatch2 dispatchNode;
+
 	public rule_onContinue_1() {
 		super(SourceSection.createUnavailable("Rule", "onContinue"));
+		this.dispatchNode = new IndirectReductionDispatch2._Uninitialized(
+				getName(), getSourceSection());
 	}
 
 	@CompilationFinal private Node createContext;
@@ -49,24 +53,22 @@ public class rule_onContinue_1 extends Rule {
 		ITerm stmt = BuiltinTypesGen.asITerm((arguments[1]));
 		DynSemContext context = getContext();
 
-		RuleRoot rr = context.getRuleRegistry().lookupRule(getName(),
-				stmt.constructor(), stmt.arity());
-
 		Object[] args = Rule.buildArguments(stmt, stmt.allSubterms(),
 				Arrays.copyOfRange(arguments, 2, arguments.length));
 
-		return invoke(rr, args);
+		return invoke(frame, args);
 	}
 
-	private RuleResult invoke(RuleRoot rr, Object[] args) {
+	private RuleResult invoke(VirtualFrame frame, Object[] args) {
 		try {
-			return (RuleResult) rr.getCallTarget().call(args);
+
+			return (RuleResult) dispatchNode.executeDispatch(frame, args);
 		} catch (ContinueException cex) {
 			Object[] components = cex.getComponents();
 			System.arraycopy(components, 0, args, args.length
 					- components.length, components.length);
 			// FIXME eliminate this recursive call
-			return invoke(rr, args);
+			return invoke(frame, args);
 		}
 	}
 

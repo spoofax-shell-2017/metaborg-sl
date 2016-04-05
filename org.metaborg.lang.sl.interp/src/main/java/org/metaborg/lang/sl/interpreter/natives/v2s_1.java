@@ -8,6 +8,7 @@ import org.metaborg.lang.sl.interpreter.generated.terms.ObjV_1_Term;
 import org.metaborg.lang.sl.interpreter.generated.terms.StringV_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 
+import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.dsl.Fallback;
 import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.dsl.NodeChildren;
@@ -22,16 +23,19 @@ public abstract class v2s_1 extends TermBuild {
 	}
 
 	@Specialization
+	@TruffleBoundary
 	public String doString(StringV_1_Term t) {
 		return t.get_1();
 	}
 
 	@Specialization
+	@TruffleBoundary
 	public String doBool(BoolV_1_Term t) {
 		return t.get_1() + "";
 	}
 
 	@Specialization
+	@TruffleBoundary
 	public String doNum(NumV_1_Term t) {
 		return t.get_1() + "";
 	}
@@ -47,11 +51,13 @@ public abstract class v2s_1 extends TermBuild {
 	}
 
 	@Specialization
+	@TruffleBoundary
 	public String doNull(ObjV_1_Term t) {
 		return t.get_1() + "";
 	}
 
 	@Fallback
+	@TruffleBoundary
 	public String doGeneric(Object o) {
 		return o + "";
 	}
