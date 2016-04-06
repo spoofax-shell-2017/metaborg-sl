@@ -9,8 +9,9 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.RelationDispatch;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationAppLhs;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationDispatch;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationInvocationNode;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationPremiseInputBuilder;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
 import com.oracle.truffle.api.CompilerDirectives;
@@ -53,37 +54,41 @@ public class rule_loop_2_uninitialized extends Rule {
 		RuleRoot condRR = getContext().getRuleRegistry().lookupRule("default",
 				expandBoolV_1_Term.CONSTRUCTOR, expandBoolV_1_Term.ARITY);
 
-		RelationAppLhs condLhs = new RelationAppLhs(new ArgRead(1, ss),
-				new TermBuild[0], new TermBuild[] { new ArgRead(3, ss),
-						new ArgRead(4, ss) }, ss);
+		RelationPremiseInputBuilder condInput = new RelationPremiseInputBuilder(
+				new ArgRead(1, ss), new TermBuild[0], new TermBuild[] {
+						new ArgRead(3, ss), new ArgRead(4, ss) }, ss);
 		RelationDispatch condDispatch = new RelationDispatch.InlinedRelationDispatch(
-				condLhs, NodeUtil.cloneNode(condRR.getRule()),
+				NodeUtil.cloneNode(condRR.getRule()),
 				condRR.getFrameDescriptor(), ss);
+		RelationInvocationNode condInvocationNode = new RelationInvocationNode(
+				condInput, condDispatch, ss);
 
 		IStmtTerm body = TypesGen.asIStmtTerm(frame.getArguments()[2]);
 		RuleRoot bodyRR = getContext().getRuleRegistry().lookupRule("default",
 				body.constructor(), body.arity());
 
-		RelationAppLhs bodyLhs = new RelationAppLhs(new ArgRead(2, ss),
-				new TermBuild[0], new TermBuild[] { new ArgRead(3, ss),
-						new ArgRead(4, ss) }, ss);
+		RelationPremiseInputBuilder bodyInput = new RelationPremiseInputBuilder(
+				new ArgRead(2, ss), new TermBuild[0], new TermBuild[] {
+						new ArgRead(3, ss), new ArgRead(4, ss) }, ss);
 		RelationDispatch bodyDispatch = new RelationDispatch.InlinedRelationDispatch(
-				bodyLhs, NodeUtil.cloneNode(bodyRR.getRule()),
+				NodeUtil.cloneNode(bodyRR.getRule()),
 				bodyRR.getFrameDescriptor(), ss);
-
-		return replace(new rule_loop_2_initialized(condDispatch, bodyDispatch))
-				.execute(frame);
+		RelationInvocationNode bodyInvocationNode = new RelationInvocationNode(
+				bodyInput, bodyDispatch, ss);
+		return replace(
+				new rule_loop_2_initialized(condInvocationNode,
+						bodyInvocationNode)).execute(frame);
 	}
 
 	private class rule_loop_2_initialized extends rule_loop_2_uninitialized {
 
 		@Child private LoopNode loopNode;
 
-		public rule_loop_2_initialized(RelationDispatch condDispatch,
-				RelationDispatch bodyDispatch) {
+		public rule_loop_2_initialized(RelationInvocationNode condInvocation,
+				RelationInvocationNode bodyInvocation) {
 			super();
 			this.loopNode = Truffle.getRuntime().createLoopNode(
-					new loop_2_repeatingnode(condDispatch, bodyDispatch));
+					new loop_2_repeatingnode(condInvocation, bodyInvocation));
 		}
 
 		@Override
@@ -98,21 +103,21 @@ public class rule_loop_2_uninitialized extends Rule {
 
 	private class loop_2_repeatingnode extends Node implements RepeatingNode {
 
-		@Child private RelationDispatch condDispatch;
-		@Child private RelationDispatch bodyDispatch;
+		@Child private RelationInvocationNode condInvocation;
+		@Child private RelationInvocationNode bodyInvocation;
 
-		public loop_2_repeatingnode(RelationDispatch condDispatch,
-				RelationDispatch bodyDispatch) {
+		public loop_2_repeatingnode(RelationInvocationNode condInvocation,
+				RelationInvocationNode bodyInvocation) {
 			super();
-			this.condDispatch = condDispatch;
-			this.bodyDispatch = bodyDispatch;
+			this.condInvocation = condInvocation;
+			this.bodyInvocation = bodyInvocation;
 		}
 
 		@Override
 		public boolean executeRepeating(VirtualFrame frame) {
 			if (evaluateCondition(frame)) {
 				// evaluate body
-				RuleResult bodyRes = bodyDispatch.execute(frame);
+				RuleResult bodyRes = bodyInvocation.execute(frame);
 				Object[] args = frame.getArguments();
 				args[3] = bodyRes.components[0];
 				args[4] = bodyRes.components[1];
@@ -122,7 +127,7 @@ public class rule_loop_2_uninitialized extends Rule {
 		}
 
 		private boolean evaluateCondition(VirtualFrame frame) {
-			RuleResult condRes = condDispatch.execute(frame);
+			RuleResult condRes = condInvocation.execute(frame);
 
 			// update the semantic components into the frame
 			Object[] args = frame.getArguments();
@@ -133,7 +138,7 @@ public class rule_loop_2_uninitialized extends Rule {
 				return BuiltinTypesGen.expectBoolean(condRes.result);
 			} catch (UnexpectedResultException ex) {
 				throw new UnsupportedSpecializationException(this,
-						new Node[] { condDispatch }, ex.getResult());
+						new Node[] { condInvocation }, ex.getResult());
 			}
 		}
 

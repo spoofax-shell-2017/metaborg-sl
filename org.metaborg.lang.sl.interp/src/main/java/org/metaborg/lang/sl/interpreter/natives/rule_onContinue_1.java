@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch2;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
@@ -13,11 +13,11 @@ import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onContinue_1 extends Rule {
 
-	@Child protected IndirectReductionDispatch2 dispatchNode;
+	@Child protected DynamicRelationDispatch dispatchNode;
 
 	public rule_onContinue_1() {
 		super(SourceSection.createUnavailable("Rule", "onContinue"));
-		this.dispatchNode = new IndirectReductionDispatch2._Uninitialized(
+		this.dispatchNode = new DynamicRelationDispatch._Uninitialized(
 				getName(), getSourceSection());
 	}
 
@@ -49,7 +49,7 @@ public class rule_onContinue_1 extends Rule {
 	private RuleResult invoke(VirtualFrame frame, Object[] args) {
 		try {
 
-			return (RuleResult) dispatchNode.executeDispatch(frame, args);
+			return (RuleResult) dispatchNode.execute(frame, args);
 		} catch (ContinueException cex) {
 			Object[] components = cex.getComponents();
 			System.arraycopy(components, 0, args, args.length

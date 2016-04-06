@@ -5,7 +5,7 @@ import java.util.Arrays;
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch2;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
@@ -14,11 +14,11 @@ import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onReturn_1 extends Rule {
 
-	@Child protected IndirectReductionDispatch2 dispatchNode;
+	@Child protected DynamicRelationDispatch dispatchNode;
 
 	public rule_onReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "onReturn"));
-		this.dispatchNode = new IndirectReductionDispatch2._Generic(getName(),
+		this.dispatchNode = new DynamicRelationDispatch._Generic(getName(),
 				getSourceSection());
 	}
 
@@ -47,7 +47,7 @@ public class rule_onReturn_1 extends Rule {
 
 		RuleResult rr = null;
 		try {
-			RuleResult rrSub = dispatchNode.executeDispatch(frame, args);
+			RuleResult rrSub = dispatchNode.execute(frame, args);
 			rr = new RuleResult(new NullV_0_Term(), rrSub.components);
 		} catch (ReturnException rex) {
 			rr = rex.getResult();
