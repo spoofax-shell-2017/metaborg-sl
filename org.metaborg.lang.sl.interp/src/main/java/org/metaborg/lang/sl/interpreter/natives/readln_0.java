@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -23,10 +22,9 @@ public class readln_0 extends TermBuild {
 
 	@Override
 	public String executeString(VirtualFrame frame) {
-		DynSemContext ctx = getContext();
 		try {
-			return new BufferedReader(new InputStreamReader(ctx.getInput()))
-					.readLine();
+			return new BufferedReader(new InputStreamReader(getContext()
+					.getInput())).readLine();
 		} catch (IOException e) {
 			throw new IllegalStateException("Failed to read input stream", e);
 		}

@@ -4,7 +4,6 @@ import org.metaborg.lang.sl.interpreter.generated.TypesGen;
 import org.metaborg.lang.sl.interpreter.generated.terms.IStmtTerm;
 import org.metaborg.lang.sl.interpreter.generated.terms.U_0_Term;
 import org.metaborg.lang.sl.interpreter.generated.terms.expandBoolV_1_Term;
-import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ArgRead;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
@@ -15,7 +14,6 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
 import com.oracle.truffle.api.CompilerDirectives;
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.dsl.UnsupportedSpecializationException;
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -27,19 +25,9 @@ import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_loop_2_uninitialized extends Rule {
-	private final Node contextNode;
-	@CompilationFinal private DynSemContext cachedContext;
 
 	public rule_loop_2_uninitialized() {
 		super(SourceSection.createUnavailable("Rule", "loop"));
-		this.contextNode = DynSemContext.LANGUAGE.createFindContextNode0();
-	}
-
-	protected DynSemContext getContext() {
-		if (cachedContext == null) {
-			cachedContext = DynSemContext.LANGUAGE.findContext0(contextNode);
-		}
-		return cachedContext;
 	}
 
 	@Override

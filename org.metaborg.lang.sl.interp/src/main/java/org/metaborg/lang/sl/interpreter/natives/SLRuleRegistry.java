@@ -27,7 +27,8 @@ public class SLRuleRegistry extends RuleRegistry {
 				FrameDescriptor.create()));
 		registerRule(new RuleRoot(new rule_doContinue_0(),
 				FrameDescriptor.create()));
-		registerRule(new RuleRoot(new rule_loop_2_uninitialized(), FrameDescriptor.create()));
+		registerRule(new RuleRoot(new rule_loop_2_uninitialized(),
+				FrameDescriptor.create()));
 	}
 
 }

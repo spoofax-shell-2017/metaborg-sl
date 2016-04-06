@@ -2,16 +2,13 @@ package org.metaborg.lang.sl.interpreter.natives;
 
 import java.util.Arrays;
 
-import org.metaborg.meta.lang.dynsem.interpreter.DynSemContext;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.IndirectReductionDispatch2;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
-import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.nodes.Node;
 import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onContinue_1 extends Rule {
@@ -22,15 +19,6 @@ public class rule_onContinue_1 extends Rule {
 		super(SourceSection.createUnavailable("Rule", "onContinue"));
 		this.dispatchNode = new IndirectReductionDispatch2._Uninitialized(
 				getName(), getSourceSection());
-	}
-
-	@CompilationFinal private Node createContext;
-
-	protected DynSemContext getContext() {
-		if (createContext == null) {
-			createContext = DynSemContext.LANGUAGE.createFindContextNode0();
-		}
-		return DynSemContext.LANGUAGE.findContext0(createContext);
 	}
 
 	@Override
@@ -51,7 +39,6 @@ public class rule_onContinue_1 extends Rule {
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
 		ITerm stmt = BuiltinTypesGen.asITerm((arguments[1]));
-		DynSemContext context = getContext();
 
 		Object[] args = Rule.buildArguments(stmt, stmt.allSubterms(),
 				Arrays.copyOfRange(arguments, 2, arguments.length));
