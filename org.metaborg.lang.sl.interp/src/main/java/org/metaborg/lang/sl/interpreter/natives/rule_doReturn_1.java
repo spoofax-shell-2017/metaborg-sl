@@ -33,8 +33,14 @@ public class rule_doReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
+		// the type of the first argument is likely to be very constant. let's
+		// specialize to that. how?
+
+		// we need expectation nodes for a node that we do not yet know
+
 		Object resultValue = BuiltinTypesGen.asITerm(arguments[0])
 				.allSubterms()[0];
+
 		RuleResult rr = new RuleResult(resultValue, Arrays.copyOfRange(
 				arguments, 1, arguments.length));
 

@@ -3,6 +3,7 @@ package org.metaborg.lang.sl.interpreter.natives;
 import org.metaborg.lang.sl.interpreter.generated.TypesGen;
 import org.metaborg.lang.sl.interpreter.generated.terms.IStmtTerm;
 import org.metaborg.lang.sl.interpreter.generated.terms.U_0_Term;
+import org.metaborg.lang.sl.interpreter.generated.terms.expandBoolV_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ArgRead;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ChildAccessTermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
@@ -59,7 +60,7 @@ public class rule_loop_2_uninitialized extends Rule {
 		final IStmtTerm stmtTerm = TypesGen.asIStmtTerm(termKids[1]);
 
 		RuleRoot condRR = getContext().getRuleRegistry().lookupRule("default",
-				condTerm.constructor(), condTerm.arity());
+				expandBoolV_1_Term.CONSTRUCTOR, expandBoolV_1_Term.ARITY);
 
 		RelationPremiseInputBuilder condInputBuilder = new RelationPremiseInputBuilder(
 				new ChildAccessTermBuild(0, ss), new TermBuild[] {
