@@ -3,8 +3,8 @@ package org.metaborg.lang.sl.interpreter.natives;
 import org.metaborg.lang.sl.interpreter.generated.TypesGen;
 import org.metaborg.lang.sl.interpreter.generated.terms.IStmtTerm;
 import org.metaborg.lang.sl.interpreter.generated.terms.U_0_Term;
-import org.metaborg.lang.sl.interpreter.generated.terms.expandBoolV_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ArgRead;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ChildAccessTermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
@@ -13,6 +13,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationInvocationNode;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.RelationPremiseInputBuilder;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
+import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.Truffle;
@@ -48,33 +49,43 @@ public class rule_loop_2_uninitialized extends Rule {
 
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
-		CompilerDirectives.transferToInterpreter();
+		CompilerDirectives.transferToInterpreterAndInvalidate();
 		SourceSection ss = this.getSourceSection();
 
-		RuleRoot condRR = getContext().getRuleRegistry().lookupRule("default",
-				expandBoolV_1_Term.CONSTRUCTOR, expandBoolV_1_Term.ARITY);
+		final ITerm redTerm = BuiltinTypesGen.asITerm(frame.getArguments()[0]);
+		final Object[] termKids = redTerm.allSubterms();
 
-		RelationPremiseInputBuilder condInput = new RelationPremiseInputBuilder(
-				new ArgRead(1, ss), new TermBuild[0], new TermBuild[] {
-						new ArgRead(3, ss), new ArgRead(4, ss) }, ss);
+		final ITerm condTerm = TypesGen.asexpandBoolV_1_Term(termKids[0]);
+		final IStmtTerm stmtTerm = TypesGen.asIStmtTerm(termKids[1]);
+
+		RuleRoot condRR = getContext().getRuleRegistry().lookupRule("default",
+				condTerm.constructor(), condTerm.arity());
+
+		RelationPremiseInputBuilder condInputBuilder = new RelationPremiseInputBuilder(
+				new ChildAccessTermBuild(0, ss), new TermBuild[] {
+						new ArgRead(1, ss), new ArgRead(2, ss) }, ss);
+
 		RelationDispatch condDispatch = new RelationDispatch.InlinedRelationDispatch(
 				NodeUtil.cloneNode(condRR.getRule()),
 				condRR.getFrameDescriptor(), ss);
+
 		RelationInvocationNode condInvocationNode = new RelationInvocationNode(
-				condInput, condDispatch, ss);
+				condInputBuilder, condDispatch, ss);
 
-		IStmtTerm body = TypesGen.asIStmtTerm(frame.getArguments()[2]);
 		RuleRoot bodyRR = getContext().getRuleRegistry().lookupRule("default",
-				body.constructor(), body.arity());
+				stmtTerm.constructor(), stmtTerm.arity());
 
-		RelationPremiseInputBuilder bodyInput = new RelationPremiseInputBuilder(
-				new ArgRead(2, ss), new TermBuild[0], new TermBuild[] {
-						new ArgRead(3, ss), new ArgRead(4, ss) }, ss);
+		RelationPremiseInputBuilder bodyInputBuilder = new RelationPremiseInputBuilder(
+				new ChildAccessTermBuild(1, ss), new TermBuild[] {
+						new ArgRead(1, ss), new ArgRead(2, ss) }, ss);
+
 		RelationDispatch bodyDispatch = new RelationDispatch.InlinedRelationDispatch(
 				NodeUtil.cloneNode(bodyRR.getRule()),
 				bodyRR.getFrameDescriptor(), ss);
+
 		RelationInvocationNode bodyInvocationNode = new RelationInvocationNode(
-				bodyInput, bodyDispatch, ss);
+				bodyInputBuilder, bodyDispatch, ss);
+
 		return replace(
 				new rule_loop_2_initialized(condInvocationNode,
 						bodyInvocationNode)).execute(frame);
@@ -93,10 +104,10 @@ public class rule_loop_2_uninitialized extends Rule {
 
 		@Override
 		public RuleResult execute(VirtualFrame frame) {
-			loopNode.executeLoop(frame);
 			Object[] args = frame.getArguments();
-			return new RuleResult(new U_0_Term(), new Object[] { args[3],
-					args[4] });
+			loopNode.executeLoop(frame);
+			return new RuleResult(new U_0_Term(), new Object[] { args[1],
+					args[2] });
 		}
 
 	}
@@ -115,12 +126,12 @@ public class rule_loop_2_uninitialized extends Rule {
 
 		@Override
 		public boolean executeRepeating(VirtualFrame frame) {
+			Object[] args = frame.getArguments();
 			if (evaluateCondition(frame)) {
 				// evaluate body
 				RuleResult bodyRes = bodyInvocation.execute(frame);
-				Object[] args = frame.getArguments();
-				args[3] = bodyRes.components[0];
-				args[4] = bodyRes.components[1];
+				args[1] = bodyRes.components[0];
+				args[2] = bodyRes.components[1];
 				return true;
 			}
 			return false;
@@ -131,8 +142,8 @@ public class rule_loop_2_uninitialized extends Rule {
 
 			// update the semantic components into the frame
 			Object[] args = frame.getArguments();
-			args[3] = condRes.components[0];
-			args[4] = condRes.components[1];
+			args[1] = condRes.components[0];
+			args[2] = condRes.components[1];
 
 			try {
 				return BuiltinTypesGen.expectBoolean(condRes.result);

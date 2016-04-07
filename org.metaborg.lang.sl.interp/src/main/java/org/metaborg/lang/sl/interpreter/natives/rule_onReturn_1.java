@@ -1,7 +1,5 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
-import java.util.Arrays;
-
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
@@ -40,10 +38,13 @@ public class rule_onReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
-		ITerm stmt = BuiltinTypesGen.asITerm(arguments[1]);
+		ITerm stmt = BuiltinTypesGen.asITerm(BuiltinTypesGen.asITerm(
+				arguments[0]).allSubterms()[0]);
 
-		Object[] args = Rule.buildArguments(stmt, stmt.allSubterms(),
-				Arrays.copyOfRange(arguments, 2, arguments.length));
+		// Object[] args = Rule.buildArguments(stmt,
+		// Arrays.copyOfRange(arguments, 1, arguments.length));
+		Object[] args = Rule.buildArguments(stmt, new Object[] { arguments[1],
+				arguments[2] });
 
 		RuleResult rr = null;
 		try {

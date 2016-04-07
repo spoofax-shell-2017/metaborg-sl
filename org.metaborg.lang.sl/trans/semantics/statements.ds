@@ -40,11 +40,11 @@ rules
   where
     e --> BoolV(bv).
 
-signature
-  constructors
-    whileHelper : Expr * Stmt -> Stmt
+//signature
+//  constructors
+//    whileHelper : Expr * Stmt -> Stmt
 
-rules
+//rules
 
 //  w@whileHelper(BoolV(bv), ss) :: C, E --> u :: C'', E''
 //  where

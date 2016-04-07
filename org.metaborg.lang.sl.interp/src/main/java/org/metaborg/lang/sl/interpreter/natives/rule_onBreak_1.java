@@ -41,10 +41,11 @@ public class rule_onBreak_1 extends Rule {
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
 
-		ITerm stmt = BuiltinTypesGen.asITerm(arguments[1]);
+		ITerm stmt = BuiltinTypesGen.asITerm(BuiltinTypesGen.asITerm(
+				arguments[0]).allSubterms()[0]);
 
-		Object[] args = Rule.buildArguments(stmt, stmt.allSubterms(),
-				Arrays.copyOfRange(arguments, 2, arguments.length));
+		Object[] args = Rule.buildArguments(stmt,
+				Arrays.copyOfRange(arguments, 1, arguments.length));
 
 		RuleResult rr = null;
 		try {

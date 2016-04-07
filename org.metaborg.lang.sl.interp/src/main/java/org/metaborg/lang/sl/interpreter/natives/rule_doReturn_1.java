@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
+import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
@@ -32,8 +33,10 @@ public class rule_doReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
-		RuleResult rr = new RuleResult(arguments[1], Arrays.copyOfRange(
-				arguments, 2, arguments.length));
+		Object resultValue = BuiltinTypesGen.asITerm(arguments[0])
+				.allSubterms()[0];
+		RuleResult rr = new RuleResult(resultValue, Arrays.copyOfRange(
+				arguments, 1, arguments.length));
 
 		throw new ReturnException(rr);
 	}
