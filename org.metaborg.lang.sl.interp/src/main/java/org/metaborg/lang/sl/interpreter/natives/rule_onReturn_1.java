@@ -5,7 +5,6 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
-import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
@@ -38,13 +37,9 @@ public class rule_onReturn_1 extends Rule {
 	@Override
 	public RuleResult execute(VirtualFrame frame) {
 		Object[] arguments = frame.getArguments();
-		ITerm stmt = BuiltinTypesGen.asITerm(BuiltinTypesGen.asITerm(
-				arguments[0]).allSubterms()[0]);
+		Object stmt = BuiltinTypesGen.asITerm(arguments[0]).allSubterms()[0];
 
-		// Object[] args = Rule.buildArguments(stmt,
-		// Arrays.copyOfRange(arguments, 1, arguments.length));
-		Object[] args = Rule.buildArguments(stmt, new Object[] { arguments[1],
-				arguments[2] });
+		Object[] args = new Object[] { stmt, arguments[1], arguments[2] };
 
 		RuleResult rr = null;
 		try {
