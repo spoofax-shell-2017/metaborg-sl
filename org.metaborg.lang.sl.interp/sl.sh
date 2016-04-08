@@ -5,7 +5,6 @@ set -e
 BASE_DIR=`pwd`
 
 GRAAL_FLAGS='
-  -ea
   -G:TruffleCompilationThreshold=2
   -G:TruffleMaximumRecursiveInlining=10
   -G:-TruffleBackgroundCompilation
