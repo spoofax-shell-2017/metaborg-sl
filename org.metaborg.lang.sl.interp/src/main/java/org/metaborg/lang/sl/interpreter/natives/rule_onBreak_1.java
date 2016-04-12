@@ -45,9 +45,9 @@ public class rule_onBreak_1 extends Rule {
 		RuleResult rr = null;
 		try {
 			RuleResult rrSub = dispatchNode.execute(frame, args);
-			rr = new RuleResult(new NullV_0_Term(), rrSub.components);
+			rr = new RuleResult(NullV_0_Term.SINGLETON, rrSub.components);
 		} catch (BreakException bex) {
-			rr = new RuleResult(new NullV_0_Term(), bex.getComponents());
+			rr = new RuleResult(NullV_0_Term.SINGLETON, bex.getComponents());
 		}
 		return rr;
 	}

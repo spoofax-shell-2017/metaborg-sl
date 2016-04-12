@@ -24,7 +24,7 @@ public class ObjData {
 	public IVTerm readProp(String prop) {
 		IVTerm v = store.get(prop);
 		if (v == null) {
-			v = new NullV_0_Term();
+			v = NullV_0_Term.SINGLETON;
 		}
 		return v;
 	}

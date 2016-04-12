@@ -44,7 +44,7 @@ public class rule_onReturn_1 extends Rule {
 		RuleResult rr = null;
 		try {
 			RuleResult rrSub = dispatchNode.execute(frame, args);
-			rr = new RuleResult(new NullV_0_Term(), rrSub.components);
+			rr = new RuleResult(NullV_0_Term.SINGLETON, rrSub.components);
 		} catch (ReturnException rex) {
 			rr = rex.getResult();
 		}

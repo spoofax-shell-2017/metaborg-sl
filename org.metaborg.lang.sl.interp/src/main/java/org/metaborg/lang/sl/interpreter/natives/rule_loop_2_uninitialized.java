@@ -107,7 +107,7 @@ public class rule_loop_2_uninitialized extends Rule {
 		public RuleResult execute(VirtualFrame frame) {
 			Object[] args = frame.getArguments();
 			loopNode.executeLoop(frame);
-			return new RuleResult(new U_0_Term(), new Object[] { args[1],
+			return new RuleResult(U_0_Term.SINGLETON, new Object[] { args[1],
 					args[2] });
 		}
 
