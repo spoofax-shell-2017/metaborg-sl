@@ -63,8 +63,8 @@ public class rule_loop_2_uninitialized extends Rule {
 				expandBoolV_1_Term.CONSTRUCTOR, expandBoolV_1_Term.ARITY);
 
 		RelationPremiseInputBuilder condInputBuilder = new RelationPremiseInputBuilder(
-				new ChildAccessTermBuild(0, ss), new TermBuild[] {
-						new ArgRead(1, ss), new ArgRead(2, ss) }, ss);
+				new ChildAccessTermBuild(new ArgRead(0, ss), 0, ss),
+				new TermBuild[] { new ArgRead(1, ss), new ArgRead(2, ss) }, ss);
 
 		RelationDispatch condDispatch = new RelationDispatch.InlinedRelationDispatch(
 				NodeUtil.cloneNode(condRR.getRule()),
@@ -77,8 +77,8 @@ public class rule_loop_2_uninitialized extends Rule {
 				stmtTerm.constructor(), stmtTerm.arity());
 
 		RelationPremiseInputBuilder bodyInputBuilder = new RelationPremiseInputBuilder(
-				new ChildAccessTermBuild(1, ss), new TermBuild[] {
-						new ArgRead(1, ss), new ArgRead(2, ss) }, ss);
+				new ChildAccessTermBuild(new ArgRead(0, ss), 1, ss),
+				new TermBuild[] { new ArgRead(1, ss), new ArgRead(2, ss) }, ss);
 
 		RelationDispatch bodyDispatch = new RelationDispatch.InlinedRelationDispatch(
 				NodeUtil.cloneNode(bodyRR.getRule()),
