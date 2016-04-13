@@ -8,7 +8,8 @@ rules
   
   While(e, b) --> U()
    where
-     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))))) --> _.
+     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), __Block2Stmt__(b))))) --> _.
+//     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))))) --> _.
 //    loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))) --> _.
 //     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
 
@@ -18,6 +19,7 @@ signature
   
   constructors
     loop: BoolVExpand * Stmt -> Loop
+    loopSpec: BoolVExpand * Stmt -> Loop
     loop2stmt : Loop -> Stmt
   
   arrows
@@ -39,6 +41,19 @@ rules
   expandBoolV(e) --> bv
   where
     e --> BoolV(bv).
+  
+  l@loopSpec(boolexp, stmt) :: C, E --> U() :: C''', E'''
+  where
+    boolexp :: C, E --> bv :: C', E';
+    bv == true
+    < {
+      stmt :: C', E' --> _ :: C'', E'';
+      l :: C'', E'' --> _ :: C''', E'''
+    } + {
+      C => C''';
+      E => E'''
+//      U() => u
+    }.
 
 //signature
 //  constructors
