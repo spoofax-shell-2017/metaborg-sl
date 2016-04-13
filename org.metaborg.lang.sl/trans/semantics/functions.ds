@@ -67,12 +67,33 @@ signature
   arrows
     List(Expr) --> List(V)
 
+  constructors
+    es_aux : List(Expr) * List(V) --> List(V)
+    bind_aux : List(V) * List(String) * E --> E
+    
 rules  
 
   invoke(vseq, parseq, stmt) :: E --> v :: E
   where
     bind(vseq, parseq) :: E --> E' :: E _;
     onReturn(stmt) :: E' --> v :: E _.
+  
+//// this is incorrect because it builds the list of values in reverse
+//  es_aux(es, acc) :: C, E --> vs :: C'', E''
+//  where
+//    es => [e | es']
+//    < {
+//      e :: C, E --> v :: C', E';
+//      es_aux(es', [v | acc]) :: C', E' --> vs :: C'', E''
+//    } + {
+//      acc => vs;
+//      C => C'';
+//      E => E''
+//    }.
+//  
+//  es : List(Expr) --> vs
+//  where
+//    es_aux(es, []) --> vs.
   
   es : List(Expr) :: C, E --> vs :: C'', E''
   where
@@ -94,23 +115,39 @@ rules
 //    e --> v;
 //    es --> vs.
   
-  bind(vs, params) :: E, C --> Ecall :: E', C'
+  
+  bind_aux(vs, params, Ecall) :: C, E --> Ecall' :: C', E'
   where
-    vs => []
+    vs => [v | vs']
     < {
-      params => [];
-      C => C(Etop);
-      Etop => Ecall;
-      E => E';
-      C => C'
+      params => [p | ps'];
+      bind_aux(vs', ps', {p |--> v, Ecall}) :: C, E --> Ecall' :: C', E'
     } + {
-      vs => [v | vs'];
-      params => [p | ps];
-      bind(vs', ps) :: E, C --> Ebind :: E', C';
-      {p |--> v, Ebind} => Ecall
-    }.
-
-        
+      Ecall => Ecall';
+      C => C';
+      E => E'
+    }. 
+    
+  bind(vs, params) :: C c@C(Etop), E --> Ecall :: C c, E
+  where
+    bind_aux(vs, params, Etop) --> Ecall.
+    
+  
+//  bind(vs, params) :: E, C --> Ecall :: E', C'
+//  where
+//    vs => []
+//    < {
+//      params => [];
+//      C => C(Etop);
+//      Etop => Ecall;
+//      E => E';
+//      C => C'
+//    } + {
+//      vs => [v | vs'];
+//      params => [p | ps];
+//      bind(vs', ps) :: E, C --> Ebind :: E', C';
+//      {p |--> v, Ebind} => Ecall
+//    }.
   
 //  bind([], []) :: C c@C(E) --> E :: C c. 
 //  

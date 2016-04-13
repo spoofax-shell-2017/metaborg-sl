@@ -136,19 +136,37 @@ rules
 signature
   arrows
     List(Stmt) --> U
+  constructors
+    stmts_aux : List(Stmt) * U --> U
 
 rules
 
-  stmts : List(Stmt) :: C, E --> U() :: C'', E''
+  stmts_aux(stmts, u) :: C, E --> u' :: C'', E''
   where
-    stmts => [s | xs]
+    stmts => [s | stmts']
     < {
       s :: C, E --> _ :: C', E';
-      xs :: C', E' --> _ :: C'', E''
+      stmts_aux(stmts', u) :: C', E' --> u' :: C'', E''
     } + {
+      u => u';
       C => C'';
       E => E''
     }.
+
+  stmts : List(Stmt) --> u
+  where
+    stmts_aux(stmts, U()) --> u.
+
+//  stmts : List(Stmt) :: C, E --> U() :: C'', E''
+//  where
+//    stmts => [s | xs]
+//    < {
+//      s :: C, E --> _ :: C', E';
+//      xs :: C', E' --> _ :: C'', E''
+//    } + {
+//      C => C'';
+//      E => E''
+//    }.
 
 //  [] : List(Stmt) --> U().
 //  
