@@ -1,6 +1,7 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
+import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
@@ -16,24 +17,10 @@ public class rule_onReturn_1 extends Rule {
 
 	public rule_onReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "onReturn"),
-				new FrameDescriptor());
-		this.dispatchNode = new DynamicRelationDispatch._Generic(getName(),
+				new FrameDescriptor(), RuleRegistry.makeKey("default",
+						"onReturn", 1));
+		this.dispatchNode = new DynamicRelationDispatch._Generic("default",
 				getSourceSection());
-	}
-
-	@Override
-	public int getArity() {
-		return 1;
-	}
-
-	@Override
-	public String getConstructor() {
-		return "onReturn";
-	}
-
-	@Override
-	public String getName() {
-		return "default";
 	}
 
 	@Override

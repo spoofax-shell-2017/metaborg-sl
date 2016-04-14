@@ -2,6 +2,7 @@ package org.metaborg.lang.sl.interpreter.natives;
 
 import java.util.Arrays;
 
+import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
@@ -14,22 +15,8 @@ public class rule_doReturn_1 extends Rule {
 
 	public rule_doReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "doReturn"),
-				new FrameDescriptor());
-	}
-
-	@Override
-	public int getArity() {
-		return 1;
-	}
-
-	@Override
-	public String getConstructor() {
-		return "doReturn";
-	}
-
-	@Override
-	public String getName() {
-		return "default";
+				new FrameDescriptor(), RuleRegistry.makeKey("default",
+						"doReturn", 1));
 	}
 
 	@Override

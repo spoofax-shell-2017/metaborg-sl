@@ -1,5 +1,6 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
+import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 
@@ -11,22 +12,8 @@ public class rule_doBreak_0 extends Rule {
 
 	public rule_doBreak_0() {
 		super(SourceSection.createUnavailable("Rule", "doBreak"),
-				new FrameDescriptor());
-	}
-
-	@Override
-	public int getArity() {
-		return 0;
-	}
-
-	@Override
-	public String getConstructor() {
-		return "doBreak";
-	}
-
-	@Override
-	public String getName() {
-		return "default";
+				new FrameDescriptor(), RuleRegistry.makeKey("default",
+						"doBreak", 0));
 	}
 
 	@Override

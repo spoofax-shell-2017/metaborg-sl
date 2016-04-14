@@ -68,7 +68,6 @@ signature
     List(Expr) --> List(V)
 
   constructors
-    es_aux : List(Expr) * List(V) --> List(V)
     bind_aux : List(V) * List(String) * E --> E
     
 rules  
@@ -77,23 +76,6 @@ rules
   where
     bind(vseq, parseq) :: E --> E' :: E _;
     onReturn(stmt) :: E' --> v :: E _.
-  
-//// this is incorrect because it builds the list of values in reverse
-//  es_aux(es, acc) :: C, E --> vs :: C'', E''
-//  where
-//    es => [e | es']
-//    < {
-//      e :: C, E --> v :: C', E';
-//      es_aux(es', [v | acc]) :: C', E' --> vs :: C'', E''
-//    } + {
-//      acc => vs;
-//      C => C'';
-//      E => E''
-//    }.
-//  
-//  es : List(Expr) --> vs
-//  where
-//    es_aux(es, []) --> vs.
   
   es : List(Expr) :: C, E --> vs :: C'', E''
   where

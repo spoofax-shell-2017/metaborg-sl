@@ -1,5 +1,6 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
+import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 
@@ -11,22 +12,8 @@ public class rule_doContinue_0 extends Rule {
 
 	public rule_doContinue_0() {
 		super(SourceSection.createUnavailable("Rule", "doContinue"),
-				new FrameDescriptor());
-	}
-
-	@Override
-	public int getArity() {
-		return 0;
-	}
-
-	@Override
-	public String getConstructor() {
-		return "doContinue";
-	}
-
-	@Override
-	public String getName() {
-		return "default";
+				new FrameDescriptor(), RuleRegistry.makeKey("default",
+						"doContinue", 0));
 	}
 
 	@Override

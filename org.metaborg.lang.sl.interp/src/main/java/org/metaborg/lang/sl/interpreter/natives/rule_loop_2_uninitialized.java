@@ -4,6 +4,7 @@ import org.metaborg.lang.sl.interpreter.generated.TypesGen;
 import org.metaborg.lang.sl.interpreter.generated.terms.IStmtTerm;
 import org.metaborg.lang.sl.interpreter.generated.terms.U_0_Term;
 import org.metaborg.lang.sl.interpreter.generated.terms.expandBoolV_1_Term;
+import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ArgRead;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.ChildAccessTermBuild;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
@@ -32,22 +33,8 @@ public class rule_loop_2_uninitialized extends Rule {
 
 	public rule_loop_2_uninitialized() {
 		super(SourceSection.createUnavailable("Rule", "loop"),
-				new FrameDescriptor());
-	}
-
-	@Override
-	public int getArity() {
-		return 2;
-	}
-
-	@Override
-	public String getConstructor() {
-		return "loop";
-	}
-
-	@Override
-	public String getName() {
-		return "default";
+				new FrameDescriptor(), RuleRegistry.makeKey("default", "loop",
+						2));
 	}
 
 	@Override
