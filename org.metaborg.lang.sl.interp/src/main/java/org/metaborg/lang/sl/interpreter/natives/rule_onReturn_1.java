@@ -6,6 +6,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
+import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -14,7 +15,8 @@ public class rule_onReturn_1 extends Rule {
 	@Child protected DynamicRelationDispatch dispatchNode;
 
 	public rule_onReturn_1() {
-		super(SourceSection.createUnavailable("Rule", "onReturn"));
+		super(SourceSection.createUnavailable("Rule", "onReturn"),
+				new FrameDescriptor());
 		this.dispatchNode = new DynamicRelationDispatch._Generic(getName(),
 				getSourceSection());
 	}

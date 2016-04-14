@@ -5,6 +5,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;
 
+import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.source.SourceSection;
 
@@ -13,7 +14,8 @@ public class rule_onContinue_1 extends Rule {
 	@Child protected DynamicRelationDispatch dispatchNode;
 
 	public rule_onContinue_1() {
-		super(SourceSection.createUnavailable("Rule", "onContinue"));
+		super(SourceSection.createUnavailable("Rule", "onContinue"),
+				new FrameDescriptor());
 		this.dispatchNode = new DynamicRelationDispatch._Uninitialized(
 				getName(), getSourceSection());
 	}

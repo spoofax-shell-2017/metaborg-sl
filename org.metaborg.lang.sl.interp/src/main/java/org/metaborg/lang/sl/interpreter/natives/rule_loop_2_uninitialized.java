@@ -19,6 +19,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.terms.ITerm;
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.dsl.UnsupportedSpecializationException;
+import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.LoopNode;
 import com.oracle.truffle.api.nodes.Node;
@@ -30,7 +31,8 @@ import com.oracle.truffle.api.source.SourceSection;
 public class rule_loop_2_uninitialized extends Rule {
 
 	public rule_loop_2_uninitialized() {
-		super(SourceSection.createUnavailable("Rule", "loop"));
+		super(SourceSection.createUnavailable("Rule", "loop"),
+				new FrameDescriptor());
 	}
 
 	@Override
