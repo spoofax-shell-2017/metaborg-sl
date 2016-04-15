@@ -8,8 +8,8 @@ rules
   
   While(e, b) --> U()
    where
-//     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), __Block2Stmt__(b))))) --> _.
-     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))))) --> _.
+     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), __Block2Stmt__(b))))) --> _.
+//     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))))) --> _.
 //    loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))) --> _.
 //     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
 
