@@ -21,6 +21,7 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/yaml/snakeyaml/1.15/snakeyaml-1.15.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/javabits/jgrapht/jgrapht-core/0.9.3/jgrapht-core-0.9.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/carrotsearch/hppc/0.7.1/hppc-0.7.1.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.metaborg.scopegraph/2.0.0-SNAPSHOT/org.metaborg.scopegraph-2.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.strategoxt.strj/2.0.0-SNAPSHOT/org.strategoxt.strj-2.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.interpreter.library.xml/2.0.0-SNAPSHOT/org.spoofax.interpreter.library.xml-2.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.interpreter.library.java/2.0.0-SNAPSHOT/org.spoofax.interpreter.library.java-2.0.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
