@@ -1,8 +1,8 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
 import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
-import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DynamicRelationDispatch;
 import org.metaborg.meta.lang.dynsem.interpreter.terms.BuiltinTypesGen;

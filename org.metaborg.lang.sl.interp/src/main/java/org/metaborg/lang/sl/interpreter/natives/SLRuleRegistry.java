@@ -2,17 +2,17 @@ package org.metaborg.lang.sl.interpreter.natives;
 
 import java.io.File;
 
-import org.metaborg.meta.lang.dynsem.interpreter.RuleRegistry;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
 
 public class SLRuleRegistry extends RuleRegistry {
 
 	public SLRuleRegistry(File specFile) {
-		init();
-		populate(this, specFile);
+		super(specFile);
 	}
 
-	public void init() {
+	@Override
+	protected void init() {
 		registerRule(new RuleRoot(new rule_onReturn_1()));
 		registerRule(new RuleRoot(new rule_doReturn_1()));
 		registerRule(new RuleRoot(new rule_doBreak_0()));
