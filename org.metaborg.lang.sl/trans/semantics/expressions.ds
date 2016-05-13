@@ -34,13 +34,13 @@ rules
   
   Add(v1, v2) --> vout
   where
-    orB(isS(v1), isS(v2)) == true
-    < {
-      StringV(concatS(v2s(v1), v2s(v2))) => vout
-    } + {
-      v1 => NumV(i1);
-      v2 => NumV(i2);
-      NumV(add[i1](i2)) => vout
+    case orB(isS(v1), isS(v2)) of {
+      true =>
+        StringV(concatS(v2s(v1), v2s(v2))) => vout
+      false =>
+        v1 => NumV(i1);
+        v2 => NumV(i2);
+        NumV(add[i1](i2)) => vout
     }.
   
   True() --> BoolV(true).
