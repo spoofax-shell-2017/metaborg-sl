@@ -9,9 +9,6 @@ rules
   While(e, b) --> U()
    where
      onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), __Block2Stmt__(b))))) --> _.
-//     onBreak(onContinue(loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))))) --> _.
-//    loop2stmt(loop(expandBoolV(e), __Block2Stmt__(b))) --> _.
-//     onBreak(onContinue(whileHelper(e, __Block2Stmt__(b)))) --> _.
 
 signature
   sorts
@@ -54,32 +51,6 @@ rules
       E' => E'''
     }.
 
-//signature
-//  constructors
-//    whileHelper : Expr * Stmt -> Stmt
-
-//rules
-
-//  w@whileHelper(BoolV(bv), ss) :: C, E --> u :: C'', E''
-//  where
-//    bv == true
-//    < {
-//      ss :: C, E --> _ :: C', E';
-//      w :: C', E' --> _ :: C'', E'';
-//      U() => u
-//    } + {
-//      U() => u;
-//      C => C'';
-//      E => E''
-//    }.
- 
-//  w@whileHelper(BoolV(true), ss) --> U()
-//  where
-//    ss --> _;
-//    w --> _.
-//  
-//  whileHelper(BoolV(false), _) --> U().
-
 signature
   sorts
     BreakHandler
@@ -119,7 +90,6 @@ rules
       U() => u
     }.
 
-
 //  IfThenElse(BoolV(true), Block(s1), _) --> s1.
 //  
 //  IfThenElse(BoolV(false), _, Block(s2)) --> s2.
@@ -151,7 +121,7 @@ rules
       C => C'';
       E => E''
     }.
-
+  
   stmts : List(Stmt) --> u
   where
     stmts_aux(stmts, U()) --> u.
