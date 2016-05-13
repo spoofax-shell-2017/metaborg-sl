@@ -42,13 +42,13 @@ rules
   l@loopSpec(boolexp, stmt) :: C, E --> U() :: C''', E'''
   where
     boolexp :: C, E --> bv :: C', E';
-    bv == true
-    < {
-      stmt :: C', E' --> _ :: C'', E'';
-      l :: C'', E'' --> _ :: C''', E'''
-    } + {
-      C' => C''';
-      E' => E'''
+    case bv of {
+      true =>
+        stmt :: C', E' --> _ :: C'', E'';
+        l :: C'', E'' --> _ :: C''', E'''
+      otherwise =>
+        C' => C''';
+        E' => E'''
     }.
 
 signature
@@ -77,23 +77,17 @@ rules
     doBreak() --> u.
 
 rules
-
-  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> u :: C'', E''
+  
+  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> U() :: C'', E''
   where
-    e :: C, E --> BoolV(bv) :: C', E';
-    bv == true
-    < {
-      s1 :: C', E' --> _ :: C'', E'';
-      U() => u
-    } + {
-      s2 :: C', E' --> _ :: C'', E'';
-      U() => u
+    e :: C, E --> bv :: C', E';
+    case bv of {
+      BoolV(true) =>
+        s1 :: C', E' --> _ :: C'', E''
+      BoolV(false) =>
+        s2 :: C', E' --> _ :: C'', E''
     }.
 
-//  IfThenElse(BoolV(true), Block(s1), _) --> s1.
-//  
-//  IfThenElse(BoolV(false), _, Block(s2)) --> s2.
-  
   Stmt(e) --> U()
   where
     e --> _.
@@ -110,18 +104,17 @@ signature
 
 rules
 
-  stmts_aux(stmts, u) :: C, E --> u' :: C'', E''
+  stmts_aux(stmts, u) :: C, E --> U() :: C'', E''
   where
-    stmts => [s | stmts']
-    < {
-      s :: C, E --> _ :: C', E';
-      stmts_aux(stmts', u) :: C', E' --> u' :: C'', E''
-    } + {
-      u => u';
-      C => C'';
-      E => E''
+    case stmts of {
+      [s | stmts'] =>
+        s :: C, E --> _ :: C', E';
+        stmts_aux(stmts', u) :: C', E' --> _ :: C'', E''
+      otherwise =>
+        C => C'';
+        E => E''
     }.
-  
+
   stmts : List(Stmt) --> u
   where
     stmts_aux(stmts, U()) --> u.
