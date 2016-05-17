@@ -39,16 +39,26 @@ rules
   where
     e --> BoolV(bv).
   
-  l@loopSpec(boolexp, stmt) :: C, E --> U() :: C''', E'''
+//  l@loopSpec(boolexp, stmt) :: C, E --> U() :: C''', E'''
+//  where
+//    boolexp :: C, E --> bv :: C', E';
+//    case bv of {
+//      true =>
+//        stmt :: C', E' --> _ :: C'', E'';
+//        l :: C'', E'' --> _ :: C''', E'''
+//      otherwise =>
+//        C' => C''';
+//        E' => E'''
+//    }.
+  
+  l@loopSpec(boolexp, stmt) --> U()
   where
-    boolexp :: C, E --> bv :: C', E';
+    boolexp --> bv;
     case bv of {
       true =>
-        stmt :: C', E' --> _ :: C'', E'';
-        l :: C'', E'' --> _ :: C''', E'''
+        stmt --> _;
+        l --> _
       otherwise =>
-        C' => C''';
-        E' => E'''
     }.
 
 signature
@@ -78,14 +88,24 @@ rules
 
 rules
   
-  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> U() :: C'', E''
+//  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> U() :: C'', E''
+//  where
+//    e :: C, E --> bv :: C', E';
+//    case bv of {
+//      BoolV(true) =>
+//        s1 :: C', E' --> _ :: C'', E''
+//      BoolV(false) =>
+//        s2 :: C', E' --> _ :: C'', E''
+//    }.
+
+  IfThenElse(e, Block(s1), Block(s2)) --> U()
   where
-    e :: C, E --> bv :: C', E';
+    e --> bv;
     case bv of {
       BoolV(true) =>
-        s1 :: C', E' --> _ :: C'', E''
+        s1 --> _
       BoolV(false) =>
-        s2 :: C', E' --> _ :: C'', E''
+        s2 --> _
     }.
 
   Stmt(e) --> U()
@@ -104,15 +124,13 @@ signature
 
 rules
 
-  stmts_aux(stmts, u) :: C, E --> U() :: C'', E''
+  stmts_aux(stmts, u) --> U()
   where
     case stmts of {
       [s | stmts'] =>
-        s :: C, E --> _ :: C', E';
-        stmts_aux(stmts', u) :: C', E' --> _ :: C'', E''
+        s --> _;
+        stmts_aux(stmts', u) --> _
       otherwise =>
-        C => C'';
-        E => E''
     }.
 
   stmts : List(Stmt) --> u
