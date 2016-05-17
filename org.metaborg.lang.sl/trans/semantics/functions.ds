@@ -14,19 +14,15 @@ signature
 
 rules
 
-  fs : List(FunDef) :: C, E -load-> u :: C'', E''
+  fs : List(FunDef) -load-> U()
   where
-    fs => [f | fs']
-    < {
-      f :: C, E -load-> _ :: C', E';
-      fs' :: C', E' -load-> _ :: C'', E'';
-      U() => u
-    } + {
-      U() => u;
-      C => C'';
-      E => E''
+    case fs of {
+      [f | fs'] =>
+        f -load-> _;
+        fs' -load-> _
+      [] =>
     }.
-
+    
 //  [] : List(FunDef) -load-> U().
 //  
 //  [f | fs] : List(FunDef) -load-> U()
@@ -77,17 +73,15 @@ rules
     bind(vseq, parseq) :: E --> E' :: E _;
     onReturn(stmt) :: E' --> v :: E _.
   
-  es : List(Expr) :: C, E --> vs :: C'', E''
+  es : List(Expr) --> vs
   where
-    es => [e | es']
-    < {
-      e :: C, E --> v :: C', E';
-      es' :: C', E' --> vs' :: C'', E'';
-      [v | vs'] => vs
-    } + {
-      [] => vs;
-      C => C'';
-      E => E''
+    case es of {
+      [e | es'] =>
+        e --> v;
+        es' --> vs';
+        [v | vs'] => vs
+      [] =>
+        [] => vs
     }.
   
 //  [] : List(Expr) --> [].
@@ -98,16 +92,14 @@ rules
 //    es --> vs.
   
   
-  bind_aux(vs, params, Ecall) :: C, E --> Ecall' :: C', E'
+  bind_aux(vs, params, Ecall) --> Ecall'
   where
-    vs => [v | vs']
-    < {
-      params => [p | ps'];
-      bind_aux(vs', ps', {p |--> v, Ecall}) :: C, E --> Ecall' :: C', E'
-    } + {
-      Ecall => Ecall';
-      C => C';
-      E => E'
+    case vs of {
+      [v | vs'] =>
+        params => [p | ps'];
+        bind_aux(vs', ps', {p |--> v, Ecall}) --> Ecall'
+    otherwise =>
+      Ecall => Ecall'
     }. 
     
   bind(vs, params) :: C c@C(Etop), E --> Ecall :: C c, E
