@@ -1,14 +1,14 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
-import java.nio.file.Path;
+import java.io.InputStream;
 
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRegistry;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRoot;
 
 public class SLRuleRegistry extends RuleRegistry {
 
-	public SLRuleRegistry(Path specPath) {
-		super(specPath);
+	public SLRuleRegistry(InputStream specStream) {
+		super(specStream);
 	}
 
 	@Override
