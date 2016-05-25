@@ -16,11 +16,11 @@ signature
     FunV: String * List(String) * Stmt -> V
     
   arrows
-    Expr --> V
+    Int |- Expr --> V
     Stmt --> U
  
   sort aliases
-    E = Map<String, V>
+    E = Map(String, V)
   
   sorts
     C
@@ -47,3 +47,4 @@ rules
 
   write(name, v) :: E --> v :: E {name |--> v, E}.
 
+  
