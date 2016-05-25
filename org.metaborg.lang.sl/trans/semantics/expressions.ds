@@ -26,10 +26,9 @@ rules
   
   Int(s) --> NumV(newBigInteger(s)).
   
-  Sub(NumV(i1), NumV(i2)) --> NumV(i1.subtract(i2)).
-  Sub(NumV(i1), NumV(i2)) --> NumV(i1.subtract(i2)).
-  Mul(NumV(i1), NumV(i2)) --> NumV(i1.multiply(i2)).
-  Div(NumV(i1), NumV(i2)) --> NumV(i1.divide(i2)).
+  Sub(NumV(i1), NumV(i2)) --> NumV(subtract[i1](i2)).
+  Mul(NumV(i1), NumV(i2)) --> NumV(multiply[i1](i2)).
+  Div(NumV(i1), NumV(i2)) --> NumV(divide[i1](i2)).
   
   String(s) --> StringV(s).
   
@@ -41,7 +40,7 @@ rules
       false =>
         v1 => NumV(i1);
         v2 => NumV(i2);
-        NumV(i1.add(i2)) => vout
+        NumV(add[i1](i2)) => vout
     }.
   
   True() --> BoolV(true).
