@@ -34,6 +34,8 @@ rules
   where
     {name |--> FunV(name, params, __Block2Stmt__(body))} => entry.
 
+  FunDef(name, params, body) -fun2val-> FunV(name, params, __Block2Stmt__(body)).
+
 rules
 
   FunCall(name, args) --> v

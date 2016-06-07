@@ -1,0 +1,5 @@
+module editor/SL-Shell
+
+shell
+
+    shell start symbol  : Expr

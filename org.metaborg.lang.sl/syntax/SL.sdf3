@@ -6,7 +6,7 @@ imports
 
 context-free start-symbols
   
-  Program FunDef
+  Program FunDef Expr
 
 context-free syntax
   

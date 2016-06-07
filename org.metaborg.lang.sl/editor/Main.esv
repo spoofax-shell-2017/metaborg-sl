@@ -5,6 +5,7 @@ imports
   SL-Colorer
   SL-Completions
   SL-References
+  SL-Shell
   SL-Syntax
   SL-Views
 
@@ -24,6 +25,6 @@ language General properties
   provider:      target/metaborg/stratego.ctree
   provider:      target/metaborg/stratego-javastrat.jar
   
-  observer:      editor-analyze
+  //observer:      editor-analyze
   
   jvm opts:      -server -Xss8m -Xmx1024m

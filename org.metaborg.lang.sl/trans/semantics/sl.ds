@@ -8,9 +8,17 @@ imports
   trans/semantics/builtins
 
 signature
+  sorts
+    ShellInit
+
+  constructors
+    ShellInit : ShellInit
+
   arrows
     Program -init-> V
-    
+    ShellInit -init-> ShellInit
+    Program -shell-> V
+    Expr -shell-> V
 
 rules // loading and init
 
@@ -19,3 +27,17 @@ rules // loading and init
     fdefs :: E {}, C C({}) -load-> _ :: E', C C(E);
     e :: E', C C(E) --> v :: E _, C _.
 
+  ShellInit() -init-> ShellInit() :: E { entry }, C C({ entry })
+    where
+      parseFunDef("function main() { println(\"Hello.\") }") => fundef;
+      fundef -fun2val-> funv;
+      { "main" |--> funv } => entry.
+
+  ProgramDesug(fdefs, e) :: E, C -shell-> v :: E', C'
+  where
+    fdefs :: E, C -load-> _ :: E1, C1;
+    e :: E1, C1 --> v :: E', C'.
+
+  e : Expr :: E, C -shell-> v :: E', C'
+  where
+    e :: E, C --> v :: E', C'.
