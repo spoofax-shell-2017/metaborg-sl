@@ -21,10 +21,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import org.metaborg.lang.sl.interpreter.generated.SLLanguage;
-import org.metaborg.lang.sl.interpreter.generated.TypesGen;
-import org.metaborg.lang.sl.interpreter.natives.ObjData;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
+import org.metaborg.sl.interpreter.generated.SLEntryPoint;
+import org.metaborg.sl.interpreter.generated.TypesGen;
+import org.metaborg.sl.interpreter.natives.ObjData;
 
 @RunWith(Parameterized.class)
 public class TestSL {
@@ -62,21 +62,21 @@ public class TestSL {
 	@Test
 	public void testEagerEval() throws Exception {
 
-		RuleResult res = SLLanguage.evaluate(testData.programFile, inputStream,
-				outputStream, errorStream);
+		RuleResult res = SLEntryPoint.evaluate(testData.programFile,
+				inputStream, outputStream, errorStream);
 
 		Object val = res.result;
 
 		if (TypesGen.isIVTerm(val) && !TypesGen.isNullV_0_Term(val)) {
-			outputStream.write((ObjData.v2s_1(TypesGen.asIVTerm(val)) + "\n")
-					.getBytes());
+			outputStream.write(
+					(ObjData.v2s_1(TypesGen.asIVTerm(val)) + "\n").getBytes());
 		}
 
 		outputStream.flush();
 		errorStream.flush();
 
-		String expectedOutput = IOUtils.toString(new FileInputStream(
-				testData.outputFile));
+		String expectedOutput = IOUtils
+				.toString(new FileInputStream(testData.outputFile));
 		String actualOutput = new String(outputStream.toByteArray());
 
 		if (errorStream.size() > 0) {
@@ -110,8 +110,8 @@ public class TestSL {
 				expectedOutput = null;
 			}
 
-			data[i] = new TestData[] { new TestData(programName, TESTSPATH
-					+ programName, expectedInput, expectedOutput) };
+			data[i] = new TestData[] { new TestData(programName,
+					TESTSPATH + programName, expectedInput, expectedOutput) };
 		}
 
 		tests.addAll(Arrays.asList(data));
