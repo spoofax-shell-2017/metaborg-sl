@@ -23,6 +23,6 @@ public class SLRuleRegistry extends RuleRegistry {
 	private void registerRule(Rule r) {
 		registerJointRule(r.getArrowName(), r.getDispatchClass(),
 				new RuleUnionRoot(r.getSourceSection(), r.getArrowName(),
-						new Rule[] { r }));
+						r.getDispatchClass(), new Rule[] { r }));
 	}
 }

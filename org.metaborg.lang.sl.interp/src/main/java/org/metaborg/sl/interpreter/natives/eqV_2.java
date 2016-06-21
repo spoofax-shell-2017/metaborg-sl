@@ -1,7 +1,7 @@
 package org.metaborg.sl.interpreter.natives;
 
-import org.metaborg.meta.lang.dynsem.interpreter.PremiseFailure;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.matching.PatternMatchFailure;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.TermEqPremise;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.TermEqPremiseNodeGen;
 
@@ -30,7 +30,7 @@ public class eqV_2 extends TermBuild {
 		try {
 			termeq.execute(frame);
 			return true;
-		} catch (PremiseFailure pf) {
+		} catch (PatternMatchFailure pf) {
 			eqFailedTaken.enter();
 			return false;
 		}

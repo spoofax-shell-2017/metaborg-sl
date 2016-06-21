@@ -35,19 +35,20 @@ public class rule_onContinue_1 extends Rule {
 
 		Object[] args = new Object[] { stmt, arguments[1], arguments[2] };
 
-		return invoke(args);
+		return invoke(frame, args);
 	}
 
-	private RuleResult invoke(Object[] args) {
+	private RuleResult invoke(VirtualFrame frame, Object[] args) {
 		try {
 
-			return (RuleResult) dispatchNode.execute(args[0].getClass(), args);
+			return (RuleResult) dispatchNode.execute(frame, args[0].getClass(),
+					args);
 		} catch (ContinueException cex) {
 			Object[] components = cex.getComponents();
 			System.arraycopy(components, 0, args,
 					args.length - components.length, components.length);
 			// FIXME eliminate this recursive call
-			return invoke(args);
+			return invoke(frame, args);
 		}
 	}
 

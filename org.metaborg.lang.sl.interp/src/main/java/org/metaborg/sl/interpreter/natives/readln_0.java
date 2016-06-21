@@ -23,8 +23,8 @@ public class readln_0 extends TermBuild {
 	@Override
 	public String executeString(VirtualFrame frame) {
 		try {
-			return new BufferedReader(new InputStreamReader(getContext()
-					.getInput())).readLine();
+			return new BufferedReader(
+					new InputStreamReader(getContext().getInput())).readLine();
 		} catch (IOException e) {
 			throw new IllegalStateException("Failed to read input stream", e);
 		}
