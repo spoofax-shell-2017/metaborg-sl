@@ -4,7 +4,6 @@ imports
   trans/semantics/desugared-sig
   trans/semantics/values
   trans/semantics/expressions
-  trans/semantics/sl
   trans/semantics/natives/arithmetics
   
 signature
@@ -16,7 +15,7 @@ signature
 
 rules
   
-  SLPrintln(e) --> v 
+  SLPrintln(e) --> v
   where
     e --> v;
     println(v2s(v)) => _.

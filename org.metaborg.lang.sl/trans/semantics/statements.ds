@@ -124,7 +124,7 @@ signature
 
 rules
 
-  stmts_aux(stmts, u) --> U()
+  stmts_aux(stmts, u) --> u
   where
     case stmts of {
       [s | stmts'] =>
