@@ -4,6 +4,7 @@ imports
   trans/semantics/desugared-sig
   trans/semantics/values
   trans/semantics/expressions
+  trans/semantics/functions
   trans/semantics/natives/arithmetics
   
 signature
