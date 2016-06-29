@@ -6,6 +6,7 @@ imports
   trans/semantics/expressions
   trans/semantics/functions
   trans/semantics/natives/arithmetics
+  trans/semantics/functions
   
 signature
   native operators

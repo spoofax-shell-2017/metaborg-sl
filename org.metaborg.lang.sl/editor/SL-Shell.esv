@@ -2,4 +2,4 @@ module editor/SL-Shell
 
 shell
 
-    shell start symbol  : Expr
+    shell start symbol  : Shell

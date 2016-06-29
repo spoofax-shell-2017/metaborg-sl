@@ -6,7 +6,7 @@ imports
 
 context-free start-symbols
   
-  Program FunDef Expr
+  Program FunDef Shell
 
 context-free syntax
   
@@ -93,3 +93,8 @@ context-free priorities
   > {left: Expr.Add Expr.Sub Expr.Or}
   > {right: Expr.VarWrite Expr.PropWrite}
 
+context-free syntax
+  Shell.StmtBlock = Block {prefer}
+  Shell = Stmt
+  Shell = Expr
+  Shell = FunDef
