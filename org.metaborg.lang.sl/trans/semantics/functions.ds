@@ -48,7 +48,7 @@ rules
   where
     lookup(name) --> ClosV(_, params, body, E);
     args --> vargs;
-    invoke(vargs, params, body) :: C C(E), E --> v.
+    invoke(vargs, params, body) :: C C(E) --> v.
 
 /*
 * Function calls
