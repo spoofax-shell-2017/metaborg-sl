@@ -7,6 +7,7 @@ imports
 * Function definitions
 */
 signature
+
   arrows
     List(FunDef) -load-> U
     FunDef -load-> U
@@ -43,12 +44,6 @@ rules
     lookup(name) --> FunV(_, params, body);
     args --> vargs;
     invoke(vargs, params, body) --> v.
-
-  FunCall(name, args) --> v
-  where
-    lookup(name) --> ClosV(_, params, body, E);
-    args --> vargs;
-    invoke(vargs, params, body) :: C C(E) --> v.
 
 /*
 * Function calls
