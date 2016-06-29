@@ -14,6 +14,7 @@ signature
     NumV : BigInteger -> V
     StringV : String -> V
     FunV: String * List(String) * Stmt -> V
+    ClosV: String * List(String) * Stmt * E -> V
     
   arrows
     Int |- Expr --> V

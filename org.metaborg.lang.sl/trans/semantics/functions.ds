@@ -40,9 +40,15 @@ rules
 
   FunCall(name, args) --> v
   where
-    lookup(name) --> FunV(_, params, body);
-    args --> vargs;
-    invoke(vargs, params, body) --> v.
+    lookup(name) --> val;
+    case val of {
+      FunV(_, params, body) =>
+        args --> vargs;
+        invoke(vargs, params, body) --> v
+      ClosV(_, params, body, E) =>
+        args --> vargs;
+        invoke(vargs, params, body) :: C C(E), E --> v
+    }.
 
 /*
 * Function calls

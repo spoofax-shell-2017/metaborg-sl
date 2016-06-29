@@ -6,6 +6,7 @@ imports
   trans/semantics/expressions
   trans/semantics/objects
   trans/semantics/builtins
+  trans/semantics/values
 
 signature
   sorts
@@ -41,10 +42,12 @@ rules // loading and init
   where
     ss :: E, C --> u :: E', C'.
 
-  FunDef(name, params, body) :: E, C -shell-> fv :: E', C'
+  FunDef(name, params, body) :: E, C C(EC) -shell-> clos :: E', C'
   where
-    FunV(name, params, __Block2Stmt__(body)) => fv;
-    FunDef(name, params, body) :: E, C -load-> _ :: E', C'.
+    ClosV(name, params, __Block2Stmt__(body), E) => clos;
+	{ name |--> clos } => entry;
+	{ entry, E } => E';
+	C({ entry, EC }) => C'.
 
   s : Stmt :: E, C -shell-> u :: E', C'
   where
