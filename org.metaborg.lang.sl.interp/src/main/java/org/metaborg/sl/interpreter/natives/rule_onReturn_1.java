@@ -1,10 +1,10 @@
 package org.metaborg.sl.interpreter.natives;
 
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.DispatchNode;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.DispatchNodeGen;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DispatchNode;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.premises.reduction.DispatchNodeGen;
 import org.metaborg.sl.interpreter.generated.TypesGen;
 import org.metaborg.sl.interpreter.generated.terms.IStmtTerm;
 import org.metaborg.sl.interpreter.generated.terms.NullV_0_Term;

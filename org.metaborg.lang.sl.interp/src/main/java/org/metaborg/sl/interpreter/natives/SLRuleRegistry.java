@@ -1,8 +1,9 @@
 package org.metaborg.sl.interpreter.natives;
 
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.JointRuleRoot;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
+import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleRegistry;
-import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleUnionRoot;
 
 public class SLRuleRegistry extends RuleRegistry {
 
@@ -22,7 +23,8 @@ public class SLRuleRegistry extends RuleRegistry {
 
 	private void registerRule(Rule r) {
 		registerJointRule(r.getArrowName(), r.getDispatchClass(),
-				new RuleUnionRoot(r.getSourceSection(), r.getArrowName(),
-						r.getDispatchClass(), new Rule[] { r }));
+				new JointRuleRoot(r.getSourceSection(), RuleKind.TERM,
+						r.getArrowName(), r.getDispatchClass(),
+						new Rule[] { r }));
 	}
 }
