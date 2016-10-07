@@ -30,7 +30,7 @@ rules
 //    f -load-> _;
 //    fs -load-> _.
 
-  FunDef(name, params, body) :: C C(E), E E' -load-> U() :: C C({entry, E}), E {entry, E'}
+  FunDef(name, params, body) :: GE, E -load-> U() :: GE {entry, GE}, E {entry, E}
   where
     {name |--> FunV(name, params, __Block2Stmt__(body))} => entry.
 
@@ -46,9 +46,9 @@ rules
 * Function calls
 */
 signature
-  constructors
-    invoke: List(V) * List(String) * Stmt --> V
-    bind: List(V) * List(String) --> E
+  arrows
+    invoke(List(V), List(String), Stmt) --> V
+    bind(List(V), List(String)) --> E
   
   sorts
     ReturnHandler
@@ -63,8 +63,8 @@ signature
   arrows
     List(Expr) --> List(V)
 
-  constructors
-    bind_aux : List(V) * List(String) * E --> E
+  arrows
+    bind_aux(List(V), List(String), E) --> E
     
 rules  
 
@@ -102,9 +102,9 @@ rules
       Ecall => Ecall'
     }. 
     
-  bind(vs, params) :: C c@C(Etop), E --> Ecall :: C c, E
+  bind(vs, params) :: GE, E --> Ecall :: GE, E
   where
-    bind_aux(vs, params, Etop) --> Ecall.
+    bind_aux(vs, params, GE) --> Ecall.
     
   
 //  bind(vs, params) :: E, C --> Ecall :: E', C'

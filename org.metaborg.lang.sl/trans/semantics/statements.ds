@@ -119,8 +119,8 @@ rules
 signature
   arrows
     List(Stmt) --> U
-  constructors
-    stmts_aux : List(Stmt) * U --> U
+  arrows
+    stmts_aux(List(Stmt), U) --> U
 
 rules
 

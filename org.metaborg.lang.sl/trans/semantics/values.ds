@@ -16,30 +16,24 @@ signature
     FunV: String * List(String) * Stmt -> V
     
   arrows
-    Int |- Expr --> V
+    Expr --> V
     Stmt --> U
  
   sort aliases
     E = Map(String, V)
   
-  sorts
-    C
-  
-  constructors
-    C : E -> C
-  
-  variables
+  components
     E : E
-    C : C
-
+    GE : E
+  
   variables
     v : V
     u : U
 
 signature
-  constructors
-    lookup : String --> V
-    write : String * V --> V
+  arrows
+    lookup(String) --> V
+    write(String, V) --> V
 
 rules
 
