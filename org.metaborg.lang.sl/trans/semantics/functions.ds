@@ -58,7 +58,7 @@ signature
     onReturn : Stmt -> ReturnHandler // will catch a ReturnException with the value and the semantic components
   
   arrows
-    ReturnHandler --> V // natively implemented
+    ReturnHandler :: E, GE --> V :: E, GE // natively implemented
   
   arrows
     List(Expr) --> List(V)
