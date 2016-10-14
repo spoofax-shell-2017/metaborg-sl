@@ -13,14 +13,13 @@ rules
 signature
   sorts
     Loop
-  
+
   constructors
-    loop: BoolVExpand * Stmt -> Loop
     loopSpec: BoolVExpand * Stmt -> Loop
     loop2stmt : Loop -> Stmt
-  
+
   arrows
-    Loop --> U // natively implemented
+    Loop :: E, GE --> U :: E, GE // natively implemented
   
   sorts
     BoolVExpand
@@ -73,8 +72,8 @@ signature
     onContinue : Stmt -> Stmt // will handle a ContinueException with the value and the semantic components  
 
    arrows
-     BreakHandler --> U // natively implemented
-     ContinueHandler --> U // natively implemented
+     BreakHandler :: E, GE --> U :: E, GE // natively implemented
+     ContinueHandler :: E, GE --> U :: E, GE // natively implemented
 
 rules
   
@@ -119,8 +118,8 @@ rules
 signature
   arrows
     List(Stmt) --> U
-  constructors
-    stmts_aux : List(Stmt) * U --> U
+  arrows
+    stmts_aux(List(Stmt), U) --> U
 
 rules
 
