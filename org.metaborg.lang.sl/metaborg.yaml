@@ -8,6 +8,7 @@ dependencies:
     - org.metaborg:org.metaborg.meta.lang.template:${metaborgVersion}
     - org.metaborg:dynsem:${metaborgVersion}
   source:
+    - org.metaborg:meta.lib.spoofax:${metaborgVersion}
     - org.metaborg:org.metaborg.meta.lib.analysis:${metaborgVersion}
 #  java:
 #    - org.metaborg:org.metaborg.meta.lang.template:2.0.0-SNAPSHOT"
