@@ -1,7 +1,7 @@
 module trans/semantics/expressions
 
 imports
-  src-gen/ds-signatures/Common-sig
+  ds-signatures/Common-sig
   trans/semantics/desugared-sig
   trans/semantics/values
   trans/semantics/natives/arithmetics
