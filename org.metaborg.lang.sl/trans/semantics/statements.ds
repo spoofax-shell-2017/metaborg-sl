@@ -1,4 +1,4 @@
-module trans/semantics/control-flow
+module trans/semantics/statements
 
 imports
   trans/semantics/desugared-sig
