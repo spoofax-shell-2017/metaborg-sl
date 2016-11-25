@@ -50,8 +50,9 @@ rules
 //        E' => E'''
 //    }.
   
-  l@loopSpec(boolexp, stmt) --> U()
+  l@loopSpec(boolexp, stmt) --> u
   where
+    U() => u;
     boolexp --> bv;
     case bv of {
       true =>
