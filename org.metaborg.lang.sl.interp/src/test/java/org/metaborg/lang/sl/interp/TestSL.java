@@ -91,7 +91,7 @@ public class TestSL {
 	public static Collection<TestData[]> testTargets() {
 		Collection<TestData[]> tests = new LinkedList<>();
 
-		File testDir = new File("src/test/resources/");
+		File testDir = new File(TESTSPATH);
 		String[] programNames = testDir.list(new SLFileFilter());
 
 		TestData[][] data = new TestData[programNames.length][];
@@ -139,11 +139,13 @@ public class TestSL {
 		}
 	}
 
+	private static final String EXTENSION = "sl";
+
 	private static class SLFileFilter implements FilenameFilter {
 
 		@Override
 		public boolean accept(File dir, String name) {
-			return FilenameUtils.getExtension(name).equalsIgnoreCase("sl");
+			return FilenameUtils.getExtension(name).equalsIgnoreCase(EXTENSION);
 		}
 
 	}
