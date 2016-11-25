@@ -35,32 +35,10 @@ public class readln_0 extends TermBuild {
 			}
 			String line = byteArrayOutputStream
 					.toString(StandardCharsets.US_ASCII.displayName());
-			System.out.println("Read: " + line);
 			return line;
 		} catch (IOException e) {
 			throw new IllegalStateException("Failed to read input stream", e);
 		}
-		//
-		// InputStreamReader reader = new InputStreamReader(
-		// getContext().getInput(), StandardCharsets.US_ASCII);
-
-		// System.lineSeparator()
-
-		//
-		//
-		// Scanner scanner = new Scanner(getContext().getInput());
-		// String s = scanner.nextLine();
-		// System.out.println("Read: " + s);
-		// return s;
-
-		// // String s = new Scanner(getContext().getInput()).nextLine();
-		//
-		// try {
-		// System.out.println("Read: " + s);
-		// return s;
-		// } catch (IOException e) {
-		// throw new IllegalStateException("Failed to read input stream", e);
-		// }
 	}
 
 	public static TermBuild create(SourceSection source) {
