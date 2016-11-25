@@ -1,4 +1,9 @@
-/bin/
+
 /target/
-/.cache/
+src/main/resources/specification.aterm
+src/main/resources/parsetable.tbl
+src/main/java/org/metaborg/sl/interpreter/generated
+src/main/java/org/metaborg/sl/interpreter/generated/terms
+src/main/java/org/metaborg/sl/interpreter/generated/terms/build
+src/main/java/org/metaborg/sl/interpreter/generated/terms/match
 /SL.launch
