@@ -14,73 +14,72 @@
 	</parent>
 
 	<dependencies>
-    <dependency>
-      <groupId>org.metaborg</groupId>
-      <artifactId>org.metaborg.meta.lang.esv</artifactId>
-      <type>spoofax-language</type>
-      <version>${metaborg-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.metaborg</groupId>
-      <artifactId>org.metaborg.meta.lang.template</artifactId>
-      <type>spoofax-language</type>
-      <version>${metaborg-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.metaborg</groupId>
-      <artifactId>meta.lib.spoofax</artifactId>
-      <type>spoofax-language</type>
-      <version>${metaborg-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.metaborg</groupId>
-      <artifactId>org.metaborg.meta.lib.analysis</artifactId>
-      <type>spoofax-language</type>
-      <version>${metaborg-version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.metaborg</groupId>
-      <artifactId>dynsem</artifactId>
-      <type>spoofax-language</type>
-      <version>${metaborg-version}</version>
-    </dependency>
-  </dependencies>
+		<dependency>
+			<groupId>org.metaborg</groupId>
+			<artifactId>org.metaborg.meta.lang.esv</artifactId>
+			<type>spoofax-language</type>
+			<version>${metaborg-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.metaborg</groupId>
+			<artifactId>org.metaborg.meta.lang.template</artifactId>
+			<type>spoofax-language</type>
+			<version>${metaborg-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.metaborg</groupId>
+			<artifactId>meta.lib.spoofax</artifactId>
+			<type>spoofax-language</type>
+			<version>${metaborg-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.metaborg</groupId>
+			<artifactId>org.metaborg.meta.lib.analysis</artifactId>
+			<type>spoofax-language</type>
+			<version>${metaborg-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.metaborg</groupId>
+			<artifactId>dynsem</artifactId>
+			<type>spoofax-language</type>
+			<version>${metaborg-version}</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
-      <plugin>
+			<plugin>
 				<groupId>org.metaborg</groupId>
 				<artifactId>spoofax-maven-plugin</artifactId>
 				<version>${metaborg-version}</version>
 				<extensions>true</extensions>
-        <executions>
-          <execution>
-            <phase>test</phase>
-            <goals>
-              <goal>transform</goal>
-            </goals>
-          </execution>
-        </executions>
+				<executions>
+					<execution>
+						<phase>test</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+					</execution>
+				</executions>
 				<configuration>
-          <language>ds</language>
-          <goal>Generate Interpreter</goal>
-          <fileSets>
-            <fileSet>
-              <directory>${basedir}/trans/semantics</directory>
-              <includes>
-                 <include>sl.ds</include>
-              </includes>
-            </fileSet>
-          </fileSets>
-          <!-- <pardonedLanguages combine.children="append">
-						<pardonedLanguage>ds</pardonedLanguage>
-					</pardonedLanguages> -->
+					<language>ds</language>
+					<goal>Generate Interpreter</goal>
+					<fileSets>
+						<fileSet>
+							<directory>${basedir}/trans/semantics</directory>
+							<includes>
+								<include>sl.ds</include>
+							</includes>
+						</fileSet>
+					</fileSets>
+					<!-- <pardonedLanguages combine.children="append"> <pardonedLanguage>ds</pardonedLanguage> 
+						</pardonedLanguages> -->
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-  <profiles>
-    <profile>
+	<profiles>
+		<profile>
 			<id>standalone</id>
 			<repositories>
 				<repository>
@@ -138,5 +137,5 @@
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
-  </profiles>
+	</profiles>
 </project>
