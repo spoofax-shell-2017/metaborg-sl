@@ -14,15 +14,37 @@
 	</parent>
 
 	<dependencies>
-		<!-- <dependency> <groupId>org.metaborg</groupId> <artifactId>org.metaborg.meta.lib.analysis</artifactId> 
-			<version>${metaborg-version}</version> <type>spoofax-language</type> </dependency> 
-			<dependency> <groupId>org.metaborg</groupId> <artifactId>org.metaborg.meta.lang.template</artifactId> 
-			<version>${metaborg-version}</version> <type>spoofax-language</type> </dependency> 
-			<dependency> <groupId>org.metaborg</groupId> <artifactId>org.metaborg.meta.lang.esv</artifactId> 
-			<version>${metaborg-version}</version> <type>spoofax-language</type> </dependency> 
-			<dependency> <groupId>org.metaborg</groupId> <artifactId>dynsem</artifactId> 
-			<version>2.0.0-SNAPSHOT</version> <type>spoofax-language</type> </dependency> -->
-	</dependencies>
+    <dependency>
+      <groupId>org.metaborg</groupId>
+      <artifactId>org.metaborg.meta.lang.esv</artifactId>
+      <type>spoofax-language</type>
+      <version>${metaborg-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.metaborg</groupId>
+      <artifactId>org.metaborg.meta.lang.template</artifactId>
+      <type>spoofax-language</type>
+      <version>${metaborg-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.metaborg</groupId>
+      <artifactId>meta.lib.spoofax</artifactId>
+      <type>spoofax-language</type>
+      <version>${metaborg-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.metaborg</groupId>
+      <artifactId>org.metaborg.meta.lib.analysis</artifactId>
+      <type>spoofax-language</type>
+      <version>${metaborg-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.metaborg</groupId>
+      <artifactId>dynsem</artifactId>
+      <type>spoofax-language</type>
+      <version>${metaborg-version}</version>
+    </dependency>
+  </dependencies>
 
 	<build>
 		<plugins>
@@ -39,8 +61,8 @@
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
+  <profiles>
+    <profile>
 			<id>standalone</id>
 			<repositories>
 				<repository>
@@ -98,5 +120,5 @@
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
-	</profiles>
+  </profiles>
 </project>
