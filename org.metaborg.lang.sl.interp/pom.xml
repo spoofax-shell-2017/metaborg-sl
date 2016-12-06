@@ -32,7 +32,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
                   <includes>**/**</includes>
                 </fileset>
                 <fileset>
-                  <directory>src/test/java/org/metaborg/sl/interpreter/generated</directory>
+                  <directory>src/test/java/org/metaborg/sl/interpreter/generated/test</directory>
                   <includes>**/**</includes>
                 </fileset>
                 <fileset>
