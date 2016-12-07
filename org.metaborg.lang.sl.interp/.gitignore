@@ -9,3 +9,4 @@ src/main/java/org/metaborg/sl/interpreter/generated/terms/match
 src/test/java/org/metaborg/sl/interpreter/generated/test
 /SL.launch
 /TestSL.launch
+/SL (Daemon).launch
