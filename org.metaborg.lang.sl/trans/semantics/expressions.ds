@@ -39,7 +39,7 @@ rules
   
   Eq(v1, v2) --> BoolV(eqT(v1, v2)).
   
-  Neq(e1, e2) --> Not(Eq(e1, e2)).
+  Neq(e1, e2) --> Eq(e1, e2).
   
   Lte(NumV(i1), NumV(i2)) --> BoolV(lteN(i1, i2)).
   
