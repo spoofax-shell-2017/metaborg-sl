@@ -8,7 +8,7 @@ rules
   
   While(e, b) --> U()
    where
-     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), __Block2Stmt__(b))))) --> _.
+     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), b)))) --> _.
 
 signature
   sorts
@@ -38,21 +38,8 @@ rules
   where
     e --> BoolV(bv).
   
-//  l@loopSpec(boolexp, stmt) :: C, E --> U() :: C''', E'''
-//  where
-//    boolexp :: C, E --> bv :: C', E';
-//    case bv of {
-//      true =>
-//        stmt :: C', E' --> _ :: C'', E'';
-//        l :: C'', E'' --> _ :: C''', E'''
-//      otherwise =>
-//        C' => C''';
-//        E' => E'''
-//    }.
-  
-  l@loopSpec(boolexp, stmt) --> u
+  l@loopSpec(boolexp, stmt) --> U()
   where
-    U() => u;
     boolexp --> bv;
     case bv of {
       true =>
@@ -78,43 +65,24 @@ signature
 
 rules
   
-  Continue() --> u
-  where
-    doContinue() --> u.
-  
-  Break() --> u
-  where
-    doBreak() --> u.
+  Continue() --> doContinue().
+
+  Break() --> doBreak().
 
 rules
   
-//  IfThenElse(e, Block(s1), Block(s2)) :: C, E --> U() :: C'', E''
-//  where
-//    e :: C, E --> bv :: C', E';
-//    case bv of {
-//      BoolV(true) =>
-//        s1 :: C', E' --> _ :: C'', E''
-//      BoolV(false) =>
-//        s2 :: C', E' --> _ :: C'', E''
-//    }.
-
   IfThenElse(e, Block(s1), Block(s2)) --> U()
   where
-    e --> bv;
+    e --> BoolV(bv);
     case bv of {
-      BoolV(true) =>
+      true =>
         s1 --> _
-      BoolV(false) =>
+      false =>
         s2 --> _
     }.
 
-  Stmt(e) --> U()
-  where
-    e --> _.
-  
-  __Block2Stmt__(Block(ss)) --> U()
-  where
-    ss --> _.
+  Stmt(_ : V) --> U().
+  Block(ss) --> ss.
   
 signature
   arrows
@@ -137,20 +105,3 @@ rules
   where
     stmts_aux(stmts, U()) --> u.
 
-//  stmts : List(Stmt) :: C, E --> U() :: C'', E''
-//  where
-//    stmts => [s | xs]
-//    < {
-//      s :: C, E --> _ :: C', E';
-//      xs :: C', E' --> _ :: C'', E''
-//    } + {
-//      C => C'';
-//      E => E''
-//    }.
-
-//  [] : List(Stmt) --> U().
-//  
-//  [s | xs] : List(Stmt) --> U()
-//  where
-//    s --> _;
-//    xs --> _.

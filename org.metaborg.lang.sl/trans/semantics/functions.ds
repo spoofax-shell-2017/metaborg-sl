@@ -23,16 +23,9 @@ rules
       [] =>
     }.
     
-//  [] : List(FunDef) -load-> U().
-//  
-//  [f | fs] : List(FunDef) -load-> U()
-//  where
-//    f -load-> _;
-//    fs -load-> _.
-
   FunDef(name, params, body) :: GE, E -load-> U() :: GE {entry, GE}, E {entry, E}
   where
-    {name |--> FunV(name, params, __Block2Stmt__(body))} => entry.
+    {name |--> FunV(name, params, body)} => entry.
 
 rules
 
@@ -84,14 +77,6 @@ rules
         [] => vs
     }.
   
-//  [] : List(Expr) --> [].
-//  
-//  [e | es] : List(Expr) --> [v | vs]
-//  where
-//    e --> v;
-//    es --> vs.
-  
-  
   bind_aux(vs, params, Ecall) --> Ecall'
   where
     case vs of {
@@ -106,28 +91,6 @@ rules
   where
     bind_aux(vs, params, GE) --> Ecall.
     
-  
-//  bind(vs, params) :: E, C --> Ecall :: E', C'
-//  where
-//    vs => []
-//    < {
-//      params => [];
-//      C => C(Etop);
-//      Etop => Ecall;
-//      E => E';
-//      C => C'
-//    } + {
-//      vs => [v | vs'];
-//      params => [p | ps];
-//      bind(vs', ps) :: E, C --> Ebind :: E', C';
-//      {p |--> v, Ebind} => Ecall
-//    }.
-  
-//  bind([], []) :: C c@C(E) --> E :: C c. 
-//  
-//  bind([v | vs], [p | ps]) --> {p |--> v, E}
-//  where
-//    bind(vs, ps) --> E.
   
   ReturnVoid() --> U()
   where
