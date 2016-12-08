@@ -4,14 +4,13 @@ imports
   trans/semantics/desugared-sig
   trans/semantics/values
   trans/semantics/expressions
-  trans/semantics/natives/arithmetics
   trans/semantics/functions
   
 signature
   native operators
     println : String -> String
     readln : String
-    nanoTime: BigInteger
+    nanoTime: Number
     parseFunDef : String -> FunDef
 
 rules

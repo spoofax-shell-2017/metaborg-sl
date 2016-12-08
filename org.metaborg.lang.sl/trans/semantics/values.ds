@@ -2,16 +2,17 @@ module trans/semantics/values
 
 imports
   trans/semantics/desugared-sig
-  trans/semantics/natives/arithmetics
 
 signature
+  sorts
+    Number
   sorts U V
 
   constructors
     U: U
     NullV: V
     BoolV : Bool -> V
-    NumV : BigInteger -> V
+    NumV : Number -> V
     StringV : String -> V
     FunV: String * List(String) * Stmt -> V
     
