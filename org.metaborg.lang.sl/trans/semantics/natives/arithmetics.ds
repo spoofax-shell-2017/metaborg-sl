@@ -14,10 +14,5 @@ signature
     lteI : BigInteger * BigInteger -> Bool
     ltI : BigInteger * BigInteger -> Bool
 
-//  constructors
-//    addNum : BigInteger * BigInteger --> BigInteger
-//    subNum : BigInteger * BigInteger --> BigInteger
-//    mulNum : BigInteger * BigInteger --> BigInteger
-//    divNum : BigInteger * BigInteger --> BigInteger
 
 
