@@ -5,4 +5,3 @@ stretch tree of depth 13 check: -1
 24 trees of depth 10 check: -24
 16 trees of depth 12 check: -16
 long lived tree of depth 12 check: -1
-NullV()
