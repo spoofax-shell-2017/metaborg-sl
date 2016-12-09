@@ -13,7 +13,7 @@ public class rule_doBreak_0 extends Rule {
 
 	public rule_doBreak_0() {
 		super(SourceSection.createUnavailable("Rule", "doBreak"),
-				new FrameDescriptor(), RuleKind.TERM, "default",
+				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				doBreak_0_Term.class);
 	}
 

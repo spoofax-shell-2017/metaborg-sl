@@ -20,10 +20,10 @@ public class rule_onReturn_1 extends Rule {
 
 	public rule_onReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "onReturn"),
-				new FrameDescriptor(), RuleKind.TERM, "default",
+				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				onReturn_1_Term.class);
 		this.dispatchNode = DispatchNodeGen.create(getSourceSection(),
-				"default");
+				DEFAULT_NAME);
 	}
 
 	@Override

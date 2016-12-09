@@ -17,7 +17,7 @@ public class rule_doReturn_1 extends Rule {
 
 	public rule_doReturn_1() {
 		super(SourceSection.createUnavailable("Rule", "doReturn"),
-				new FrameDescriptor(), RuleKind.TERM, "default",
+				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				doReturn_1_Term.class);
 	}
 

@@ -13,7 +13,7 @@ public class rule_doContinue_0 extends Rule {
 
 	public rule_doContinue_0() {
 		super(SourceSection.createUnavailable("Rule", "doContinue"),
-				new FrameDescriptor(), RuleKind.TERM, "default",
+				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				doContinue_0_Term.class);
 	}
 

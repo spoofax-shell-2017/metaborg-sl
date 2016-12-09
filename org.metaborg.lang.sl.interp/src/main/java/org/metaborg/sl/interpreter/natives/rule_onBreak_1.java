@@ -20,10 +20,10 @@ public class rule_onBreak_1 extends Rule {
 
 	public rule_onBreak_1() {
 		super(SourceSection.createUnavailable("Rule", "onBreak"),
-				new FrameDescriptor(), RuleKind.TERM, "default",
+				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				onBreak_1_Term.class);
 		this.dispatchNode = DispatchNodeGen.create(getSourceSection(),
-				"default");
+				DEFAULT_NAME);
 	}
 
 	@Override

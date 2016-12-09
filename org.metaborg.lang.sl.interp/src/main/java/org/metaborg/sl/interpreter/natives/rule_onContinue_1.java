@@ -19,10 +19,10 @@ public class rule_onContinue_1 extends Rule {
 
 	public rule_onContinue_1() {
 		super(SourceSection.createUnavailable("Rule", "onContinue"),
-				new FrameDescriptor(), RuleKind.TERM, "default",
+				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				onContinue_1_Term.class);
 		this.dispatchNode = DispatchNodeGen.create(getSourceSection(),
-				"default");
+				DEFAULT_NAME);
 	}
 
 	public RuleResult execute(VirtualFrame frame) {
