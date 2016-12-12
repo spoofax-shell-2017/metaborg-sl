@@ -66,13 +66,13 @@
 					<goal>Generate interpreter</goal>
 					<fileSets>
 						<fileSet>
-							<directory>${basedir}/trans/semantics</directory>
+							<directory>${basedir}/trans</directory>
 							<includes>
 								<include>sl.ds</include>
 							</includes>
 						</fileSet>
 					</fileSets>
-					<!-- <pardonedLanguages combine.children="append"> <pardonedLanguage>ds</pardonedLanguage> 
+					<!-- <pardonedLanguages combine.children="append"> <pardonedLanguage>ds</pardonedLanguage>
 						</pardonedLanguages> -->
 				</configuration>
 			</plugin>
