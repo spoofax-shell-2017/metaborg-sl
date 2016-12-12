@@ -63,7 +63,7 @@
 				</executions>
 				<configuration>
 					<language>ds</language>
-					<goal>Generate Interpreter</goal>
+					<goal>Generate interpreter</goal>
 					<fileSets>
 						<fileSet>
 							<directory>${basedir}/trans/semantics</directory>
