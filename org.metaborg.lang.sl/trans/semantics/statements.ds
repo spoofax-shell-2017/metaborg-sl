@@ -82,7 +82,8 @@ rules
     }.
 
   Stmt(_ : V) --> U().
-  Block(ss) --> ss.
+  
+  __Block2Stmt__(Block(ss)) --> ss.
   
 signature
   arrows
