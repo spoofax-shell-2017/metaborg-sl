@@ -21,11 +21,11 @@ rules
         f -load-> _;
         fs' -load-> _
       [] =>
-    }.
+    }
     
   FunDef(name, params, body) :: GE, E -load-> U() :: GE {entry, GE}, E {entry, E}
   where
-    {name |--> FunV(name, params, body)} => entry.
+    {name |--> FunV(name, params, body)} => entry
 
 rules
 
@@ -33,7 +33,7 @@ rules
   where
     lookup(name) --> FunV(_, params, body);
     args --> vargs;
-    invoke(vargs, params, body) --> v.
+    invoke(vargs, params, body) --> v
 
 /*
 * Function calls
@@ -64,7 +64,7 @@ rules
   invoke(vseq, parseq, stmt) :: E --> v :: E
   where
     bind(vseq, parseq) :: E --> E' :: E _;
-    onReturn(stmt) :: E' --> v :: E _.
+    onReturn(stmt) :: E' --> v :: E _
   
   es : List(Expr) --> vs
   where
@@ -75,7 +75,7 @@ rules
         [v | vs'] => vs
       [] =>
         [] => vs
-    }.
+    }
   
   bind_aux(vs, params, Ecall) --> Ecall'
   where
@@ -85,20 +85,20 @@ rules
         bind_aux(vs', ps', {p |--> v, Ecall}) --> Ecall'
     otherwise =>
       Ecall => Ecall'
-    }. 
+    }
     
   bind(vs, params) :: GE, E --> Ecall :: GE, E
   where
-    bind_aux(vs, params, GE) --> Ecall.
+    bind_aux(vs, params, GE) --> Ecall
     
   
   ReturnVoid() --> U()
   where
-    doReturn(NullV()) --> _.
+    doReturn(NullV()) --> _
 
   Return(v) --> U()
   where
-    doReturn(v) --> _.
+    doReturn(v) --> _
 
 
 

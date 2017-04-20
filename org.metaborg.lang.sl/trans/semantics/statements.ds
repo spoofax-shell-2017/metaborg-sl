@@ -8,7 +8,7 @@ rules
   
   While(e, b) --> U()
    where
-     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), b)))) --> _.
+     onBreak(onContinue(loop2stmt(loopSpec(expandBoolV(e), b)))) --> _
 
 signature
   sorts
@@ -32,11 +32,11 @@ signature
 
 rules
 
-  loop2stmt(l) --> l.
+  loop2stmt(l) --> l
 
   expandBoolV(e) --> bv
   where
-    e --> BoolV(bv).
+    e --> BoolV(bv)
   
   l@loopSpec(boolexp, stmt) --> U()
   where
@@ -46,7 +46,7 @@ rules
         stmt --> _;
         l --> _
       otherwise =>
-    }.
+    }
 
 signature
   sorts
@@ -65,9 +65,9 @@ signature
 
 rules
   
-  Continue() --> doContinue().
+  Continue() --> doContinue()
 
-  Break() --> doBreak().
+  Break() --> doBreak()
 
 rules
   
@@ -79,11 +79,11 @@ rules
         s1 --> _
       false =>
         s2 --> _
-    }.
+    }
 
-  Stmt(_ : V) --> U().
+  Stmt(_ : V) --> U()
   
-  __Block2Stmt__(Block(ss)) --> ss.
+  __Block2Stmt__(Block(ss)) --> ss
   
 signature
   arrows
@@ -100,9 +100,9 @@ rules
         s --> _;
         stmts_aux(stmts', u) --> _
       otherwise =>
-    }.
+    }
 
   stmts : List(Stmt) --> u
   where
-    stmts_aux(stmts, U()) --> u.
+    stmts_aux(stmts, U()) --> u
 

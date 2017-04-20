@@ -28,15 +28,15 @@ signature
 
 rules
 
-  x : String --> newBigInteger(x).
+  x : String --> newBigInteger(x)
   
-  addN(i1, i2) --> add[i1](i2).
-  subN(i1, i2) --> subtract[i1](i2).
-  mulN(i1, i2) --> multiply[i1](i2).
-  divN(i1, i2) --> divide[i1](i2).
+  addN(i1, i2) --> add[i1](i2)
+  subN(i1, i2) --> subtract[i1](i2)
+  mulN(i1, i2) --> multiply[i1](i2)
+  divN(i1, i2) --> divide[i1](i2)
   
-  ltN(i1, i2) --> ltBigInt(i1, i2).
+  ltN(i1, i2) --> ltBigInt(i1, i2)
   
-  lteN(i1, i2) --> lteBigInt(i1, i2).
+  lteN(i1, i2) --> lteBigInt(i1, i2)
   
     

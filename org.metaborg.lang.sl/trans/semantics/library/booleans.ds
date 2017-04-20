@@ -11,11 +11,11 @@ rules
   
   eqT(t1, t2) --> true
   where
-    t1 == t2.
+    t1 == t2
   
   eqT(t1, t2) --> false
   where
-    t1 != t2.
+    t1 != t2
 
   andB(b1, b2) --> b3
   where
@@ -23,15 +23,15 @@ rules
       false => false => b3
       otherwise =>
         b2 => b3
-    }.
+    }
 
   orB(b1, b2) --> b3
   where
     case b1 of {
       true => true => b3
       otherwise => b2 => b3
-    }.
+    }
   
-  notB(true) --> false.
+  notB(true) --> false
   
-  notB(false) --> true.
+  notB(false) --> true

@@ -38,8 +38,8 @@ signature
 
 rules
 
-  lookup(name) :: E --> E[name] :: E.
+  lookup(name) :: E --> E[name] :: E
 
-  write(name, v) :: E --> v :: E {name |--> v, E}.
+  write(name, v) :: E --> v :: E {name |--> v, E}
 
   
