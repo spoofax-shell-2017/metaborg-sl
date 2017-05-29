@@ -2,11 +2,11 @@
 /target/
 src/main/resources/specification.aterm
 src/main/resources/parsetable.tbl
-src/main/java/org/metaborg/sl/interpreter/generated
-src/main/java/org/metaborg/sl/interpreter/generated/terms
-src/main/java/org/metaborg/sl/interpreter/generated/terms/build
-src/main/java/org/metaborg/sl/interpreter/generated/terms/match
-src/test/java/org/metaborg/sl/interpreter/generated/test
+src/main/java/org/metaborg/org/metaborg/lang/sl/interp/generated
+src/main/java/org/metaborg/org/metaborg/lang/sl/interp/generated/terms
+src/main/java/org/metaborg/org/metaborg/lang/sl/interp/generated/terms/build
+src/main/java/org/metaborg/org/metaborg/lang/sl/interp/generated/terms/match
+src/test/java/org/metaborg/org/metaborg/lang/sl/interp/generated/test
 /SL.launch
 /TestSL.launch
 /SL (Daemon).launch
