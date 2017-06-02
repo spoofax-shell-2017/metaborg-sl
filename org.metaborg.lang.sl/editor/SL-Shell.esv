@@ -1,0 +1,6 @@
+module editor/SL-Shell
+
+shell
+
+    evaluation method: "dynsem"
+    shell start symbol  : Shell
