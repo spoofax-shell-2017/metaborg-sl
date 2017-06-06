@@ -9,16 +9,20 @@ imports
 	editor/SL-Outliner
 	
 	libspoofax/editor/outline
+	libspoofax/core/language
 
 	runtime/editor/-
 	runtime/analysis/-
+	runtime/properties/-
 	desugar
 	outline
 	pp
 
 rules // Analysis
 	
-	editor-analyze = !([], [], [])
+	editor-analyze:
+		(ast, path, project-path) -> (ast', [], [], [])
+		with ast' := <desugar-all> ast
 	
 rules // Editor services
 	
