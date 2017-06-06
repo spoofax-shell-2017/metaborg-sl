@@ -1,5 +1,8 @@
 module SL-Completions
 
+imports
+	libspoofax/color/default
+
 completions
                                                                    
   // This file is used to define content completion.               
