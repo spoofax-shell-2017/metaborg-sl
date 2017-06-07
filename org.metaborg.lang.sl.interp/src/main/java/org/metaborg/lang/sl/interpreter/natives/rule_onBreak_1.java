@@ -5,6 +5,7 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.DispatchNodeGen;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
+import org.metaborg.org.metaborg.lang.sl.interp.generated.SLLanguage;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.TypesGen;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.IStmtTerm;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.NullV_0_Term;
@@ -12,18 +13,16 @@ import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.onBreak_1_Term;
 
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onBreak_1 extends Rule {
 
-	@Child protected DispatchNode dispatchNode;
+	@Child
+	protected DispatchNode dispatchNode;
 
 	public rule_onBreak_1() {
-		super(SourceSection.createUnavailable("Rule", "onBreak"),
-				new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
+		super(SLLanguage.getSourceSectionNone(), new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				onBreak_1_Term.class);
-		this.dispatchNode = DispatchNodeGen.create(getSourceSection(),
-				DEFAULT_NAME);
+		this.dispatchNode = DispatchNodeGen.create(getSourceSection(), DEFAULT_NAME);
 	}
 
 	@Override
@@ -37,8 +36,7 @@ public class rule_onBreak_1 extends Rule {
 
 		RuleResult rr = null;
 		try {
-			RuleResult rrSub = dispatchNode.execute(frame, args[0].getClass(),
-					args);
+			RuleResult rrSub = dispatchNode.execute(frame, args[0].getClass(), args);
 			rr = new RuleResult(NullV_0_Term.SINGLETON, rrSub.components);
 		} catch (BreakException bex) {
 			rr = new RuleResult(NullV_0_Term.SINGLETON, bex.getComponents());
