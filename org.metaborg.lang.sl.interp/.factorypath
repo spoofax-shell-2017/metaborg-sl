@@ -41,8 +41,8 @@
     <factorypathentry kind="VARJAR" id="M2_REPO/org/mockito/mockito-core/2.0.76-beta/mockito-core-2.0.76-beta.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/net/bytebuddy/byte-buddy/1.4.3/byte-buddy-1.4.3.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/objenesis/objenesis/2.4/objenesis-2.4.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/oracle/truffle/truffle-api/0.23/truffle-api-0.23.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/oracle/truffle/truffle-dsl-processor/0.23/truffle-dsl-processor-0.23.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/oracle/truffle/truffle-api/0.25/truffle-api-0.25.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="VARJAR" id="M2_REPO/com/oracle/truffle/truffle-dsl-processor/0.25/truffle-dsl-processor-0.25.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/metaborg/org.spoofax.terms/2.3.0-SNAPSHOT/org.spoofax.terms-2.3.0-SNAPSHOT.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/com/martiansoftware/nailgun-server/0.9.1/nailgun-server-0.9.1.jar" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="VARJAR" id="M2_REPO/org/slf4j/slf4j-api/1.7.10/slf4j-api-1.7.10.jar" enabled="true" runInBatchMode="false"/>

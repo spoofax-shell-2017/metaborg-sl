@@ -5,7 +5,6 @@ import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.DispatchNodeGen;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.SLLanguage;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.TypesGen;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.IStmtTerm;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.onContinue_1_Term;
@@ -19,7 +18,7 @@ public class rule_onContinue_1 extends Rule {
 	protected DispatchNode dispatchNode;
 
 	public rule_onContinue_1() {
-		super(SLLanguage.getSourceSectionNone(), new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
+		super(null, new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				onContinue_1_Term.class);
 		this.dispatchNode = DispatchNodeGen.create(getSourceSection(), DEFAULT_NAME);
 	}

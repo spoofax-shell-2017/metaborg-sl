@@ -1,7 +1,7 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.SLEntryPoint;
+import org.metaborg.org.metaborg.lang.sl.interp.generated.SLMain;
 import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.IFunDefTerm;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 
@@ -22,7 +22,7 @@ public abstract class parseFunDef_1 extends TermBuild {
 	public IFunDefTerm doEvaluated(String s) {
 
 		IStrategoTerm funDefTerm = getContext().getParser().parse(
-				Source.newBuilder(s).name("Dynamically defined function").mimeType(SLEntryPoint.MIME_TYPE).build(),
+				Source.newBuilder(s).name("Dynamically defined function").mimeType(SLMain.MIME_TYPE).build(),
 				"FunDef");
 
 		IStrategoTerm desugFunDefTerm = new DesugarTransformer().transform(funDefTerm);
