@@ -2,12 +2,12 @@ package org.metaborg.lang.sl.interpreter.natives;
 
 import java.util.Arrays;
 
+import org.metaborg.lang.sl.interpreter.generated.TypesGen;
+import org.metaborg.lang.sl.interpreter.generated.terms.IVTerm;
+import org.metaborg.lang.sl.interpreter.generated.terms.doReturn_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.TypesGen;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.IVTerm;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.doReturn_1_Term;
 
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;

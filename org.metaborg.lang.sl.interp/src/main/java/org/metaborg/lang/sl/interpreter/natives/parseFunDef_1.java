@@ -1,8 +1,8 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
+import org.metaborg.lang.sl.interpreter.generated.SLMain;
+import org.metaborg.lang.sl.interpreter.generated.terms.IFunDefTerm;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.building.TermBuild;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.SLMain;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.IFunDefTerm;
 import org.spoofax.interpreter.terms.IStrategoTerm;
 
 import com.oracle.truffle.api.dsl.NodeChild;

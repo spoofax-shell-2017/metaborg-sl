@@ -1,9 +1,9 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
+import org.metaborg.lang.sl.interpreter.generated.terms.doContinue_0_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
-import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.doContinue_0_Term;
 
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;

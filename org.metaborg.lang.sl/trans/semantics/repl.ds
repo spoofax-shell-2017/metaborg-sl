@@ -1,6 +1,8 @@
 module trans/semantics/repl
 
-imports trans/semantics/semantics
+imports
+  trans/semantics/values
+  trans/semantics/semantics
 
 signature
   sorts
@@ -18,45 +20,36 @@ signature
     Stmt -shell-> U
     Expr -shell-> V
   
-  sorts
-    C
-  
-  constructors
-    C: E -> C
-  
-  components
-    C: C
-
 rules
 
-  ShellInit() -init-> ShellInit() :: E { }, C C({ })
+  ShellInit() -init-> ShellInit() :: E {}, GE {}
 
-  ProgramDesug(fdefs, e) :: E, C -shell-> v :: E', C'
+  ProgramDesug(fdefs, e) :: E, GE -shell-> v :: E', GE'
   where
-    fdefs :: E, C -load-> _ :: E1, C1;
-    e :: E1, C1 --> v :: E', C'
+    fdefs :: E, GE -load-> _ :: E1, GE1;
+    e :: E1, GE1 --> v :: E', GE'
 
-  StmtBlock(Block(ss)) :: E, C -shell-> u :: E', C'
+  StmtBlock(Block(ss)) :: E, GE -shell-> u :: E', GE'
   where
-    ss :: E, C --> u :: E', C'
+    ss :: E, GE --> u :: E', GE'
 
-  FunDef(name, params, body) :: E, C C(EC) -shell-> clos :: E', C'
+  FunDef(name, params, body) :: E, GE -shell-> clos :: E', GE'
   where
-    ClosV(name, params, __Block2Stmt__(body), E) => clos;
-	{ name |--> clos } => entry;
-	{ entry, E } => E';
-	C({ entry, EC }) => C'
+    ClosV(name, params, body, E) => clos;
+	  { name |--> clos } => entry;
+	  { entry, E } => E';
+	  { entry, GE } => GE'
 
-  s : Stmt :: E, C -shell-> u :: E', C'
+  s : Stmt :: E, GE -shell-> u :: E', GE'
   where
-    s :: E, C --> u :: E', C'
+    s :: E, GE --> u :: E', GE'
 
-  e : Expr :: E, C -shell-> v :: E', C'
+  e : Expr :: E, GE -shell-> v :: E', GE'
   where
-    e :: E, C --> v :: E', C'
+    e :: E, GE --> v :: E', GE'
 
   FunCall(name, args) --> v
   where
     lookup(name) --> ClosV(_, params, body, E);
     args --> vargs;
-    invoke(vargs, params, body) :: C C(E) --> v
+    invoke(vargs, params, body) :: E --> v

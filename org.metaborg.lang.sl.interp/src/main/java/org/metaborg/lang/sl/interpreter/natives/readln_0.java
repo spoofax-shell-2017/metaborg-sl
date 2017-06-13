@@ -33,7 +33,8 @@ public class readln_0 extends TermBuild {
 			if (c == -1 && byteArrayOutputStream.size() == 0) {
 				return null;
 			}
-			String line = byteArrayOutputStream.toString(StandardCharsets.US_ASCII.displayName());
+			String line = byteArrayOutputStream
+					.toString(StandardCharsets.US_ASCII.displayName());
 			return line;
 		} catch (IOException e) {
 			throw new IllegalStateException("Failed to read input stream", e);

@@ -7,7 +7,6 @@ imports
 * Function definitions
 */
 signature
-
   arrows
     List(FunDef) -load-> U
     FunDef -load-> U
@@ -27,8 +26,6 @@ rules
   FunDef(name, params, body) :: GE, E -load-> U() :: GE {entry, GE}, E {entry, E}
   where
     {name |--> FunV(name, params, body)} => entry
-
-  FunDef(name, params, body) -fun2val-> FunV(name, params, __Block2Stmt__(body))
 
 rules
 

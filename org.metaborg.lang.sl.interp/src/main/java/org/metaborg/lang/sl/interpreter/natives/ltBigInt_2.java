@@ -24,7 +24,8 @@ public abstract class ltBigInt_2 extends TermBuild {
 		return left.compareTo(right) < 0;
 	}
 
-	public static TermBuild create(SourceSection source, TermBuild left, TermBuild right) {
+	public static TermBuild create(SourceSection source, TermBuild left,
+			TermBuild right) {
 		return ltBigInt_2NodeGen.create(source, left, right);
 	}
 

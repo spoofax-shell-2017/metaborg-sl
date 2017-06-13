@@ -5,8 +5,6 @@ imports
   trans/semantics/values
   trans/semantics/expressions
   trans/semantics/functions
-  trans/semantics/natives/bigint-arithmetics
-  trans/semantics/functions
   
 signature
   native operators
