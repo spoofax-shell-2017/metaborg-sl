@@ -1,18 +1,17 @@
 package org.metaborg.lang.sl.interpreter.natives;
 
-import org.metaborg.lang.sl.interpreter.generated.TypesGen;
-import org.metaborg.lang.sl.interpreter.generated.terms.IStmtTerm;
-import org.metaborg.lang.sl.interpreter.generated.terms.NullV_0_Term;
-import org.metaborg.lang.sl.interpreter.generated.terms.onReturn_1_Term;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.DispatchNode;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.DispatchNodeGen;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.Rule;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleKind;
 import org.metaborg.meta.lang.dynsem.interpreter.nodes.rules.RuleResult;
+import org.metaborg.org.metaborg.lang.sl.interp.generated.TypesGen;
+import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.IStmtTerm;
+import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.NullV_0_Term;
+import org.metaborg.org.metaborg.lang.sl.interp.generated.terms.onReturn_1_Term;
 
 import com.oracle.truffle.api.frame.FrameDescriptor;
 import com.oracle.truffle.api.frame.VirtualFrame;
-import com.oracle.truffle.api.source.SourceSection;
 
 public class rule_onReturn_1 extends Rule {
 
@@ -20,7 +19,7 @@ public class rule_onReturn_1 extends Rule {
 	protected DispatchNode dispatchNode;
 
 	public rule_onReturn_1() {
-		super(SourceSection.createUnavailable("Rule", "onReturn"), new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
+		super(null, new FrameDescriptor(), RuleKind.TERM, DEFAULT_NAME,
 				onReturn_1_Term.class);
 		this.dispatchNode = DispatchNodeGen.create(getSourceSection(), DEFAULT_NAME);
 	}
