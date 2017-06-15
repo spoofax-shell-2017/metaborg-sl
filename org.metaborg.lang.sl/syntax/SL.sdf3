@@ -94,7 +94,9 @@ context-free priorities
   > {right: Expr.VarWrite Expr.PropWrite}
 
 context-free syntax
-  Shell.StmtBlock = Block {prefer}
-  Shell = Stmt
-  Shell = Expr
-  Shell = FunDef
+//  Shell.StmtBlock = Block {prefer}
+//  Shell = Stmt
+//  Shell = Expr
+//  Shell = FunDef
+
+  Shell.Def = [[ID] = [Expr]]

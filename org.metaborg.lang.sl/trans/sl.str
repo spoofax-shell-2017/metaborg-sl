@@ -17,6 +17,8 @@ imports
 	desugar
 	outline
 	pp
+	
+	sl-eval
 
 rules // Analysis
 	

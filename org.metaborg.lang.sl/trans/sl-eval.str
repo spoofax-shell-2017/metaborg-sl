@@ -1,0 +1,26 @@
+module trans/sl-eval
+
+imports
+	signatures/-
+	libstratego-lib/-
+
+rules
+
+	shell_init: _ -> <new-hashtable>
+	where
+		debug
+
+	add_to_env(|E): (x, v) -> <hashtable-put(|x, v)> E
+
+	shell_eval: (Def(x,e), E) -> (V, E')
+	where
+		debug
+	where
+		V := <eval(|E)> e;
+		E' := <add_to_env(|E)>(x, V)
+
+	eval(|E): Add(e1, e2) -> <add> (<eval(|E)> e1,
+																<eval(|E)> e2)
+
+	eval(|E): Int(i) -> <string-to-int> i
+	eval(|E): VarRead(x) -> <hashtable-get(|x)> E
