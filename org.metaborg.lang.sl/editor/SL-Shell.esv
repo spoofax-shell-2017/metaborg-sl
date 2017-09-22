@@ -3,3 +3,5 @@ module editor/SL-Shell
 shell
 
     shell start symbol  : Shell
+    shell evaluation method : "stratego"
+    // shell evaluation method : "dynsem"
