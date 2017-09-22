@@ -95,8 +95,6 @@ context-free priorities
 
 context-free syntax
 //  Shell.StmtBlock = Block {prefer}
-//  Shell = Stmt
-//  Shell = Expr
-//  Shell = FunDef
-
-  Shell.Def = [[ID] = [Expr]]
+  Shell = Stmt
+  Shell = Expr
+  Shell = FunDef

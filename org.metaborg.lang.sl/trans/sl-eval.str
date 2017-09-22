@@ -7,20 +7,49 @@ imports
 rules
 
 	shell_init: _ -> <new-hashtable>
-	where
-		debug
 
 	add_to_env(|E): (x, v) -> <hashtable-put(|x, v)> E
 
-	shell_eval: (Def(x,e), E) -> (V, E')
+	shell_eval: (e, E) -> (V, E')
 	where
-		debug
+		(V, E') := <eval_env(|E)> e
+
+	eval_env(|E): e -> (V, E)
+	where
+		V := <eval(|E)> e
+
+	eval_env(|E): VarWrite(x, e) -> (V, E')
 	where
 		V := <eval(|E)> e;
 		E' := <add_to_env(|E)>(x, V)
 
-	eval(|E): Add(e1, e2) -> <add> (<eval(|E)> e1,
-																<eval(|E)> e2)
+//	eval(|E): FunCall(name, args) -> V
+//	where
+//		V := <eval(|E)> VarRead(name)
 
-	eval(|E): Int(i) -> <string-to-int> i
-	eval(|E): VarRead(x) -> <hashtable-get(|x)> E
+	eval(|E): FunCall(name, args) -> V
+	where
+		FunDef(_, argnames, body) := <eval(|E)> VarRead(name);
+		EBody := <new-hashtable>;
+		V := <eval(|EBody)> body
+	
+	eval_env(|E): Block(stmt) -> stmt
+	
+//	eval_env(|E): Block([stmt]) -> (V, E)
+//	where
+//		(V, _) := <eval_env(|E)> stmt
+//
+//	eval_env(|E): Block([stmt | stmts]) -> (V, E)
+//	where
+//		(_, E') := <eval_env(|E)> stmt;
+//		(V, _) := <eval_env(|E')> Block(stmts)
+
+	eval_env(|E): FunDef(name, args, body) -> (V, E')
+	where
+		V := FunDef(name, args, body);
+		E' := <add_to_env(|E)>(name, V)
+
+	eval(|E): Add(e1, e2) -> <add> (<eval(|E)> e1, <eval(|E)> e2)
+	eval(|E): Mul(e1, e2) -> <mul> (<eval(|E)> e1, <eval(|E)> e2)
+	eval(|E): Int(i)      -> <string-to-int> i
+	eval(|E): VarRead(x)  -> <hashtable-get(|x)> E
